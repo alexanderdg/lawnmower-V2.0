@@ -27,7 +27,8 @@ void setup() {
   canbus.initCAN();
   battery.enableCharger();
   delay(5000);
-  motioncontrol.enableVBlade();
+  
+  //motioncontrol.enableVBlade();
   motioncontrol.startTurning();
   //delay(5000);
   //motioncontrol.bladeStop();
@@ -70,7 +71,7 @@ void loop() {
   Serial.println(battery.readVoltage());
   Serial.print("Battery current: ");
   Serial.println(battery.readCurrent());
-  Serial.print("Battery power: ");
-  Serial.println(battery.readPower());
+  Serial.print("Battery status: ");
+  Serial.println(battery.readBatteryLevel());
   delay(100);
 }

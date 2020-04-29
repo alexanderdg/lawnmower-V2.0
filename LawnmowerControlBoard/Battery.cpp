@@ -2,6 +2,11 @@
 #include<Arduino.h>
 #include <Wire.h>
 
+
+//define the impedance of the battery in milliOhms
+//to simplify the calculations, a constant impedance is used 
+#define impedance 65
+
 Battery::Battery(void) {
   pinMode(CHRG_EN, OUTPUT);
   Wire.begin();
@@ -23,6 +28,7 @@ bool Battery::initBattery(void) {
   MSBdata = 0x6A;
   LSBdata = 0xAA;
   writeI2CByte(0x05, MSBdata, LSBdata);
+  return true;
 }
 
 void Battery::enableCharger(void) {
@@ -55,6 +61,30 @@ float Battery::readVoltage(void) {
   int temp = (MSBdata << 5) + ((LSBdata & 0b11111000) >> 3);
   float normalized = temp * 0.004;
   return normalized;
+}
+
+float Battery::readOpenVoltage(void) {
+  float voltage = readVoltage();
+  float current = readCurrent();
+  float openVoltage = voltage + (current * (impedance/1000.0));
+  return openVoltage;
+}
+
+int Battery::readBatteryLevel(void) {
+  float voltage = readVoltage();
+  float current = readCurrent();
+  float openVoltage = voltage + (current * (impedance/1000.0));
+  //Serial.println(current * (impedance/1000.0));
+  int foundIndex = -1;
+  for(int i = 0; i < 15; i ++)
+  {
+    if(openVoltage > dischargeGraph[i])
+    {
+      foundIndex = i;
+      break;
+    }
+  }
+  return int(100 - (foundIndex * 6.66));
 }
 
 bool Battery::writeI2CByte(int reg, int MSBvalue, int LSBvalue) {
