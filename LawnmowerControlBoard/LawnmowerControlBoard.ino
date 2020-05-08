@@ -1,6 +1,7 @@
 #include "MotorDriver.h"
 #include "CANbus.h"
 #include "Battery.h"
+#include "StateMachineImp.h"
 
 
 int L_CURRENT = 21;
@@ -9,7 +10,10 @@ int R_CURRENT = 32;
 MotorDriver motioncontrol;
 CANbus canbus;
 Battery battery;
+StateMachineImp SM;
 static uint8_t hex[17] = "0123456789abcdef";
+
+
 
 static void hexDump(uint8_t dumpLen, uint8_t *bytePtr)
 {
@@ -24,17 +28,18 @@ static void hexDump(uint8_t dumpLen, uint8_t *bytePtr)
 }
 
 void setup() {
+  Serial3.begin(9600);
   canbus.initCAN();
   battery.enableCharger();
   delay(5000);
   
   //motioncontrol.enableVBlade();
-  motioncontrol.startTurning();
+  //motioncontrol.startTurning();
   //delay(5000);
   //motioncontrol.bladeStop();
-  //motioncontrol.Forward(0.5);
+ // motioncontrol.Forward(0.5);
   /*
-  delay(5000);
+  delay(500000);
   motioncontrol.coastBrake();
   delay(5000);
   motioncontrol.Backward(0.5);
@@ -56,22 +61,29 @@ void loop() {
     Serial.print("CAN bus 0: "); hexDump(8, inMsg.buf);
   }
   */
-  Serial.print("l current: ");
-  Serial.println(motioncontrol.getLeftCurrent());
-  Serial.print("r current: ");
-  Serial.println(motioncontrol.getRightCurrent());
-  Serial.print("Speed L: ");
-  Serial.println(motioncontrol.getLeftSpeed());
-  Serial.print("Speed R: ");
-  Serial.println(motioncontrol.getRightSpeed());
-  Serial.print("blade current: ");
-  Serial.println(motioncontrol.getBladeCurrent());
+  //Serial3.print("l current: ");
+  //Serial3.println(motioncontrol.getLeftCurrent());
+  //Serial3.print("r current: ");
+  //Serial3.println(motioncontrol.getRightCurrent());
+  //Serial3.print("Speed L: ");
+  //Serial3.println(motioncontrol.getLeftSpeed());
+  //Serial3.print("Speed R: ");
+  //Serial3.println(motioncontrol.getRightSpeed());
+  //Serial3.print("blade current: ");
+  //Serial3.println(motioncontrol.getBladeCurrent());
   //battery.readVoltage();
-  Serial.print("Battery voltage: ");
-  Serial.println(battery.readVoltage());
-  Serial.print("Battery current: ");
-  Serial.println(battery.readCurrent());
-  Serial.print("Battery status: ");
-  Serial.println(battery.readBatteryLevel());
+  //Serial3.print("Battery voltage: ");
+  //Serial3.println(battery.readVoltage());
+  //Serial3.print("Battery current: ");
+  //Serial3.println(battery.readCurrent());
+  //Serial3.print("Battery status: ");
+  //Serial3.println(battery.readBatteryLevel());
+  //SM.runStatemachine();
   delay(100);
+}
+
+void serialEvent3() {
+  while (Serial3.available()) {
+    Serial3.println(Serial3.read());
+  }
 }

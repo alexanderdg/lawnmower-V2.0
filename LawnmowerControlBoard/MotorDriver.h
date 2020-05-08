@@ -17,6 +17,8 @@ class MotorDriver
     bool turnLeft(float speed);
     bool coastBrake(void);
     bool dynamicBrake(void);
+    bool takeRandomTurnRight(void);
+    bool takeRandomTurnLeft(void);
 
     bool enableVBlade(void);
     bool disableVBlade(void);
@@ -52,8 +54,11 @@ class MotorDriver
     int temp_counter_l = 0;
     int temp_counter_r = 0;
     int counter_l = 0;
+    long total_counter_1 = 0;
     int counter_r = 0;
-    bool en_pid = true; 
+    long total_counter_r = 0;
+    bool en_pid = true;
+    bool en_distance = false; 
 
     //variables for the current measurment
     int leftCurrent = 0;

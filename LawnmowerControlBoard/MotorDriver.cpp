@@ -5,7 +5,7 @@
 
 MotorDriver* MotorDriver::MotorDriverS = 0;
 
-MotorDriver::MotorDriver() : LPID(&InputL, &OutputL, &SetpointL, 2, 10, 0, DIRECT), RPID(&InputR, &OutputR, &SetpointR, 5, 40, 0.5, DIRECT) {
+MotorDriver::MotorDriver() : LPID(&InputL, &OutputL, &SetpointL, 5, 40, 0.5, DIRECT), RPID(&InputR, &OutputR, &SetpointR, 5, 40, 0.5, DIRECT) {
   MotorDriverS = this;
   analogWriteResolution(12);
   analogReadResolution(12);
@@ -37,8 +37,8 @@ MotorDriver::MotorDriver() : LPID(&InputL, &OutputL, &SetpointL, 2, 10, 0, DIREC
 bool MotorDriver::Forward(float speed) {
   digitalWrite(RL_EN, LOW);
   digitalWrite(RL_SLEEP, HIGH);
-  digitalWrite(R_DIR, LOW);
-  digitalWrite(L_DIR, HIGH);
+  digitalWrite(R_DIR, HIGH);
+  digitalWrite(L_DIR, LOW);
   SetpointL = MStoCPMSconverter(speed);
   SetpointR = MStoCPMSconverter(speed);
   en_pid = true;
@@ -50,8 +50,8 @@ bool MotorDriver::Forward(float speed) {
 bool MotorDriver::Backward(float speed) {
   digitalWrite(RL_EN, LOW);
   digitalWrite(RL_SLEEP, HIGH);
-  digitalWrite(R_DIR, HIGH);
-  digitalWrite(L_DIR, LOW);
+  digitalWrite(R_DIR, LOW);
+  digitalWrite(L_DIR, HIGH);
   SetpointL = MStoCPMSconverter(speed);
   SetpointR = MStoCPMSconverter(speed);
   en_pid = true;
@@ -91,6 +91,7 @@ bool MotorDriver::coastBrake(void) {
   SetpointL = 0;
   SetpointR = 0;
   OutputL = 0;
+  OutputR = 0;
   LPID.SetMode(MANUAL);
   RPID.SetMode(MANUAL);
   digitalWrite(RL_EN, HIGH);
@@ -101,10 +102,23 @@ bool MotorDriver::dynamicBrake(void) {
   SetpointL = 0;
   SetpointR = 0;
   OutputL = 0; 
+  OutputR = 0;
   LPID.SetMode(MANUAL);
   RPID.SetMode(MANUAL);
   setLeftSpeed(0);
   setRightSpeed(0);
+}
+
+bool MotorDriver::takeRandomTurnRight(void) {
+  turnRight(0.5);
+  delay(random(500,2000));
+  coastBrake();
+}
+
+bool MotorDriver::takeRandomTurnLeft(void) {
+  turnLeft(0.5);
+  delay(random(500,2000));
+  coastBrake();
 }
 
 int MotorDriver::MStoCPMSconverter(float speed) {
@@ -191,10 +205,12 @@ float MotorDriver::getBladeCurrent(void) {
 
 void MotorDriver::EncoderInteruptL() {
   MotorDriverS -> temp_counter_l ++;
+  MotorDriverS -> total_counter_1 ++;
 }
 
 void MotorDriver::EncoderInteruptR() {
   MotorDriverS -> temp_counter_r ++;
+  MotorDriverS -> total_counter_r ++;
 }
 
 void MotorDriver::resetCounter() {
@@ -215,8 +231,12 @@ void MotorDriver::resetCounter() {
   }
   else
   {
+    MotorDriverS -> SetpointL = 0;
+    MotorDriverS -> SetpointR = 0;
     MotorDriverS -> setLeftSpeed(0);
     MotorDriverS -> setRightSpeed(0);
+    Serial.println(MotorDriverS -> OutputL);
+    Serial.println(MotorDriverS -> OutputR);
   }
   /*
   Serial.print("Input PID: ");
