@@ -78,8 +78,8 @@ void loop() {
   //Serial3.println(battery.readCurrent());
   //Serial3.print("Battery status: ");
   //Serial3.println(battery.readBatteryLevel());
-  //SM.runStatemachine();
-  delay(100);
+  SM.RunStatemachine();
+  //delay(100);
 }
 
 void serialEvent3() {
