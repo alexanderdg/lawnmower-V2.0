@@ -2,13 +2,23 @@
 #include "StateMachineImp.h"
 
 StateMachineType StateMachineImp::stateMachine[] =       {
-  {STATE_ONE, SM_STATE_ONE},
-  {STATE_TWO, SM_STATE_TWO},
-  {STATE_THREE, SM_STATE_THREE},
-  {STATE_FOUR, SM_STATE_FOUR}
+  {RUN, SM_RUN},
+  {RUN_SLOW, SM_RUN_SLOW},
+  {TRY_LEFT, SM_TRY_LEFT},
+  {TRY_RIGHT, SM_TRY_RIGHT},
+  {TRY_INSTEAD_LEFT, SM_TRY_INSTEAD_LEFT},
+  {TRY_INSTEAD_RIGHT, SM_TRY_INSTEAD_RIGHT},
+  {TRY_LAST_TIME_LEFT, SM_TRY_LAST_TIME_LEFT},
+  {TRY_LAST_TIME_RIGHT, SM_TRY_LAST_TIME_RIGHT},
+  {TRY_BACKWARD, SM_TRY_BACKWARD},
+  {STUCK, SM_STUCK},
+  {CHARGING, SM_CHARGING}
 };
-StateType StateMachineImp::SM_STATE = STATE_ONE;
+
+StateType StateMachineImp::SM_STATE = RUN;
 MotorDriver *StateMachineImp::motordriver = new MotorDriver();
+Battery *StateMachineImp::batterydriver = new Battery();
+Speaker *StateMachineImp::speaker = new Speaker();
 bool StateMachineImp::enter_state = true;
 
 void StateMachineImp::RunStatemachine(void)
@@ -26,65 +36,124 @@ void StateMachineImp::RunStatemachine(void)
   }
 }
 
-void StateMachineImp::SM_STATE_ONE(void)
+void StateMachineImp::initStatemachine(void)
+{
+  speaker -> init();
+}
+
+void StateMachineImp::SM_RUN(void)
 {
   if (enter_state == true)
   {
-    Serial.println("Enter one state");
+    Serial.println("Enter RUN state");
     enter_state = false;
+    speaker -> playStartMowing();
+    motordriver -> Forward(0.5);
   }
   else
   {
-    Serial.println("State one");
-    Serial.print("blade current: ");
-    Serial.println(motordriver -> getBladeCurrent());
-    delay(1000);
-    changeState(STATE_TWO);
+    if(motordriver -> getLeftCurrent() > 1.6 or motordriver -> getRightCurrent() > 1.6)
+    {
+      changeState(TRY_LEFT);
+    }
+    if(batterydriver -> isChargerPresent())
+    {
+      changeState(CHARGING);
+    }
+    //Serial.println("State RUN");
+    //Serial.print("blade current: ");
+    //Serial.println(motordriver -> getLeftCurrent());
+    delay(10);
+    
   }
 }
 
-void StateMachineImp::SM_STATE_TWO(void)
+void StateMachineImp::SM_RUN_SLOW(void)
+{
+
+}
+
+
+void StateMachineImp::SM_TRY_LEFT(void)
 {
   if (enter_state == true)
   {
-    Serial.println("Enter two state");
+    Serial.println("Enter TRY_LEFT state");
     enter_state = false;
+    motordriver -> coastBrake();
+    speaker -> playStuck();
   }
   else
   {
-    Serial.println("State two");
+    Serial.println("State TRY_LEFT");
     delay(1000);
-    changeState(STATE_THREE);
+    changeState(TRY_RIGHT);
   }
 }
 
-void StateMachineImp::SM_STATE_THREE(void)
+void StateMachineImp::SM_TRY_RIGHT(void)
 {
   if (enter_state == true)
   {
-    Serial.println("Enter three state");
+    Serial.println("Enter TRY_RIGHT state");
     enter_state = false;
   }
   else
   {
-    Serial.println("State three");
+    Serial.println("State TRY_RIGHT");
     delay(1000);
-    changeState(STATE_FOUR);
+    changeState(STUCK);
   }
 }
 
-void StateMachineImp::SM_STATE_FOUR(void)
+void StateMachineImp::SM_TRY_INSTEAD_LEFT(void)
+{
+
+}
+
+void StateMachineImp::SM_TRY_INSTEAD_RIGHT(void)
+{
+
+}
+
+void StateMachineImp::SM_TRY_LAST_TIME_LEFT(void)
+{
+
+}
+
+void StateMachineImp::SM_TRY_LAST_TIME_RIGHT(void)
+{
+
+}
+
+
+void StateMachineImp::SM_STUCK(void)
 {
   if (enter_state == true)
   {
-    Serial.println("Enter four state");
+    Serial.println("Enter STUCK state");
     enter_state = false;
   }
   else
   {
-    Serial.println("State four");
+    Serial.println("State STUCK");
     delay(1000);
-    changeState(STATE_ONE);
+    changeState(RUN);
+  }
+}
+
+void StateMachineImp::SM_TRY_BACKWARD(void)
+{
+
+  
+}
+
+void StateMachineImp::SM_CHARGING(void)
+{
+  if (enter_state == true)
+  {
+    Serial.println("Enter CHARGING state");
+    enter_state = false;
   }
 }
 

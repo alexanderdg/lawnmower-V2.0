@@ -7,10 +7,10 @@ static uint8_t hex[17] = "0123456789abcdef";
 static void hexDump(uint8_t dumpLen, uint8_t *bytePtr)
 {
   uint8_t working;
-  while( dumpLen-- ) {
+  while ( dumpLen-- ) {
     working = *bytePtr++;
-    Serial.write( hex[ working>>4 ] );
-    Serial.write( hex[ working&15 ] );
+    Serial.write( hex[ working >> 4 ] );
+    Serial.write( hex[ working & 15 ] );
   }
   Serial.write('\r');
   Serial.write('\n');
@@ -25,15 +25,8 @@ CANbus::CANbus() {
 
   msg.ext = 0;
   msg.id = 0x01;
-  msg.len = 8;
-  msg.buf[0] = 10;
-  msg.buf[1] = 20;
-  msg.buf[2] = 0;
-  msg.buf[3] = 100;
-  msg.buf[4] = 128;
-  msg.buf[5] = 64;
-  msg.buf[6] = 32;
-  msg.buf[7] = 16;
+  msg.len = 1;
+  msg.buf[0] = 0;
 }
 
 bool CANbus::initCAN(void) {
@@ -41,13 +34,49 @@ bool CANbus::initCAN(void) {
   return true;
 }
 
-int CANbus::readPot(void) {
-  int result = Can0.write(msg);
+void CANbus::readPerimeter(int * value, int * sign) {
+  * value = -1;
+  * sign = -1;
   CAN_message_t inMsg;
-  while (Can0.available()) 
+  bool temp = readCANReg(8, & inMsg);
+  if(temp)
   {
-    Can0.read(inMsg);
-    Serial.print("CAN bus 0: "); hexDump(8, inMsg.buf);
+    if(inMsg.buf[2] != 1)
+    {
+      *value = -2;
+    }
+    else
+    {
+      * value = inMsg.buf[0]; 
+    }
   }
-  return result;
+}
+
+int CANbus::readDistanceSensor(int sensor) {
+  int data = -1;
+  CAN_message_t inMsg;
+  if (sensor > 0 && sensor < 6)
+  {
+    bool temp = readCANReg(sensor + 2, & inMsg);
+    if (temp)
+    {
+      data = (inMsg.buf[0] << 8 | inMsg.buf[1]) / 11.7;
+    }
+  }
+  return data;
+}
+
+bool CANbus::readCANReg(int reg, CAN_message_t * inMsg) {
+
+  bool ok = false;
+  msg.buf[0] = reg;
+  Can0.write(msg);
+  delayMicroseconds(800);
+  while (Can0.available())
+  {
+    Can0.read( * inMsg);
+    ok = true;
+  }
+  delayMicroseconds(800);
+  return ok;
 }

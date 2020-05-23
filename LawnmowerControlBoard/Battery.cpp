@@ -9,6 +9,7 @@
 
 Battery::Battery(void) {
   pinMode(CHRG_EN, OUTPUT);
+  pinMode(CHRG_PRESENT, INPUT);
   Wire.begin();
   initBattery();
 }
@@ -37,6 +38,10 @@ void Battery::enableCharger(void) {
 
 void Battery::disableCharger(void) {
   digitalWrite(CHRG_EN, HIGH);
+}
+
+bool Battery::isChargerPresent(void) {
+  return not(digitalRead(CHRG_PRESENT));
 }
 
 float Battery::readPower(void) {

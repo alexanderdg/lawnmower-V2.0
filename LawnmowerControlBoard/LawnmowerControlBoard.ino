@@ -4,12 +4,8 @@
 #include "StateMachineImp.h"
 
 
-int L_CURRENT = 21;
-int R_CURRENT = 32; 
 
-MotorDriver motioncontrol;
 CANbus canbus;
-Battery battery;
 StateMachineImp SM;
 static uint8_t hex[17] = "0123456789abcdef";
 
@@ -30,8 +26,9 @@ static void hexDump(uint8_t dumpLen, uint8_t *bytePtr)
 void setup() {
   Serial3.begin(9600);
   canbus.initCAN();
-  battery.enableCharger();
-  delay(5000);
+  SM.initStatemachine();
+  //battery.enableCharger();
+  delay(500);
   
   //motioncontrol.enableVBlade();
   //motioncontrol.startTurning();
@@ -51,7 +48,18 @@ void setup() {
 }
 
 void loop() {
-  canbus.readPot();
+  int value, sign;
+  Serial.println("---------------------------------------------");
+  Serial.println(canbus.readDistanceSensor(1));
+  Serial.println(canbus.readDistanceSensor(2));
+  Serial.println(canbus.readDistanceSensor(2));
+  Serial.println(canbus.readDistanceSensor(3));
+  Serial.println(canbus.readDistanceSensor(4));
+  Serial.println(canbus.readDistanceSensor(5));
+  canbus.readPerimeter(& value, & sign);
+  Serial.println(value);
+  Serial.println("---------------------------------------------");
+  delay(10);
   /*
   Can0.write(msg);
   CAN_message_t inMsg;
@@ -78,7 +86,7 @@ void loop() {
   //Serial3.println(battery.readCurrent());
   //Serial3.print("Battery status: ");
   //Serial3.println(battery.readBatteryLevel());
-  SM.RunStatemachine();
+  //SM.RunStatemachine();
   //delay(100);
 }
 
