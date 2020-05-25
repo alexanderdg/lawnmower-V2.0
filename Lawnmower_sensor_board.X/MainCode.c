@@ -315,10 +315,11 @@ int readI2C(char reg, int * conOK) {
         counter++;
     }
     if (counter >= 25000) *conOK = 0;
+    else data = I2C1RXB;
     //if(I2C1CON1bits.ACKSTAT == 1) *conOK = 0;
     //if(I2C1CON1bits.ACKT == 1) *conOK = 0;
     //if(I2C1PIRbits.ACKTIF == 1) *conOK = 0;
-    data = I2C1RXB;
+    
     // Detect Stop condition
     counter = 0;
     while (!I2C1PIRbits.PCIF && counter < 25000) {
