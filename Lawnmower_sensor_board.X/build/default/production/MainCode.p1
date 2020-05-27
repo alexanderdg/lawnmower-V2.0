@@ -3,17 +3,17 @@ Version 4.0 HI-TECH Software Intermediate Code
 "27121 D:\MPLAB\pic\include\pic18f25k83.h
 [; ;D:\MPLAB\pic\include\pic18f25k83.h: 27121: extern volatile unsigned char OSCCON1 __attribute__((address(0x39D9)));
 [v _OSCCON1 `Vuc ~T0 @X0 0 e@14809 ]
-"61 MainCode.c
-[; ;MainCode.c: 61: 
+"62 MainCode.c
+[; ;MainCode.c: 62:     PIE5bits.RXB1IE = 1;
 [v _initCAN `(v ~T0 @X0 0 ef ]
-"62
-[; ;MainCode.c: 62: 
-[v _initADC `(v ~T0 @X0 0 ef ]
 "63
-[; ;MainCode.c: 63:     while (1) {
-[v _initHCSR04 `(v ~T0 @X0 0 ef ]
+[; ;MainCode.c: 63:     (INTCON0bits.GIE = 1);
+[v _initADC `(v ~T0 @X0 0 ef ]
 "64
 [; ;MainCode.c: 64: 
+[v _initHCSR04 `(v ~T0 @X0 0 ef ]
+"65
+[; ;MainCode.c: 65: 
 [v _initI2C `(v ~T0 @X0 0 ef ]
 "5007 D:\MPLAB\pic\include\pic18f25k83.h
 [; ;D:\MPLAB\pic\include\pic18f25k83.h: 5007:         unsigned FIL4_0 :1;
@@ -62,29 +62,29 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n S3088 . . . . ]
 "4902
 [v _PORTCbits `VS3088 ~T0 @X0 0 e@16332 ]
-"81 MainCode.c
-[; ;MainCode.c: 81:         if (waitForSensor2() == 1) {
+"82 MainCode.c
+[; ;MainCode.c: 82:         }
 [v _wait2US `(v ~T0 @X0 0 ef ]
-"82
-[; ;MainCode.c: 82:             distance2 = getDistance2();
+"83
+[; ;MainCode.c: 83:         wait10US();
 [v _wait10US `(v ~T0 @X0 0 ef ]
-"71
-[; ;MainCode.c: 71:             distance1 = getDistance1();
-[v _waitForSensor1 `(i ~T0 @X0 0 ef ]
-"76
-[; ;MainCode.c: 76:         PORTCbits.RC2 = 0;
-[v _getDistance1 `(i ~T0 @X0 0 ef ]
 "72
-[; ;MainCode.c: 72:         } else distance1 = -1;
-[v _waitForSensor2 `(i ~T0 @X0 0 ef ]
+[; ;MainCode.c: 72:         PORTCbits.RC1 = 1;
+[v _waitForSensor1 `(i ~T0 @X0 0 ef ]
 "77
-[; ;MainCode.c: 77:         wait2US();
-[v _getDistance2 `(i ~T0 @X0 0 ef ]
+[; ;MainCode.c: 77:             valid_distance1 = 1;
+[v _getDistance1 `(i ~T0 @X0 0 ef ]
 "73
 [; ;MainCode.c: 73:         wait10US();
-[v _waitForSensor3 `(i ~T0 @X0 0 ef ]
+[v _waitForSensor2 `(i ~T0 @X0 0 ef ]
 "78
-[; ;MainCode.c: 78:         PORTCbits.RC2 = 1;
+[; ;MainCode.c: 78:         }
+[v _getDistance2 `(i ~T0 @X0 0 ef ]
+"74
+[; ;MainCode.c: 74:         PORTCbits.RC1 = 0;
+[v _waitForSensor3 `(i ~T0 @X0 0 ef ]
+"79
+[; ;MainCode.c: 79:         else{
 [v _getDistance3 `(i ~T0 @X0 0 ef ]
 "4727 D:\MPLAB\pic\include\pic18f25k83.h
 [s S3083 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -97,23 +97,23 @@ Version 4.0 HI-TECH Software Intermediate Code
 [n S3082 . . . ]
 "4745
 [v _PORTAbits `VS3082 ~T0 @X0 0 e@16330 ]
-"74 MainCode.c
-[; ;MainCode.c: 74: 
+"75 MainCode.c
+[; ;MainCode.c: 75:         if (waitForSensor1() == 1) {
 [v _waitForSensor4 `(i ~T0 @X0 0 ef ]
-"79
-[; ;MainCode.c: 79:         wait10US();
-[v _getDistance4 `(i ~T0 @X0 0 ef ]
-"75
-[; ;MainCode.c: 75: 
-[v _waitForSensor5 `(i ~T0 @X0 0 ef ]
 "80
-[; ;MainCode.c: 80:         PORTCbits.RC2 = 0;
+[; ;MainCode.c: 80:             distance1 = 0;
+[v _getDistance4 `(i ~T0 @X0 0 ef ]
+"76
+[; ;MainCode.c: 76:             distance1 = getDistance1();
+[v _waitForSensor5 `(i ~T0 @X0 0 ef ]
+"81
+[; ;MainCode.c: 81:             valid_distance1 = 0;
 [v _getDistance5 `(i ~T0 @X0 0 ef ]
-"85
-[; ;MainCode.c: 85: 
+"86
+[; ;MainCode.c: 86:         PORTCbits.RC2 = 0;
 [v _readADC `(i ~T0 @X0 0 ef1`i ]
-"65
-[; ;MainCode.c: 65:         PORTCbits.RC1 = 0;
+"66
+[; ;MainCode.c: 66: 
 [v _readI2C `(i ~T0 @X0 0 ef2`uc`*i ]
 [t ~ __interrupt . k ]
 [t T1 __interrupt irq ( AD ) high_priority ]
@@ -141,8 +141,8 @@ Version 4.0 HI-TECH Software Intermediate Code
 "63130
 [; ;D:\MPLAB\pic\include\pic18f25k83.h: 63130: extern volatile RXB0CONbits_t RXB0CONbits __attribute__((address(0x3F80)));
 [v _RXB0CONbits `VS2750 ~T0 @X0 0 e@16256 ]
-"83 MainCode.c
-[; ;MainCode.c: 83:         } else distance2 = -1;
+"84 MainCode.c
+[; ;MainCode.c: 84: 
 [v _sendCANmessage `(v ~T0 @X0 0 ef3`i`*i`i ]
 "63687 D:\MPLAB\pic\include\pic18f25k83.h
 [; ;D:\MPLAB\pic\include\pic18f25k83.h: 63687: extern volatile unsigned char RXB0D0 __attribute__((address(0x3F86)));
@@ -166,6 +166,17 @@ Version 4.0 HI-TECH Software Intermediate Code
 "26271
 [; ;D:\MPLAB\pic\include\pic18f25k83.h: 26271: extern volatile PIR5bits_t PIR5bits __attribute__((address(0x39A5)));
 [v _PIR5bits `VS1094 ~T0 @X0 0 e@14757 ]
+"45623
+[; ;D:\MPLAB\pic\include\pic18f25k83.h: 45623:     struct {
+[s S1961 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1961 . RXBF . CLRBF RXRE . TXBE . TXWE ]
+"45622
+[; ;D:\MPLAB\pic\include\pic18f25k83.h: 45622: typedef union {
+[u S1960 `S1961 1 ]
+[n S1960 . . ]
+"45634
+[; ;D:\MPLAB\pic\include\pic18f25k83.h: 45634: extern volatile I2C1STAT1bits_t I2C1STAT1bits __attribute__((address(0x3D78)));
+[v _I2C1STAT1bits `VS1960 ~T0 @X0 0 e@15736 ]
 "45125
 [; ;D:\MPLAB\pic\include\pic18f25k83.h: 45125: extern volatile unsigned char I2C1ADB1 __attribute__((address(0x3D6E)));
 [v _I2C1ADB1 `Vuc ~T0 @X0 0 e@15726 ]
@@ -213,17 +224,6 @@ Version 4.0 HI-TECH Software Intermediate Code
 "45249
 [; ;D:\MPLAB\pic\include\pic18f25k83.h: 45249: extern volatile I2C1CON0bits_t I2C1CON0bits __attribute__((address(0x3D73)));
 [v _I2C1CON0bits `VS1944 ~T0 @X0 0 e@15731 ]
-"45623
-[; ;D:\MPLAB\pic\include\pic18f25k83.h: 45623:     struct {
-[s S1961 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
-[n S1961 . RXBF . CLRBF RXRE . TXBE . TXWE ]
-"45622
-[; ;D:\MPLAB\pic\include\pic18f25k83.h: 45622: typedef union {
-[u S1960 `S1961 1 ]
-[n S1960 . . ]
-"45634
-[; ;D:\MPLAB\pic\include\pic18f25k83.h: 45634: extern volatile I2C1STAT1bits_t I2C1STAT1bits __attribute__((address(0x3D78)));
-[v _I2C1STAT1bits `VS1960 ~T0 @X0 0 e@15736 ]
 "44995
 [; ;D:\MPLAB\pic\include\pic18f25k83.h: 44995: extern volatile unsigned char I2C1RXB __attribute__((address(0x3D6A)));
 [v _I2C1RXB `Vuc ~T0 @X0 0 e@15722 ]
@@ -379,6 +379,21 @@ Version 4.0 HI-TECH Software Intermediate Code
 "45462
 [; ;D:\MPLAB\pic\include\pic18f25k83.h: 45462: extern volatile I2C1ERRbits_t I2C1ERRbits __attribute__((address(0x3D76)));
 [v _I2C1ERRbits `VS1952 ~T0 @X0 0 e@15734 ]
+"45772
+[; ;D:\MPLAB\pic\include\pic18f25k83.h: 45772:     struct {
+[s S1966 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1966 . SCIE RSCIE PCIE ADRIE WRIE . ACKTIE CNTIE ]
+"45782
+[; ;D:\MPLAB\pic\include\pic18f25k83.h: 45782:     struct {
+[s S1967 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
+[n S1967 . SC1IE RSC1IE PC1IE ADR1IE WR1IE . ACKT1IE CNT1IE ]
+"45771
+[; ;D:\MPLAB\pic\include\pic18f25k83.h: 45771: typedef union {
+[u S1965 `S1966 1 `S1967 1 ]
+[n S1965 . . . ]
+"45793
+[; ;D:\MPLAB\pic\include\pic18f25k83.h: 45793: extern volatile I2C1PIEbits_t I2C1PIEbits __attribute__((address(0x3D7A)));
+[v _I2C1PIEbits `VS1965 ~T0 @X0 0 e@15738 ]
 "52235
 [; ;D:\MPLAB\pic\include\pic18f25k83.h: 52235:     struct {
 [s S2264 :1 `uc 1 :1 `uc 1 :2 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 :1 `uc 1 ]
@@ -3839,527 +3854,639 @@ Version 4.0 HI-TECH Software Intermediate Code
 "71986
 [; ;D:\MPLAB\pic\include\pic18f25k83.h: 71986: __asm("TOSU equ 03FFFh");
 [; <" TOSU equ 03FFFh ;# ">
-"10 MainCode.c
-[; ;MainCode.c: 10: void sendTrigger2(void);
+"11 MainCode.c
+[; ;MainCode.c: 11: void sendTrigger3(void);
 [p x RSTOSC = HFINTOSC_64MHZ ]
-"12
-[; ;MainCode.c: 12: void sendTrigger4(void);
-[p x CLKOUTEN = OFF ]
 "13
 [; ;MainCode.c: 13: void sendTrigger5(void);
-[p x PR1WAY = ON ]
+[p x CLKOUTEN = OFF ]
 "14
 [; ;MainCode.c: 14: int waitForSensor1(void);
-[p x CSWEN = ON ]
+[p x PR1WAY = ON ]
 "15
 [; ;MainCode.c: 15: int waitForSensor2(void);
+[p x CSWEN = ON ]
+"16
+[; ;MainCode.c: 16: int waitForSensor3(void);
 [p x FCMEN = ON ]
-"18
-[; ;MainCode.c: 18: int waitForSensor5(void);
-[p x MCLRE = EXTMCLR ]
 "19
 [; ;MainCode.c: 19: int getDistance1(void);
-[p x PWRTS = PWRT_OFF ]
+[p x MCLRE = EXTMCLR ]
 "20
 [; ;MainCode.c: 20: int getDistance2(void);
-[p x MVECEN = ON ]
+[p x PWRTS = PWRT_OFF ]
 "21
 [; ;MainCode.c: 21: int getDistance3(void);
-[p x IVT1WAY = ON ]
+[p x MVECEN = ON ]
 "22
 [; ;MainCode.c: 22: int getDistance4(void);
-[p x LPBOREN = OFF ]
+[p x IVT1WAY = ON ]
 "23
 [; ;MainCode.c: 23: int getDistance5(void);
+[p x LPBOREN = OFF ]
+"24
+[; ;MainCode.c: 24: void wait2US(void);
 [p x BOREN = SBORDIS ]
-"26
-[; ;MainCode.c: 26: void sendCANmessage(int id, int message [8], int length);
-[p x BORV = VBOR_2P45 ]
 "27
 [; ;MainCode.c: 27: void readCANmessage(void);
-[p x ZCD = OFF ]
+[p x BORV = VBOR_2P45 ]
 "28
 [; ;MainCode.c: 28: int readADC(int ch);
-[p x PPS1WAY = ON ]
+[p x ZCD = OFF ]
 "29
 [; ;MainCode.c: 29: 
-[p x STVREN = ON ]
+[p x PPS1WAY = ON ]
 "30
 [; ;MainCode.c: 30: int ADCvalueHigh0 = 0;
-[p x DEBUG = OFF ]
+[p x STVREN = ON ]
 "31
 [; ;MainCode.c: 31: int ADCvalueLow0 = 0;
+[p x DEBUG = OFF ]
+"32
+[; ;MainCode.c: 32: int ADCvalueHigh1 = 0;
 [p x XINST = OFF ]
-"34
-[; ;MainCode.c: 34: int distance1 = 0;
-[p x WDTCPS = WDTCPS_31 ]
 "35
 [; ;MainCode.c: 35: int distance2 = 0;
+[p x WDTCPS = WDTCPS_31 ]
+"36
+[; ;MainCode.c: 36: int distance3 = 0;
 [p x WDTE = OFF ]
-"38
-[; ;MainCode.c: 38: int distance5 = 0;
-[p x WDTCWS = WDTCWS_7 ]
 "39
-[; ;MainCode.c: 39: int perimeter = 0;
+[; ;MainCode.c: 39: int valid_distance1 = 0;
+[p x WDTCWS = WDTCWS_7 ]
+"40
+[; ;MainCode.c: 40: int valid_distance2 = 0;
 [p x WDTCCS = SC ]
-"42
-[; ;MainCode.c: 42: 
-[p x BBSIZE = BBSIZE_512 ]
 "43
-[; ;MainCode.c: 43: int main() {
-[p x BBEN = OFF ]
+[; ;MainCode.c: 43: int valid_distance5 = 0;
+[p x BBSIZE = BBSIZE_512 ]
 "44
-[; ;MainCode.c: 44: 
-[p x SAFEN = OFF ]
+[; ;MainCode.c: 44: int perimeter = 0;
+[p x BBEN = OFF ]
 "45
-[; ;MainCode.c: 45:     OSCCON1 = 0b01100000;
+[; ;MainCode.c: 45: int sign_perimeter = 0;
+[p x SAFEN = OFF ]
+"46
+[; ;MainCode.c: 46: int con_perimeter = 0;
 [p x WRTAPP = OFF ]
-"48
-[; ;MainCode.c: 48:     initADC();
-[p x WRTB = OFF ]
 "49
-[; ;MainCode.c: 49:     initHCSR04();
-[p x WRTC = OFF ]
+[; ;MainCode.c: 49: 
+[p x WRTB = OFF ]
 "50
-[; ;MainCode.c: 50:     initI2C();
-[p x WRTD = OFF ]
+[; ;MainCode.c: 50:     OSCCON1 = 0b01100000;
+[p x WRTC = OFF ]
 "51
-[; ;MainCode.c: 51: 
-[p x WRTSAF = OFF ]
+[; ;MainCode.c: 51:     initCAN();
+[p x WRTD = OFF ]
 "52
-[; ;MainCode.c: 52:     INTCON0bits.GIEL = 1;
+[; ;MainCode.c: 52: 
+[p x WRTSAF = OFF ]
+"53
+[; ;MainCode.c: 53:     initADC();
 [p x LVP = ON ]
-"55
-[; ;MainCode.c: 55: 
+"56
+[; ;MainCode.c: 56: 
 [p x CP = OFF ]
-"87
-[; ;MainCode.c: 87:         wait2US();
+"88
+[; ;MainCode.c: 88:         PORTCbits.RC2 = 1;
 [v _ADCvalueHigh0 `i ~T0 @X0 1 e ]
 [i _ADCvalueHigh0
 -> 0 `i
 ]
-"88
-[; ;MainCode.c: 88:         PORTCbits.RC7 = 1;
+"89
+[; ;MainCode.c: 89:         wait10US();
 [v _ADCvalueLow0 `i ~T0 @X0 1 e ]
 [i _ADCvalueLow0
 -> 0 `i
 ]
-"89
-[; ;MainCode.c: 89:         wait10US();
+"90
+[; ;MainCode.c: 90:         PORTCbits.RC2 = 0;
 [v _ADCvalueHigh1 `i ~T0 @X0 1 e ]
 [i _ADCvalueHigh1
 -> 0 `i
 ]
-"90
-[; ;MainCode.c: 90:         PORTCbits.RC7 = 0;
+"91
+[; ;MainCode.c: 91:         if (waitForSensor2() == 1) {
 [v _ADCvalueLow1 `i ~T0 @X0 1 e ]
 [i _ADCvalueLow1
 -> 0 `i
 ]
-"91
-[; ;MainCode.c: 91:         if (waitForSensor3() == 1) {
+"92
+[; ;MainCode.c: 92:             distance2 = getDistance2();
 [v _distance1 `i ~T0 @X0 1 e ]
 [i _distance1
 -> 0 `i
 ]
-"92
-[; ;MainCode.c: 92:             distance3 = getDistance3();
+"93
+[; ;MainCode.c: 93:             valid_distance2 = 1;
 [v _distance2 `i ~T0 @X0 1 e ]
 [i _distance2
 -> 0 `i
 ]
-"93
-[; ;MainCode.c: 93:         } else distance3 = -1;
+"94
+[; ;MainCode.c: 94:         }
 [v _distance3 `i ~T0 @X0 1 e ]
 [i _distance3
 -> 0 `i
 ]
-"94
-[; ;MainCode.c: 94:         wait10US();
+"95
+[; ;MainCode.c: 95:         else{
 [v _distance4 `i ~T0 @X0 1 e ]
 [i _distance4
 -> 0 `i
 ]
-"95
-[; ;MainCode.c: 95: 
+"96
+[; ;MainCode.c: 96:             distance2 = 0;
 [v _distance5 `i ~T0 @X0 1 e ]
 [i _distance5
 -> 0 `i
 ]
-"96
-[; ;MainCode.c: 96:         PORTAbits.RA1 = 0;
+"97
+[; ;MainCode.c: 97:             valid_distance2 = 0;
+[v _valid_distance1 `i ~T0 @X0 1 e ]
+[i _valid_distance1
+-> 0 `i
+]
+"98
+[; ;MainCode.c: 98:         }
+[v _valid_distance2 `i ~T0 @X0 1 e ]
+[i _valid_distance2
+-> 0 `i
+]
+"99
+[; ;MainCode.c: 99:         wait10US();
+[v _valid_distance3 `i ~T0 @X0 1 e ]
+[i _valid_distance3
+-> 0 `i
+]
+"100
+[; ;MainCode.c: 100: 
+[v _valid_distance4 `i ~T0 @X0 1 e ]
+[i _valid_distance4
+-> 0 `i
+]
+"101
+[; ;MainCode.c: 101:         PORTCbits.RC7 = 0;
+[v _valid_distance5 `i ~T0 @X0 1 e ]
+[i _valid_distance5
+-> 0 `i
+]
+"102
+[; ;MainCode.c: 102:         wait2US();
 [v _perimeter `i ~T0 @X0 1 e ]
 [i _perimeter
 -> 0 `i
 ]
-"97
-[; ;MainCode.c: 97:         wait2US();
+"103
+[; ;MainCode.c: 103:         PORTCbits.RC7 = 1;
 [v _sign_perimeter `i ~T0 @X0 1 e ]
 [i _sign_perimeter
 -> 0 `i
 ]
-"98
-[; ;MainCode.c: 98:         PORTAbits.RA1 = 1;
+"104
+[; ;MainCode.c: 104:         wait10US();
 [v _con_perimeter `i ~T0 @X0 1 e ]
 [i _con_perimeter
 -> 0 `i
 ]
 [v $root$_main `(v ~T0 @X0 0 e ]
-"100
-[; ;MainCode.c: 100:         PORTAbits.RA1 = 0;
+"106
+[; ;MainCode.c: 106:         if (waitForSensor3() == 1) {
 [v _main `(i ~T0 @X0 1 ef ]
 {
 [e :U _main ]
 [f ]
-"102
-[; ;MainCode.c: 102:             distance4 = getDistance4();
+"108
+[; ;MainCode.c: 108:             valid_distance3 = 1;
 [e = _OSCCON1 -> -> 96 `i `uc ]
-"103
-[; ;MainCode.c: 103:         } else distance4 = -1;
-[e ( _initCAN ..  ]
-"105
-[; ;MainCode.c: 105: 
-[e ( _initADC ..  ]
-"106
-[; ;MainCode.c: 106:         PORTAbits.RA2 = 0;
-[e ( _initHCSR04 ..  ]
-"107
-[; ;MainCode.c: 107:         wait2US();
-[e ( _initI2C ..  ]
 "109
-[; ;MainCode.c: 109:         wait10US();
-[e = . . _INTCON0bits 0 5 -> -> 1 `i `uc ]
+[; ;MainCode.c: 109:         }
+[e ( _initCAN ..  ]
 "111
-[; ;MainCode.c: 111:         if (waitForSensor5() == 1) {
-[e = . . _INTCON0bits 0 4 -> -> 0 `i `uc ]
+[; ;MainCode.c: 111:             distance3 = 0;
+[e ( _initADC ..  ]
+"112
+[; ;MainCode.c: 112:             valid_distance3 = 0;
+[e ( _initHCSR04 ..  ]
 "113
-[; ;MainCode.c: 113:         } else distance5 = -1;
-[e = . . _PIE5bits 0 0 -> -> 1 `i `uc ]
-"114
-[; ;MainCode.c: 114:         wait10US();
-[e = . . _PIE5bits 0 1 -> -> 1 `i `uc ]
+[; ;MainCode.c: 113:         }
+[e ( _initI2C ..  ]
 "115
-[; ;MainCode.c: 115: 
-[e = . . _INTCON0bits 0 6 -> -> 1 `i `uc ]
+[; ;MainCode.c: 115:         wait10US();
+[e = . . _INTCON0bits 0 5 -> -> 1 `i `uc ]
+"117
+[; ;MainCode.c: 117:         PORTAbits.RA1 = 0;
+[e = . . _INTCON0bits 0 4 -> -> 0 `i `uc ]
+"119
+[; ;MainCode.c: 119:         PORTAbits.RA1 = 1;
+[e = . . _PIE5bits 0 0 -> -> 1 `i `uc ]
 "120
-[; ;MainCode.c: 120:         ADCvalueHigh1 = (temp1 >> 8) & 0xFF;
+[; ;MainCode.c: 120:         wait10US();
+[e = . . _PIE5bits 0 1 -> -> 1 `i `uc ]
+"121
+[; ;MainCode.c: 121:         PORTAbits.RA1 = 0;
+[e = . . _INTCON0bits 0 6 -> -> 1 `i `uc ]
+"126
+[; ;MainCode.c: 126:         else{
 [e :U 3206 ]
 {
-"122
-[; ;MainCode.c: 122:         perimeter = readI2C(0x09, &con_perimeter);
+"128
+[; ;MainCode.c: 128:             valid_distance4 = 0;
 [e = . . _PORTCbits 0 1 -> -> 0 `i `uc ]
-"123
-[; ;MainCode.c: 123:         sign_perimeter = readI2C(0x0A, &con_perimeter);
+"129
+[; ;MainCode.c: 129:         }
 [e ( _wait2US ..  ]
-"124
-[; ;MainCode.c: 124: 
+"130
+[; ;MainCode.c: 130:         wait10US();
 [e = . . _PORTCbits 0 1 -> -> 1 `i `uc ]
-"125
-[; ;MainCode.c: 125:     }
+"131
+[; ;MainCode.c: 131: 
 [e ( _wait10US ..  ]
-"126
-[; ;MainCode.c: 126:     return 0;
+"132
+[; ;MainCode.c: 132:         PORTAbits.RA2 = 0;
 [e = . . _PORTCbits 0 1 -> -> 0 `i `uc ]
-"127
-[; ;MainCode.c: 127: }
+"133
+[; ;MainCode.c: 133:         wait2US();
 [e $ ! == ( _waitForSensor1 ..  -> 1 `i 3208  ]
 {
-"128
-[; ;MainCode.c: 128: 
+"134
+[; ;MainCode.c: 134:         PORTAbits.RA2 = 1;
 [e = _distance1 ( _getDistance1 ..  ]
-"129
-[; ;MainCode.c: 129: void __attribute__((picinterrupt(("irq(AD), high_priority")))) adcInt(void) {
+"135
+[; ;MainCode.c: 135:         wait10US();
+[e = _valid_distance1 -> 1 `i ]
+"136
+[; ;MainCode.c: 136:         PORTAbits.RA2 = 0;
 }
 [e $U 3209  ]
-[e :U 3208 ]
-[e = _distance1 -U -> 1 `i ]
-[e :U 3209 ]
-"130
-[; ;MainCode.c: 130: 
-[e ( _wait10US ..  ]
-"133
-[; ;MainCode.c: 133: }
-[e = . . _PORTCbits 0 2 -> -> 0 `i `uc ]
-"134
-[; ;MainCode.c: 134: 
-[e ( _wait2US ..  ]
-"135
-[; ;MainCode.c: 135: void __attribute__((picinterrupt(("irq(RXB0IF), high_priority")))) canRecInt(void) {
-[e = . . _PORTCbits 0 2 -> -> 1 `i `uc ]
-"136
-[; ;MainCode.c: 136: 
-[e ( _wait10US ..  ]
 "137
-[; ;MainCode.c: 137:     if (RXB0CONbits.RXFUL == 1) {
-[e = . . _PORTCbits 0 2 -> -> 0 `i `uc ]
+[; ;MainCode.c: 137:         if (waitForSensor5() == 1) {
+[e :U 3208 ]
+{
 "138
-[; ;MainCode.c: 138: 
+[; ;MainCode.c: 138:             distance5 = getDistance5();
+[e = _distance1 -> 0 `i ]
+"139
+[; ;MainCode.c: 139:             valid_distance5 = 1;
+[e = _valid_distance1 -> 0 `i ]
+"140
+[; ;MainCode.c: 140:         }
+}
+[e :U 3209 ]
+"141
+[; ;MainCode.c: 141:         else{
+[e ( _wait10US ..  ]
+"144
+[; ;MainCode.c: 144:         }
+[e = . . _PORTCbits 0 2 -> -> 0 `i `uc ]
+"145
+[; ;MainCode.c: 145:         wait10US();
+[e ( _wait2US ..  ]
+"146
+[; ;MainCode.c: 146:         int temp0 = readADC(0);
+[e = . . _PORTCbits 0 2 -> -> 1 `i `uc ]
+"147
+[; ;MainCode.c: 147:         int temp1 = readADC(1);
+[e ( _wait10US ..  ]
+"148
+[; ;MainCode.c: 148:         ADCvalueHigh0 = (temp0 >> 8) & 0xFF;
+[e = . . _PORTCbits 0 2 -> -> 0 `i `uc ]
+"149
+[; ;MainCode.c: 149:         ADCvalueLow0 = temp0 & 0xFF;
 [e $ ! == ( _waitForSensor2 ..  -> 1 `i 3210  ]
 {
-"139
-[; ;MainCode.c: 139: 
+"150
+[; ;MainCode.c: 150:         ADCvalueHigh1 = (temp1 >> 8) & 0xFF;
 [e = _distance2 ( _getDistance2 ..  ]
-"140
-[; ;MainCode.c: 140:         int message[8];
+"151
+[; ;MainCode.c: 151:         ADCvalueLow1 = temp1 & 0xFF;
+[e = _valid_distance2 -> 1 `i ]
+"152
+[; ;MainCode.c: 152:         perimeter = readI2C(0x09, &con_perimeter);
 }
 [e $U 3211  ]
-[e :U 3210 ]
-[e = _distance2 -U -> 1 `i ]
-[e :U 3211 ]
-"141
-[; ;MainCode.c: 141:         switch (RXB0D0) {
-[e ( _wait10US ..  ]
-"143
-[; ;MainCode.c: 143: 
-[e = . . _PORTCbits 0 7 -> -> 0 `i `uc ]
-"144
-[; ;MainCode.c: 144:             case 0:
-[e ( _wait2US ..  ]
-"145
-[; ;MainCode.c: 145:                 message[0] = 1;
-[e = . . _PORTCbits 0 7 -> -> 1 `i `uc ]
-"146
-[; ;MainCode.c: 146:                 sendCANmessage(0, message, 1);
-[e ( _wait10US ..  ]
-"147
-[; ;MainCode.c: 147:                 break;
-[e = . . _PORTCbits 0 7 -> -> 0 `i `uc ]
-"148
-[; ;MainCode.c: 148:             case 1:
-[e $ ! == ( _waitForSensor3 ..  -> 1 `i 3212  ]
-{
-"149
-[; ;MainCode.c: 149:                 message[0] = ADCvalueHigh0;
-[e = _distance3 ( _getDistance3 ..  ]
-"150
-[; ;MainCode.c: 150:                 message[1] = ADCvalueLow0;
-}
-[e $U 3213  ]
-[e :U 3212 ]
-[e = _distance3 -U -> 1 `i ]
-[e :U 3213 ]
-"151
-[; ;MainCode.c: 151:                 sendCANmessage(0, message, 2);
-[e ( _wait10US ..  ]
 "153
-[; ;MainCode.c: 153:             case 2:
-[e = . . _PORTAbits 0 1 -> -> 0 `i `uc ]
-"154
-[; ;MainCode.c: 154:                 message[0] = ADCvalueHigh1;
-[e ( _wait2US ..  ]
-"155
-[; ;MainCode.c: 155:                 message[1] = ADCvalueLow1;
-[e = . . _PORTAbits 0 1 -> -> 1 `i `uc ]
-"156
-[; ;MainCode.c: 156:                 sendCANmessage(0, message, 2);
-[e ( _wait10US ..  ]
-"157
-[; ;MainCode.c: 157:                 break;
-[e = . . _PORTAbits 0 1 -> -> 0 `i `uc ]
-"158
-[; ;MainCode.c: 158:             case 3:
-[e $ ! == ( _waitForSensor4 ..  -> 1 `i 3214  ]
+[; ;MainCode.c: 153:         sign_perimeter = readI2C(0x0A, &con_perimeter);
+[e :U 3210 ]
 {
-"159
-[; ;MainCode.c: 159:                 message[0] = distance1 >> 8 & 0xFF;
-[e = _distance4 ( _getDistance4 ..  ]
-"160
-[; ;MainCode.c: 160:                 message[1] = distance1 & 0xFF;
+"154
+[; ;MainCode.c: 154: 
+[e = _distance2 -> 0 `i ]
+"155
+[; ;MainCode.c: 155:     }
+[e = _valid_distance2 -> 0 `i ]
+"156
+[; ;MainCode.c: 156:     return 0;
 }
-[e $U 3215  ]
-[e :U 3214 ]
-[e = _distance4 -U -> 1 `i ]
-[e :U 3215 ]
+[e :U 3211 ]
+"157
+[; ;MainCode.c: 157: }
+[e ( _wait10US ..  ]
+"159
+[; ;MainCode.c: 159: void __attribute__((picinterrupt(("irq(AD), high_priority")))) adcInt(void) {
+[e = . . _PORTCbits 0 7 -> -> 0 `i `uc ]
+"160
+[; ;MainCode.c: 160: 
+[e ( _wait2US ..  ]
 "161
-[; ;MainCode.c: 161:                 sendCANmessage(0, message, 2);
+[; ;MainCode.c: 161: 
+[e = . . _PORTCbits 0 7 -> -> 1 `i `uc ]
+"162
+[; ;MainCode.c: 162: 
 [e ( _wait10US ..  ]
 "163
-[; ;MainCode.c: 163:             case 4:
-[e = . . _PORTAbits 0 2 -> -> 0 `i `uc ]
+[; ;MainCode.c: 163: }
+[e = . . _PORTCbits 0 7 -> -> 0 `i `uc ]
 "164
-[; ;MainCode.c: 164:                 message[0] = distance2 >> 8 & 0xFF;
-[e ( _wait2US ..  ]
+[; ;MainCode.c: 164: 
+[e $ ! == ( _waitForSensor3 ..  -> 1 `i 3212  ]
+{
 "165
-[; ;MainCode.c: 165:                 message[1] = distance2 & 0xFF;
-[e = . . _PORTAbits 0 2 -> -> 1 `i `uc ]
+[; ;MainCode.c: 165: void __attribute__((picinterrupt(("irq(RXB0IF), high_priority")))) canRecInt(void) {
+[e = _distance3 ( _getDistance3 ..  ]
 "166
-[; ;MainCode.c: 166:                 sendCANmessage(0, message, 2);
-[e ( _wait10US ..  ]
+[; ;MainCode.c: 166: 
+[e = _valid_distance3 -> 1 `i ]
 "167
-[; ;MainCode.c: 167:                 break;
-[e = . . _PORTAbits 0 2 -> -> 0 `i `uc ]
+[; ;MainCode.c: 167:     if (RXB0CONbits.RXFUL == 1) {
+}
+[e $U 3213  ]
 "168
-[; ;MainCode.c: 168:             case 5:
-[e $ ! == ( _waitForSensor5 ..  -> 1 `i 3216  ]
+[; ;MainCode.c: 168: 
+[e :U 3212 ]
 {
 "169
-[; ;MainCode.c: 169:                 message[0] = distance3 >> 8 & 0xFF;
-[e = _distance5 ( _getDistance5 ..  ]
+[; ;MainCode.c: 169: 
+[e = _distance3 -> 0 `i ]
 "170
-[; ;MainCode.c: 170:                 message[1] = distance3 & 0xFF;
-}
-[e $U 3217  ]
-[e :U 3216 ]
-[e = _distance5 -U -> 1 `i ]
-[e :U 3217 ]
+[; ;MainCode.c: 170:         int message[8];
+[e = _valid_distance3 -> 0 `i ]
 "171
-[; ;MainCode.c: 171:                 sendCANmessage(0, message, 2);
-[e ( _wait10US ..  ]
+[; ;MainCode.c: 171:         switch (RXB0D0) {
+}
+[e :U 3213 ]
 "173
-[; ;MainCode.c: 173:             case 6:
-[v _temp0 `i ~T0 @X0 1 a ]
-[e = _temp0 ( _readADC (1 -> 0 `i ]
-"174
-[; ;MainCode.c: 174:                 message[0] = distance4 >> 8 & 0xFF;
-[v _temp1 `i ~T0 @X0 1 a ]
-[e = _temp1 ( _readADC (1 -> 1 `i ]
+[; ;MainCode.c: 173: 
+[e ( _wait10US ..  ]
 "175
-[; ;MainCode.c: 175:                 message[1] = distance4 & 0xFF;
-[e = _ADCvalueHigh0 & >> _temp0 -> 8 `i -> 255 `i ]
+[; ;MainCode.c: 175:                 message[0] = 1;
+[e = . . _PORTAbits 0 1 -> -> 0 `i `uc ]
 "176
-[; ;MainCode.c: 176:                 sendCANmessage(0, message, 2);
-[e = _ADCvalueLow0 & _temp0 -> 255 `i ]
+[; ;MainCode.c: 176:                 sendCANmessage(0, message, 1);
+[e ( _wait2US ..  ]
 "177
 [; ;MainCode.c: 177:                 break;
-[e = _ADCvalueHigh1 & >> _temp1 -> 8 `i -> 255 `i ]
+[e = . . _PORTAbits 0 1 -> -> 1 `i `uc ]
 "178
-[; ;MainCode.c: 178:             case 7:
-[e = _ADCvalueLow1 & _temp1 -> 255 `i ]
+[; ;MainCode.c: 178:             case 1:
+[e ( _wait10US ..  ]
 "179
-[; ;MainCode.c: 179:                 message[0] = distance5 >> 8 & 0xFF;
-[e = _perimeter ( _readI2C (2 , -> -> 9 `i `uc &U _con_perimeter ]
+[; ;MainCode.c: 179:                 message[0] = ADCvalueHigh0;
+[e = . . _PORTAbits 0 1 -> -> 0 `i `uc ]
 "180
-[; ;MainCode.c: 180:                 message[1] = distance5 & 0xFF;
-[e = _sign_perimeter ( _readI2C (2 , -> -> 10 `i `uc &U _con_perimeter ]
+[; ;MainCode.c: 180:                 message[1] = ADCvalueLow0;
+[e $ ! == ( _waitForSensor4 ..  -> 1 `i 3214  ]
+{
+"181
+[; ;MainCode.c: 181:                 sendCANmessage(0, message, 2);
+[e = _distance4 ( _getDistance4 ..  ]
 "182
 [; ;MainCode.c: 182:                 break;
+[e = _valid_distance4 -> 1 `i ]
+"183
+[; ;MainCode.c: 183:             case 2:
+}
+[e $U 3215  ]
+"184
+[; ;MainCode.c: 184:                 message[0] = ADCvalueHigh1;
+[e :U 3214 ]
+{
+"185
+[; ;MainCode.c: 185:                 message[1] = ADCvalueLow1;
+[e = _distance4 -> 0 `i ]
+"186
+[; ;MainCode.c: 186:                 sendCANmessage(0, message, 2);
+[e = _valid_distance4 -> 0 `i ]
+"187
+[; ;MainCode.c: 187:                 break;
+}
+[e :U 3215 ]
+"188
+[; ;MainCode.c: 188:             case 3:
+[e ( _wait10US ..  ]
+"190
+[; ;MainCode.c: 190:                 message[1] = distance1 & 0xFF;
+[e = . . _PORTAbits 0 2 -> -> 0 `i `uc ]
+"191
+[; ;MainCode.c: 191:                 message[2] = valid_distance1;
+[e ( _wait2US ..  ]
+"192
+[; ;MainCode.c: 192:                 sendCANmessage(0, message, 3);
+[e = . . _PORTAbits 0 2 -> -> 1 `i `uc ]
+"193
+[; ;MainCode.c: 193:                 break;
+[e ( _wait10US ..  ]
+"194
+[; ;MainCode.c: 194:             case 4:
+[e = . . _PORTAbits 0 2 -> -> 0 `i `uc ]
+"195
+[; ;MainCode.c: 195:                 message[0] = distance2 >> 8 & 0xFF;
+[e $ ! == ( _waitForSensor5 ..  -> 1 `i 3216  ]
+{
+"196
+[; ;MainCode.c: 196:                 message[1] = distance2 & 0xFF;
+[e = _distance5 ( _getDistance5 ..  ]
+"197
+[; ;MainCode.c: 197:                 message[2] = valid_distance2;
+[e = _valid_distance5 -> 1 `i ]
+"198
+[; ;MainCode.c: 198:                 sendCANmessage(0, message, 3);
+}
+[e $U 3217  ]
+"199
+[; ;MainCode.c: 199:                 break;
+[e :U 3216 ]
+{
+"200
+[; ;MainCode.c: 200:             case 5:
+[e = _distance5 -> 0 `i ]
+"201
+[; ;MainCode.c: 201:                 message[0] = distance3 >> 8 & 0xFF;
+[e = _valid_distance5 -> 0 `i ]
+"202
+[; ;MainCode.c: 202:                 message[1] = distance3 & 0xFF;
+}
+[e :U 3217 ]
+"203
+[; ;MainCode.c: 203:                 message[2] = valid_distance3;
+[e ( _wait10US ..  ]
+"204
+[; ;MainCode.c: 204:                 sendCANmessage(0, message, 3);
+[v _temp0 `i ~T0 @X0 1 a ]
+[e = _temp0 ( _readADC (1 -> 0 `i ]
+"205
+[; ;MainCode.c: 205:                 break;
+[v _temp1 `i ~T0 @X0 1 a ]
+[e = _temp1 ( _readADC (1 -> 1 `i ]
+"206
+[; ;MainCode.c: 206:             case 6:
+[e = _ADCvalueHigh0 & >> _temp0 -> 8 `i -> 255 `i ]
+"207
+[; ;MainCode.c: 207:                 message[0] = distance4 >> 8 & 0xFF;
+[e = _ADCvalueLow0 & _temp0 -> 255 `i ]
+"208
+[; ;MainCode.c: 208:                 message[1] = distance4 & 0xFF;
+[e = _ADCvalueHigh1 & >> _temp1 -> 8 `i -> 255 `i ]
+"209
+[; ;MainCode.c: 209:                 message[2] = valid_distance4;
+[e = _ADCvalueLow1 & _temp1 -> 255 `i ]
+"210
+[; ;MainCode.c: 210:                 sendCANmessage(0, message, 3);
+[e = _perimeter ( _readI2C (2 , -> -> 9 `i `uc &U _con_perimeter ]
+"211
+[; ;MainCode.c: 211:                 break;
+[e = _sign_perimeter ( _readI2C (2 , -> -> 10 `i `uc &U _con_perimeter ]
+"213
+[; ;MainCode.c: 213:                 message[0] = distance5 >> 8 & 0xFF;
 }
 [e :U 3205 ]
 [e $U 3206  ]
 [e :U 3207 ]
-"183
-[; ;MainCode.c: 183:             case 8:
+"214
+[; ;MainCode.c: 214:                 message[1] = distance5 & 0xFF;
 [e ) -> 0 `i ]
 [e $UE 3204  ]
-"184
-[; ;MainCode.c: 184:                 message[0] = perimeter;
+"215
+[; ;MainCode.c: 215:                 message[2] = valid_distance5;
 [e :UE 3204 ]
 }
 [v $root$_adcInt `(v ~T0 @X0 0 e ]
-"186
-[; ;MainCode.c: 186:                 message[2] = con_perimeter;
+"217
+[; ;MainCode.c: 217:                 break;
 [v _adcInt `(v ~T1 @X0 1 ef ]
 {
 [e :U _adcInt ]
 [f ]
-"190
+"221
+[; ;MainCode.c: 221:                 message[2] = con_perimeter;
 [e :UE 3218 ]
 }
 [v $root$_canRecInt `(v ~T0 @X0 0 e ]
-"192
+"223
+[; ;MainCode.c: 223:                 break;
 [v _canRecInt `(v ~T2 @X0 1 ef ]
 {
 [e :U _canRecInt ]
 [f ]
-"194
+"225
 [e $ ! == -> . . _RXB0CONbits 0 7 `i -> 1 `i 3220  ]
 {
-"197
+"228
 [v _message `i ~T0 @X0 -> 8 `i a ]
-"198
+"229
 [e $U 3222  ]
 {
-"201
-[e :U 3223 ]
-"202
-[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux -> 1 `i ]
-"203
-[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 1 `i ]
-"204
-[e $U 3221  ]
-"205
-[e :U 3224 ]
-"206
-[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux _ADCvalueHigh0 ]
-"207
-[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux _ADCvalueLow0 ]
-"208
-[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 2 `i ]
-"209
-[e $U 3221  ]
-"210
-[e :U 3225 ]
-"211
-[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux _ADCvalueHigh1 ]
-"212
-[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux _ADCvalueLow1 ]
-"213
-[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 2 `i ]
-"214
-[e $U 3221  ]
-"215
-[e :U 3226 ]
-"216
-[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux & >> _distance1 -> 8 `i -> 255 `i ]
-"217
-[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux & _distance1 -> 255 `i ]
-"218
-[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 2 `i ]
-"219
-[e $U 3221  ]
-"220
-[e :U 3227 ]
-"221
-[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux & >> _distance2 -> 8 `i -> 255 `i ]
-"222
-[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux & _distance2 -> 255 `i ]
-"223
-[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 2 `i ]
-"224
-[e $U 3221  ]
-"225
-[e :U 3228 ]
-"226
-[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux & >> _distance3 -> 8 `i -> 255 `i ]
-"227
-[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux & _distance3 -> 255 `i ]
-"228
-[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 2 `i ]
-"229
-[e $U 3221  ]
-"230
-[e :U 3229 ]
-"231
-[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux & >> _distance4 -> 8 `i -> 255 `i ]
 "232
-[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux & _distance4 -> 255 `i ]
+[e :U 3223 ]
 "233
-[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 2 `i ]
+[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux -> 1 `i ]
 "234
-[e $U 3221  ]
+[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 1 `i ]
 "235
-[e :U 3230 ]
-"236
-[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux & >> _distance5 -> 8 `i -> 255 `i ]
-"237
-[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux & _distance5 -> 255 `i ]
-"238
-[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 2 `i ]
-"239
 [e $U 3221  ]
+"236
+[e :U 3224 ]
+"237
+[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux _ADCvalueHigh0 ]
+"238
+[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux _ADCvalueLow0 ]
+"239
+[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 2 `i ]
 "240
-[e :U 3231 ]
+[e $U 3221  ]
 "241
-[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux _perimeter ]
+[e :U 3225 ]
 "242
-[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux _sign_perimeter ]
+[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux _ADCvalueHigh1 ]
 "243
-[e = *U + &U _message * -> -> -> 2 `i `ui `ux -> -> # *U &U _message `ui `ux _con_perimeter ]
+[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux _ADCvalueLow1 ]
 "244
-[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 3 `i ]
+[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 2 `i ]
 "245
 [e $U 3221  ]
 "246
+[e :U 3226 ]
+"247
+[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux & >> _distance1 -> 8 `i -> 255 `i ]
+"248
+[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux & _distance1 -> 255 `i ]
+"249
+[e = *U + &U _message * -> -> -> 2 `i `ui `ux -> -> # *U &U _message `ui `ux _valid_distance1 ]
+"250
+[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 3 `i ]
+"251
+[e $U 3221  ]
+"252
+[e :U 3227 ]
+"253
+[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux & >> _distance2 -> 8 `i -> 255 `i ]
+"254
+[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux & _distance2 -> 255 `i ]
+"255
+[e = *U + &U _message * -> -> -> 2 `i `ui `ux -> -> # *U &U _message `ui `ux _valid_distance2 ]
+"256
+[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 3 `i ]
+"257
+[e $U 3221  ]
+"258
+[e :U 3228 ]
+"259
+[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux & >> _distance3 -> 8 `i -> 255 `i ]
+"260
+[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux & _distance3 -> 255 `i ]
+"261
+[e = *U + &U _message * -> -> -> 2 `i `ui `ux -> -> # *U &U _message `ui `ux _valid_distance3 ]
+"262
+[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 3 `i ]
+"263
+[e $U 3221  ]
+"264
+[e :U 3229 ]
+"265
+[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux & >> _distance4 -> 8 `i -> 255 `i ]
+"266
+[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux & _distance4 -> 255 `i ]
+"267
+[e = *U + &U _message * -> -> -> 2 `i `ui `ux -> -> # *U &U _message `ui `ux _valid_distance4 ]
+"268
+[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 3 `i ]
+"269
+[e $U 3221  ]
+"270
+[e :U 3230 ]
+"271
+[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux & >> _distance5 -> 8 `i -> 255 `i ]
+"272
+[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux & _distance5 -> 255 `i ]
+"273
+[e = *U + &U _message * -> -> -> 2 `i `ui `ux -> -> # *U &U _message `ui `ux _valid_distance5 ]
+"274
+[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 3 `i ]
+"275
+[e $U 3221  ]
+"276
+[e :U 3231 ]
+"277
+[e = *U + &U _message * -> -> -> 0 `i `ui `ux -> -> # *U &U _message `ui `ux _perimeter ]
+"278
+[e = *U + &U _message * -> -> -> 1 `i `ui `ux -> -> # *U &U _message `ui `ux _sign_perimeter ]
+"279
+[e = *U + &U _message * -> -> -> 2 `i `ui `ux -> -> # *U &U _message `ui `ux _con_perimeter ]
+"280
+[e ( _sendCANmessage (3 , , -> 0 `i &U _message -> 3 `i ]
+"281
+[e $U 3221  ]
+"282
 }
 [e $U 3221  ]
 [e :U 3222 ]
@@ -4374,1086 +4501,1101 @@ Version 4.0 HI-TECH Software Intermediate Code
  , $ -> 8 `i 3231
  3221 ]
 [e :U 3221 ]
-"270
-[; ;MainCode.c: 270:         RXB0CONbits.RXFUL = 0;
+"306
+[; ;MainCode.c: 306:         RXB0CONbits.RXFUL = 0;
 [e = . . _RXB0CONbits 0 7 -> -> 0 `i `uc ]
-"271
-[; ;MainCode.c: 271:     }
+"307
+[; ;MainCode.c: 307:     }
 }
 [e :U 3220 ]
-"272
-[; ;MainCode.c: 272:     PIR5bits.RXB0IF = 0;
+"308
+[; ;MainCode.c: 308:     PIR5bits.RXB0IF = 0;
 [e = . . _PIR5bits 0 0 -> -> 0 `i `uc ]
-"273
-[; ;MainCode.c: 273:     return;
+"309
+[; ;MainCode.c: 309:     return;
 [e $UE 3219  ]
-"274
-[; ;MainCode.c: 274: }
+"310
+[; ;MainCode.c: 310: }
 [e :UE 3219 ]
 }
-"276
-[; ;MainCode.c: 276: int readI2C(char reg, int * conOK) {
+"312
+[; ;MainCode.c: 312: int readI2C(char reg, int * conOK) {
 [v _readI2C `(i ~T0 @X0 1 ef2`uc`*i ]
 {
 [e :U _readI2C ]
 [v _reg `uc ~T0 @X0 1 r1 ]
 [v _conOK `*i ~T0 @X0 1 r2 ]
 [f ]
-"292
-[; ;MainCode.c: 292:     unsigned char data;
+"328
+[; ;MainCode.c: 328:     I2C1STAT1bits.TXWE = 0;
+[e = . . _I2C1STAT1bits 0 7 -> -> 0 `i `uc ]
+"329
+[; ;MainCode.c: 329:     I2C1STAT1bits.RXRE = 0;
+[e = . . _I2C1STAT1bits 0 3 -> -> 0 `i `uc ]
+"330
+[; ;MainCode.c: 330:     unsigned char data;
 [v _data `uc ~T0 @X0 1 a ]
-"293
-[; ;MainCode.c: 293:     * conOK = 1;
-[e = *U _conOK -> 1 `i ]
-"294
-[; ;MainCode.c: 294:     I2C1ADB1 = 0X10;
+"331
+[; ;MainCode.c: 331:     int tmpOK = 1;
+[v _tmpOK `i ~T0 @X0 1 a ]
+[e = _tmpOK -> 1 `i ]
+"332
+[; ;MainCode.c: 332:     I2C1ADB1 = 0X10;
 [e = _I2C1ADB1 -> -> 16 `i `uc ]
-"295
-[; ;MainCode.c: 295:     I2C1TXB = reg;
+"333
+[; ;MainCode.c: 333:     I2C1TXB = reg;
 [e = _I2C1TXB -> _reg `uc ]
-"296
-[; ;MainCode.c: 296:     while (!I2C1STAT0bits.BFRE);
+"334
+[; ;MainCode.c: 334:     while (!I2C1STAT0bits.BFRE);
 [e $U 3233  ]
 [e :U 3234 ]
 [e :U 3233 ]
 [e $ ! != -> . . _I2C1STAT0bits 0 5 `i -> 0 `i 3234  ]
 [e :U 3235 ]
-"297
-[; ;MainCode.c: 297:     I2C1CNT = 1;
+"335
+[; ;MainCode.c: 335:     I2C1CNT = 1;
 [e = _I2C1CNT -> -> 1 `i `uc ]
-"298
-[; ;MainCode.c: 298:     I2C1CON0bits.RSEN = 1;
+"336
+[; ;MainCode.c: 336:     I2C1CON0bits.RSEN = 1;
 [e = . . _I2C1CON0bits 0 4 -> -> 1 `i `uc ]
-"299
-[; ;MainCode.c: 299:     I2C1CON0bits.S = 1;
+"337
+[; ;MainCode.c: 337:     I2C1CON0bits.S = 1;
 [e = . . _I2C1CON0bits 0 3 -> -> 1 `i `uc ]
-"300
-[; ;MainCode.c: 300:     int counter = 0;
+"338
+[; ;MainCode.c: 338:     int counter = 0;
 [v _counter `i ~T0 @X0 1 a ]
 [e = _counter -> 0 `i ]
-"301
-[; ;MainCode.c: 301:     while (!I2C1CON0bits.MDR && counter < 25000) {
+"339
+[; ;MainCode.c: 339:     while (!I2C1CON0bits.MDR && counter < 25000) {
 [e $U 3236  ]
 [e :U 3237 ]
 {
-"302
-[; ;MainCode.c: 302:         counter++;
+"340
+[; ;MainCode.c: 340:         counter++;
 [e ++ _counter -> 1 `i ]
-"303
-[; ;MainCode.c: 303:     }
+"341
+[; ;MainCode.c: 341:     }
 }
 [e :U 3236 ]
-"301
-[; ;MainCode.c: 301:     while (!I2C1CON0bits.MDR && counter < 25000) {
+"339
+[; ;MainCode.c: 339:     while (!I2C1CON0bits.MDR && counter < 25000) {
 [e $ && ! != -> . . _I2C1CON0bits 0 1 `i -> 0 `i < _counter -> 25000 `i 3237  ]
 [e :U 3238 ]
-"304
-[; ;MainCode.c: 304:     if (counter >= 25000) *conOK = 0;
+"342
+[; ;MainCode.c: 342:     if (counter >= 25000) tmpOK = 0;
 [e $ ! >= _counter -> 25000 `i 3239  ]
-[e = *U _conOK -> 0 `i ]
+[e = _tmpOK -> 0 `i ]
 [e :U 3239 ]
-"308
-[; ;MainCode.c: 308:     I2C1ADB1 = (0x11);
+"346
+[; ;MainCode.c: 346:     I2C1ADB1 = (0x11);
 [e = _I2C1ADB1 -> -> 17 `i `uc ]
-"309
-[; ;MainCode.c: 309:     I2C1CNT = 1;
+"347
+[; ;MainCode.c: 347:     I2C1CNT = 1;
 [e = _I2C1CNT -> -> 1 `i `uc ]
-"310
-[; ;MainCode.c: 310:     I2C1CON0bits.S = 1;
+"348
+[; ;MainCode.c: 348:     I2C1CON0bits.S = 1;
 [e = . . _I2C1CON0bits 0 3 -> -> 1 `i `uc ]
-"311
-[; ;MainCode.c: 311:     I2C1CON0bits.RSEN = 0;
+"349
+[; ;MainCode.c: 349:     I2C1CON0bits.RSEN = 0;
 [e = . . _I2C1CON0bits 0 4 -> -> 0 `i `uc ]
-"312
-[; ;MainCode.c: 312:     counter = 0;
+"350
+[; ;MainCode.c: 350:     counter = 0;
 [e = _counter -> 0 `i ]
-"313
-[; ;MainCode.c: 313:     while (!I2C1STAT1bits.RXBF && counter < 25000) {
+"351
+[; ;MainCode.c: 351:     while (!I2C1STAT1bits.RXBF && counter < 25000) {
 [e $U 3240  ]
 [e :U 3241 ]
 {
-"314
-[; ;MainCode.c: 314:         counter++;
+"352
+[; ;MainCode.c: 352:         counter++;
 [e ++ _counter -> 1 `i ]
-"315
-[; ;MainCode.c: 315:     }
+"353
+[; ;MainCode.c: 353:     }
 }
 [e :U 3240 ]
-"313
-[; ;MainCode.c: 313:     while (!I2C1STAT1bits.RXBF && counter < 25000) {
+"351
+[; ;MainCode.c: 351:     while (!I2C1STAT1bits.RXBF && counter < 25000) {
 [e $ && ! != -> . . _I2C1STAT1bits 0 0 `i -> 0 `i < _counter -> 25000 `i 3241  ]
 [e :U 3242 ]
-"316
-[; ;MainCode.c: 316:     if (counter >= 25000) *conOK = 0;
+"354
+[; ;MainCode.c: 354:     if (counter >= 25000) tmpOK = 0;
 [e $ ! >= _counter -> 25000 `i 3243  ]
-[e = *U _conOK -> 0 `i ]
-[e :U 3243 ]
-"320
-[; ;MainCode.c: 320:     data = I2C1RXB;
-[e = _data _I2C1RXB ]
-"322
-[; ;MainCode.c: 322:     counter = 0;
-[e = _counter -> 0 `i ]
-"323
-[; ;MainCode.c: 323:     while (!I2C1PIRbits.PCIF && counter < 25000) {
+[e = _tmpOK -> 0 `i ]
 [e $U 3244  ]
-[e :U 3245 ]
-{
-"324
-[; ;MainCode.c: 324:         counter++;
-[e ++ _counter -> 1 `i ]
-"325
-[; ;MainCode.c: 325:     }
-}
+"356
+[; ;MainCode.c: 356:     else data = I2C1RXB;
+[e :U 3243 ]
+[e = _data _I2C1RXB ]
 [e :U 3244 ]
-"323
-[; ;MainCode.c: 323:     while (!I2C1PIRbits.PCIF && counter < 25000) {
-[e $ && ! != -> . . _I2C1PIRbits 0 2 `i -> 0 `i < _counter -> 25000 `i 3245  ]
+"362
+[; ;MainCode.c: 362:     counter = 0;
+[e = _counter -> 0 `i ]
+"363
+[; ;MainCode.c: 363:     while (!I2C1PIRbits.PCIF && counter < 25000) {
+[e $U 3245  ]
 [e :U 3246 ]
-"326
-[; ;MainCode.c: 326:     if (counter >= 25000) *conOK = 0;
-[e $ ! >= _counter -> 25000 `i 3247  ]
-[e = *U _conOK -> 0 `i ]
+{
+"364
+[; ;MainCode.c: 364:         counter++;
+[e ++ _counter -> 1 `i ]
+"365
+[; ;MainCode.c: 365:     }
+}
+[e :U 3245 ]
+"363
+[; ;MainCode.c: 363:     while (!I2C1PIRbits.PCIF && counter < 25000) {
+[e $ && ! != -> . . _I2C1PIRbits 0 2 `i -> 0 `i < _counter -> 25000 `i 3246  ]
 [e :U 3247 ]
-"329
-[; ;MainCode.c: 329:     I2C1PIRbits.PCIF = 0;
+"366
+[; ;MainCode.c: 366:     if (counter >= 25000) tmpOK = 0;
+[e $ ! >= _counter -> 25000 `i 3248  ]
+[e = _tmpOK -> 0 `i ]
+[e :U 3248 ]
+"369
+[; ;MainCode.c: 369:     I2C1PIRbits.PCIF = 0;
 [e = . . _I2C1PIRbits 0 2 -> -> 0 `i `uc ]
-"330
-[; ;MainCode.c: 330:     I2C1PIRbits.SCIF = 0;
+"370
+[; ;MainCode.c: 370:     I2C1PIRbits.SCIF = 0;
 [e = . . _I2C1PIRbits 0 0 -> -> 0 `i `uc ]
-"331
-[; ;MainCode.c: 331:     I2C1STAT1bits.CLRBF = 1;
+"371
+[; ;MainCode.c: 371:     I2C1STAT1bits.CLRBF = 1;
 [e = . . _I2C1STAT1bits 0 2 -> -> 1 `i `uc ]
-"333
-[; ;MainCode.c: 333:     return data;
+"372
+[; ;MainCode.c: 372:     * conOK = tmpOK;
+[e = *U _conOK _tmpOK ]
+"373
+[; ;MainCode.c: 373:     return data;
 [e ) -> _data `i ]
 [e $UE 3232  ]
-"334
-[; ;MainCode.c: 334: }
+"374
+[; ;MainCode.c: 374: }
 [e :UE 3232 ]
 }
-"336
-[; ;MainCode.c: 336: void initI2C(void) {
+"376
+[; ;MainCode.c: 376: void initI2C(void) {
 [v _initI2C `(v ~T0 @X0 1 ef ]
 {
 [e :U _initI2C ]
 [f ]
-"337
-[; ;MainCode.c: 337:     LATCbits.LATC3 = 0;
+"377
+[; ;MainCode.c: 377:     LATCbits.LATC3 = 0;
 [e = . . _LATCbits 0 3 -> -> 0 `i `uc ]
-"338
-[; ;MainCode.c: 338:     LATCbits.LATC4 = 0;
+"378
+[; ;MainCode.c: 378:     LATCbits.LATC4 = 0;
 [e = . . _LATCbits 0 4 -> -> 0 `i `uc ]
-"339
-[; ;MainCode.c: 339:     TRISCbits.TRISC3 = 0;
+"379
+[; ;MainCode.c: 379:     TRISCbits.TRISC3 = 0;
 [e = . . _TRISCbits 0 3 -> -> 0 `i `uc ]
-"340
-[; ;MainCode.c: 340:     TRISCbits.TRISC4 = 0;
+"380
+[; ;MainCode.c: 380:     TRISCbits.TRISC4 = 0;
 [e = . . _TRISCbits 0 4 -> -> 0 `i `uc ]
-"341
-[; ;MainCode.c: 341:     ANSELCbits.ANSELC3 = 0;
+"381
+[; ;MainCode.c: 381:     ANSELCbits.ANSELC3 = 0;
 [e = . . _ANSELCbits 0 3 -> -> 0 `i `uc ]
-"342
-[; ;MainCode.c: 342:     ANSELCbits.ANSELC4 = 0;
+"382
+[; ;MainCode.c: 382:     ANSELCbits.ANSELC4 = 0;
 [e = . . _ANSELCbits 0 4 -> -> 0 `i `uc ]
-"343
-[; ;MainCode.c: 343:     ODCONCbits.ODCC3 = 1;
+"383
+[; ;MainCode.c: 383:     ODCONCbits.ODCC3 = 1;
 [e = . . _ODCONCbits 0 3 -> -> 1 `i `uc ]
-"344
-[; ;MainCode.c: 344:     ODCONCbits.ODCC4 = 1;
+"384
+[; ;MainCode.c: 384:     ODCONCbits.ODCC4 = 1;
 [e = . . _ODCONCbits 0 4 -> -> 1 `i `uc ]
-"345
-[; ;MainCode.c: 345:     RC3I2C = 0x01;
+"385
+[; ;MainCode.c: 385:     RC3I2C = 0x01;
 [e = _RC3I2C -> -> 1 `i `uc ]
-"348
-[; ;MainCode.c: 348:     SLRCONCbits.SLRC3 = 0;
+"388
+[; ;MainCode.c: 388:     SLRCONCbits.SLRC3 = 0;
 [e = . . _SLRCONCbits 0 3 -> -> 0 `i `uc ]
-"349
-[; ;MainCode.c: 349:     RC4I2C = 0x01;
+"389
+[; ;MainCode.c: 389:     RC4I2C = 0x01;
 [e = _RC4I2C -> -> 1 `i `uc ]
-"350
-[; ;MainCode.c: 350:     SLRCONCbits.SLRC4 = 0;
+"390
+[; ;MainCode.c: 390:     SLRCONCbits.SLRC4 = 0;
 [e = . . _SLRCONCbits 0 4 -> -> 0 `i `uc ]
-"353
-[; ;MainCode.c: 353:     int state = (unsigned char) GIE;
+"393
+[; ;MainCode.c: 393:     int state = (unsigned char) GIE;
 [v _state `i ~T0 @X0 1 a ]
 [e = _state -> -> _GIE `uc `i ]
-"354
-[; ;MainCode.c: 354:     GIE = 0;
+"394
+[; ;MainCode.c: 394:     GIE = 0;
 [e = _GIE -> -> 0 `i `b ]
-"355
-[; ;MainCode.c: 355:     PPSLOCK = 0x55;
+"395
+[; ;MainCode.c: 395:     PPSLOCK = 0x55;
 [e = _PPSLOCK -> -> 85 `i `uc ]
-"356
-[; ;MainCode.c: 356:     PPSLOCK = 0xAA;
+"396
+[; ;MainCode.c: 396:     PPSLOCK = 0xAA;
 [e = _PPSLOCK -> -> 170 `i `uc ]
-"357
-[; ;MainCode.c: 357:     PPSLOCKbits.PPSLOCKED = 0x00;
+"397
+[; ;MainCode.c: 397:     PPSLOCKbits.PPSLOCKED = 0x00;
 [e = . . _PPSLOCKbits 0 0 -> -> 0 `i `uc ]
-"358
-[; ;MainCode.c: 358:     RC3PPS = 0x21;
+"398
+[; ;MainCode.c: 398:     RC3PPS = 0x21;
 [e = _RC3PPS -> -> 33 `i `uc ]
-"359
-[; ;MainCode.c: 359:     RC4PPS = 0x22;
+"399
+[; ;MainCode.c: 399:     RC4PPS = 0x22;
 [e = _RC4PPS -> -> 34 `i `uc ]
-"360
-[; ;MainCode.c: 360:     I2C1SDAPPSbits.I2C1SDAPPS = 0x14;
+"400
+[; ;MainCode.c: 400:     I2C1SDAPPSbits.I2C1SDAPPS = 0x14;
 [e = . . _I2C1SDAPPSbits 0 0 -> -> 20 `i `uc ]
-"361
-[; ;MainCode.c: 361:     I2C1SCLPPSbits.I2C1SCLPPS = 0x13;
+"401
+[; ;MainCode.c: 401:     I2C1SCLPPSbits.I2C1SCLPPS = 0x13;
 [e = . . _I2C1SCLPPSbits 0 0 -> -> 19 `i `uc ]
-"362
-[; ;MainCode.c: 362:     PPSLOCK = 0x55;
+"402
+[; ;MainCode.c: 402:     PPSLOCK = 0x55;
 [e = _PPSLOCK -> -> 85 `i `uc ]
-"363
-[; ;MainCode.c: 363:     PPSLOCK = 0xAA;
+"403
+[; ;MainCode.c: 403:     PPSLOCK = 0xAA;
 [e = _PPSLOCK -> -> 170 `i `uc ]
-"364
-[; ;MainCode.c: 364:     PPSLOCKbits.PPSLOCKED = 0x01;
+"404
+[; ;MainCode.c: 404:     PPSLOCKbits.PPSLOCKED = 0x01;
 [e = . . _PPSLOCKbits 0 0 -> -> 1 `i `uc ]
-"365
-[; ;MainCode.c: 365:     GIE = state;
+"405
+[; ;MainCode.c: 405:     GIE = state;
 [e = _GIE -> _state `b ]
-"366
-[; ;MainCode.c: 366:     I2C1CON0 = 0x04;
+"406
+[; ;MainCode.c: 406:     I2C1CON0 = 0x04;
 [e = _I2C1CON0 -> -> 4 `i `uc ]
-"367
-[; ;MainCode.c: 367:     I2C1CON1 = 0x80;
+"407
+[; ;MainCode.c: 407:     I2C1CON1 = 0x80;
 [e = _I2C1CON1 -> -> 128 `i `uc ]
-"368
-[; ;MainCode.c: 368:     I2C1CON2 = 0x24;
+"408
+[; ;MainCode.c: 408:     I2C1CON2 = 0x24;
 [e = _I2C1CON2 -> -> 36 `i `uc ]
-"371
-[; ;MainCode.c: 371:     I2C1CLK = 0x03;
+"411
+[; ;MainCode.c: 411:     I2C1CLK = 0x03;
 [e = _I2C1CLK -> -> 3 `i `uc ]
-"372
-[; ;MainCode.c: 372:     I2C1PIR = 0;
+"412
+[; ;MainCode.c: 412:     I2C1PIR = 0;
 [e = _I2C1PIR -> -> 0 `i `uc ]
-"373
-[; ;MainCode.c: 373:     I2C1ERR = 0;
+"413
+[; ;MainCode.c: 413:     I2C1ERR = 0;
 [e = _I2C1ERR -> -> 0 `i `uc ]
-"374
-[; ;MainCode.c: 374:     I2C1CON0bits.EN = 1;
+"414
+[; ;MainCode.c: 414:     I2C1CON0bits.EN = 1;
 [e = . . _I2C1CON0bits 0 5 -> -> 1 `i `uc ]
-"375
-[; ;MainCode.c: 375:     I2C1ERRbits.NACKIE = 1;
+"415
+[; ;MainCode.c: 415:     I2C1ERRbits.NACKIE = 1;
 [e = . . _I2C1ERRbits 0 0 -> -> 1 `i `uc ]
-"376
-[; ;MainCode.c: 376: }
-[e :UE 3248 ]
+"416
+[; ;MainCode.c: 416:     I2C1PIEbits.ACKTIE = 1;
+[e = . . _I2C1PIEbits 0 6 -> -> 1 `i `uc ]
+"417
+[; ;MainCode.c: 417: }
+[e :UE 3249 ]
 }
-"378
-[; ;MainCode.c: 378: void initADC(void) {
+"419
+[; ;MainCode.c: 419: void initADC(void) {
 [v _initADC `(v ~T0 @X0 1 ef ]
 {
 [e :U _initADC ]
 [f ]
-"380
-[; ;MainCode.c: 380:     TRISCbits.TRISC6 = 1;
+"421
+[; ;MainCode.c: 421:     TRISCbits.TRISC6 = 1;
 [e = . . _TRISCbits 0 6 -> -> 1 `i `uc ]
-"381
-[; ;MainCode.c: 381:     TRISCbits.TRISC5 = 1;
+"422
+[; ;MainCode.c: 422:     TRISCbits.TRISC5 = 1;
 [e = . . _TRISCbits 0 5 -> -> 1 `i `uc ]
-"382
-[; ;MainCode.c: 382:     ANSELCbits.ANSELC6 = 1;
+"423
+[; ;MainCode.c: 423:     ANSELCbits.ANSELC6 = 1;
 [e = . . _ANSELCbits 0 6 -> -> 1 `i `uc ]
-"383
-[; ;MainCode.c: 383:     ANSELCbits.ANSELC5 = 1;
+"424
+[; ;MainCode.c: 424:     ANSELCbits.ANSELC5 = 1;
 [e = . . _ANSELCbits 0 5 -> -> 1 `i `uc ]
-"385
-[; ;MainCode.c: 385:     ADCON0bits.ON = 1;
+"426
+[; ;MainCode.c: 426:     ADCON0bits.ON = 1;
 [e = . . _ADCON0bits 0 6 -> -> 1 `i `uc ]
-"386
-[; ;MainCode.c: 386:     ADCLKbits.CS = 0b011100;
+"427
+[; ;MainCode.c: 427:     ADCLKbits.CS = 0b011100;
 [e = . . _ADCLKbits 0 0 -> -> 28 `i `uc ]
-"388
-[; ;MainCode.c: 388:     ADCON0bits.FM = 0;
+"429
+[; ;MainCode.c: 429:     ADCON0bits.FM = 0;
 [e = . . _ADCON0bits 0 2 -> -> 0 `i `uc ]
-"390
-[; ;MainCode.c: 390:     ADREFbits.NREF = 0;
+"431
+[; ;MainCode.c: 431:     ADREFbits.NREF = 0;
 [e = . . _ADREFbits 0 1 -> -> 0 `i `uc ]
-"391
-[; ;MainCode.c: 391:     ADREFbits.PREF = 00;
+"432
+[; ;MainCode.c: 432:     ADREFbits.PREF = 00;
 [e = . . _ADREFbits 0 0 -> -> 0 `i `uc ]
-"393
-[; ;MainCode.c: 393:     ADPCHbits.ADPCH = 0b010110;
+"434
+[; ;MainCode.c: 434:     ADPCHbits.ADPCH = 0b010110;
 [e = . . _ADPCHbits 0 0 -> -> 22 `i `uc ]
-"395
-[; ;MainCode.c: 395:     ADCON0bits.ON = 1;
+"436
+[; ;MainCode.c: 436:     ADCON0bits.ON = 1;
 [e = . . _ADCON0bits 0 6 -> -> 1 `i `uc ]
-"415
-[; ;MainCode.c: 415: }
-[e :UE 3249 ]
+"456
+[; ;MainCode.c: 456: }
+[e :UE 3250 ]
 }
-"417
-[; ;MainCode.c: 417: void initHCSR04(void) {
+"458
+[; ;MainCode.c: 458: void initHCSR04(void) {
 [v _initHCSR04 `(v ~T0 @X0 1 ef ]
 {
 [e :U _initHCSR04 ]
 [f ]
-"418
-[; ;MainCode.c: 418:     T1CLK = 0x01;
+"459
+[; ;MainCode.c: 459:     T1CLK = 0x01;
 [e = _T1CLK -> -> 1 `i `uc ]
-"419
-[; ;MainCode.c: 419:     T1CONbits.CKPS = 0b11;
+"460
+[; ;MainCode.c: 460:     T1CONbits.CKPS = 0b11;
 [e = . . _T1CONbits 0 4 -> -> 3 `i `uc ]
-"420
-[; ;MainCode.c: 420:     TMR1H = 0x00;
+"461
+[; ;MainCode.c: 461:     TMR1H = 0x00;
 [e = _TMR1H -> -> 0 `i `uc ]
-"421
-[; ;MainCode.c: 421:     TMR1L = 0x00;
+"462
+[; ;MainCode.c: 462:     TMR1L = 0x00;
 [e = _TMR1L -> -> 0 `i `uc ]
-"423
-[; ;MainCode.c: 423:     ANSELCbits.ANSELC1 = 0;
+"464
+[; ;MainCode.c: 464:     ANSELCbits.ANSELC1 = 0;
 [e = . . _ANSELCbits 0 1 -> -> 0 `i `uc ]
-"424
-[; ;MainCode.c: 424:     ANSELCbits.ANSELC2 = 0;
+"465
+[; ;MainCode.c: 465:     ANSELCbits.ANSELC2 = 0;
 [e = . . _ANSELCbits 0 2 -> -> 0 `i `uc ]
-"425
-[; ;MainCode.c: 425:     ANSELCbits.ANSELC7 = 0;
+"466
+[; ;MainCode.c: 466:     ANSELCbits.ANSELC7 = 0;
 [e = . . _ANSELCbits 0 7 -> -> 0 `i `uc ]
-"426
-[; ;MainCode.c: 426:     ANSELAbits.ANSELA1 = 0;
+"467
+[; ;MainCode.c: 467:     ANSELAbits.ANSELA1 = 0;
 [e = . . _ANSELAbits 0 1 -> -> 0 `i `uc ]
-"427
-[; ;MainCode.c: 427:     ANSELAbits.ANSELA2 = 0;
+"468
+[; ;MainCode.c: 468:     ANSELAbits.ANSELA2 = 0;
 [e = . . _ANSELAbits 0 2 -> -> 0 `i `uc ]
-"429
-[; ;MainCode.c: 429:     ANSELBbits.ANSELB1 = 0;
+"470
+[; ;MainCode.c: 470:     ANSELBbits.ANSELB1 = 0;
 [e = . . _ANSELBbits 0 1 -> -> 0 `i `uc ]
-"430
-[; ;MainCode.c: 430:     ANSELBbits.ANSELB0 = 0;
+"471
+[; ;MainCode.c: 471:     ANSELBbits.ANSELB0 = 0;
 [e = . . _ANSELBbits 0 0 -> -> 0 `i `uc ]
-"431
-[; ;MainCode.c: 431:     ANSELAbits.ANSELA5 = 0;
+"472
+[; ;MainCode.c: 472:     ANSELAbits.ANSELA5 = 0;
 [e = . . _ANSELAbits 0 5 -> -> 0 `i `uc ]
-"432
-[; ;MainCode.c: 432:     ANSELBbits.ANSELB4 = 0;
+"473
+[; ;MainCode.c: 473:     ANSELBbits.ANSELB4 = 0;
 [e = . . _ANSELBbits 0 4 -> -> 0 `i `uc ]
-"433
-[; ;MainCode.c: 433:     ANSELAbits.ANSELA4 = 0;
+"474
+[; ;MainCode.c: 474:     ANSELAbits.ANSELA4 = 0;
 [e = . . _ANSELAbits 0 4 -> -> 0 `i `uc ]
-"435
-[; ;MainCode.c: 435:     TRISCbits.TRISC1 = 0;
+"476
+[; ;MainCode.c: 476:     TRISCbits.TRISC1 = 0;
 [e = . . _TRISCbits 0 1 -> -> 0 `i `uc ]
-"436
-[; ;MainCode.c: 436:     TRISCbits.TRISC2 = 0;
+"477
+[; ;MainCode.c: 477:     TRISCbits.TRISC2 = 0;
 [e = . . _TRISCbits 0 2 -> -> 0 `i `uc ]
-"437
-[; ;MainCode.c: 437:     TRISCbits.TRISC7 = 0;
+"478
+[; ;MainCode.c: 478:     TRISCbits.TRISC7 = 0;
 [e = . . _TRISCbits 0 7 -> -> 0 `i `uc ]
-"438
-[; ;MainCode.c: 438:     TRISAbits.TRISA1 = 0;
+"479
+[; ;MainCode.c: 479:     TRISAbits.TRISA1 = 0;
 [e = . . _TRISAbits 0 1 -> -> 0 `i `uc ]
-"439
-[; ;MainCode.c: 439:     TRISAbits.TRISA2 = 0;
+"480
+[; ;MainCode.c: 480:     TRISAbits.TRISA2 = 0;
 [e = . . _TRISAbits 0 2 -> -> 0 `i `uc ]
-"441
-[; ;MainCode.c: 441:     TRISBbits.TRISB1 = 1;
+"482
+[; ;MainCode.c: 482:     TRISBbits.TRISB1 = 1;
 [e = . . _TRISBbits 0 1 -> -> 1 `i `uc ]
-"442
-[; ;MainCode.c: 442:     TRISBbits.TRISB0 = 1;
+"483
+[; ;MainCode.c: 483:     TRISBbits.TRISB0 = 1;
 [e = . . _TRISBbits 0 0 -> -> 1 `i `uc ]
-"443
-[; ;MainCode.c: 443:     TRISAbits.TRISA5 = 1;
+"484
+[; ;MainCode.c: 484:     TRISAbits.TRISA5 = 1;
 [e = . . _TRISAbits 0 5 -> -> 1 `i `uc ]
-"444
-[; ;MainCode.c: 444:     TRISBbits.TRISB4 = 1;
+"485
+[; ;MainCode.c: 485:     TRISBbits.TRISB4 = 1;
 [e = . . _TRISBbits 0 4 -> -> 1 `i `uc ]
-"445
-[; ;MainCode.c: 445:     TRISAbits.TRISA4 = 1;
+"486
+[; ;MainCode.c: 486:     TRISAbits.TRISA4 = 1;
 [e = . . _TRISAbits 0 4 -> -> 1 `i `uc ]
-"447
-[; ;MainCode.c: 447:     PORTCbits.RC1 = 0;
+"488
+[; ;MainCode.c: 488:     PORTCbits.RC1 = 0;
 [e = . . _PORTCbits 0 1 -> -> 0 `i `uc ]
-"448
-[; ;MainCode.c: 448:     PORTCbits.RC2 = 0;
+"489
+[; ;MainCode.c: 489:     PORTCbits.RC2 = 0;
 [e = . . _PORTCbits 0 2 -> -> 0 `i `uc ]
-"449
-[; ;MainCode.c: 449:     PORTCbits.RC7 = 0;
+"490
+[; ;MainCode.c: 490:     PORTCbits.RC7 = 0;
 [e = . . _PORTCbits 0 7 -> -> 0 `i `uc ]
-"450
-[; ;MainCode.c: 450:     PORTAbits.RA1 = 0;
+"491
+[; ;MainCode.c: 491:     PORTAbits.RA1 = 0;
 [e = . . _PORTAbits 0 1 -> -> 0 `i `uc ]
-"451
-[; ;MainCode.c: 451:     PORTAbits.RA2 = 0;
+"492
+[; ;MainCode.c: 492:     PORTAbits.RA2 = 0;
 [e = . . _PORTAbits 0 2 -> -> 0 `i `uc ]
-"452
-[; ;MainCode.c: 452: }
-[e :UE 3250 ]
+"493
+[; ;MainCode.c: 493: }
+[e :UE 3251 ]
 }
-"454
-[; ;MainCode.c: 454: int waitForSensor1(void) {
+"495
+[; ;MainCode.c: 495: int waitForSensor1(void) {
 [v _waitForSensor1 `(i ~T0 @X0 1 ef ]
 {
 [e :U _waitForSensor1 ]
 [f ]
-"455
-[; ;MainCode.c: 455:     int i = 0;
+"496
+[; ;MainCode.c: 496:     int i = 0;
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-"456
-[; ;MainCode.c: 456:     TMR1H = 0;
+"497
+[; ;MainCode.c: 497:     TMR1H = 0;
 [e = _TMR1H -> -> 0 `i `uc ]
-"457
-[; ;MainCode.c: 457:     TMR1L = 0;
+"498
+[; ;MainCode.c: 498:     TMR1L = 0;
 [e = _TMR1L -> -> 0 `i `uc ]
-"458
-[; ;MainCode.c: 458:     T1CONbits.TMR1ON = 1;
+"499
+[; ;MainCode.c: 499:     T1CONbits.TMR1ON = 1;
 [e = . . _T1CONbits 1 0 -> -> 1 `i `uc ]
-"459
-[; ;MainCode.c: 459:     while (!PORTBbits.RB1 && (i < 10000))
-[e $U 3252  ]
-[e :U 3253 ]
-"460
-[; ;MainCode.c: 460:         i = (TMR1H << 8) | TMR1L;
-[e = _i | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
-[e :U 3252 ]
-"459
-[; ;MainCode.c: 459:     while (!PORTBbits.RB1 && (i < 10000))
-[e $ && ! != -> . . _PORTBbits 0 1 `i -> 0 `i < _i -> 10000 `i 3253  ]
+"500
+[; ;MainCode.c: 500:     while (!PORTBbits.RB1 && (i < 10000))
+[e $U 3253  ]
 [e :U 3254 ]
-"461
-[; ;MainCode.c: 461:     if (i >= 10000)
-[e $ ! >= _i -> 10000 `i 3255  ]
-"462
-[; ;MainCode.c: 462:         return 0;
-[e ) -> 0 `i ]
-[e $UE 3251  ]
-[e $U 3256  ]
-"463
-[; ;MainCode.c: 463:     else
+"501
+[; ;MainCode.c: 501:         i = (TMR1H << 8) | TMR1L;
+[e = _i | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
+[e :U 3253 ]
+"500
+[; ;MainCode.c: 500:     while (!PORTBbits.RB1 && (i < 10000))
+[e $ && ! != -> . . _PORTBbits 0 1 `i -> 0 `i < _i -> 10000 `i 3254  ]
 [e :U 3255 ]
-"464
-[; ;MainCode.c: 464:         return 1;
-[e ) -> 1 `i ]
-[e $UE 3251  ]
+"502
+[; ;MainCode.c: 502:     if (i >= 10000)
+[e $ ! >= _i -> 10000 `i 3256  ]
+"503
+[; ;MainCode.c: 503:         return 0;
+[e ) -> 0 `i ]
+[e $UE 3252  ]
+[e $U 3257  ]
+"504
+[; ;MainCode.c: 504:     else
 [e :U 3256 ]
-"465
-[; ;MainCode.c: 465: }
-[e :UE 3251 ]
+"505
+[; ;MainCode.c: 505:         return 1;
+[e ) -> 1 `i ]
+[e $UE 3252  ]
+[e :U 3257 ]
+"506
+[; ;MainCode.c: 506: }
+[e :UE 3252 ]
 }
-"467
-[; ;MainCode.c: 467: int waitForSensor2(void) {
+"508
+[; ;MainCode.c: 508: int waitForSensor2(void) {
 [v _waitForSensor2 `(i ~T0 @X0 1 ef ]
 {
 [e :U _waitForSensor2 ]
 [f ]
-"468
-[; ;MainCode.c: 468:     int i = 0;
+"509
+[; ;MainCode.c: 509:     int i = 0;
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-"469
-[; ;MainCode.c: 469:     TMR1H = 0;
+"510
+[; ;MainCode.c: 510:     TMR1H = 0;
 [e = _TMR1H -> -> 0 `i `uc ]
-"470
-[; ;MainCode.c: 470:     TMR1L = 0;
+"511
+[; ;MainCode.c: 511:     TMR1L = 0;
 [e = _TMR1L -> -> 0 `i `uc ]
-"471
-[; ;MainCode.c: 471:     T1CONbits.TMR1ON = 1;
+"512
+[; ;MainCode.c: 512:     T1CONbits.TMR1ON = 1;
 [e = . . _T1CONbits 1 0 -> -> 1 `i `uc ]
-"472
-[; ;MainCode.c: 472:     while (!PORTBbits.RB0 && (i < 10000))
-[e $U 3258  ]
-[e :U 3259 ]
-"473
-[; ;MainCode.c: 473:         i = (TMR1H << 8) | TMR1L;
-[e = _i | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
-[e :U 3258 ]
-"472
-[; ;MainCode.c: 472:     while (!PORTBbits.RB0 && (i < 10000))
-[e $ && ! != -> . . _PORTBbits 0 0 `i -> 0 `i < _i -> 10000 `i 3259  ]
+"513
+[; ;MainCode.c: 513:     while (!PORTBbits.RB0 && (i < 10000))
+[e $U 3259  ]
 [e :U 3260 ]
-"474
-[; ;MainCode.c: 474:     if (i >= 10000)
-[e $ ! >= _i -> 10000 `i 3261  ]
-"475
-[; ;MainCode.c: 475:         return 0;
-[e ) -> 0 `i ]
-[e $UE 3257  ]
-[e $U 3262  ]
-"476
-[; ;MainCode.c: 476:     else
+"514
+[; ;MainCode.c: 514:         i = (TMR1H << 8) | TMR1L;
+[e = _i | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
+[e :U 3259 ]
+"513
+[; ;MainCode.c: 513:     while (!PORTBbits.RB0 && (i < 10000))
+[e $ && ! != -> . . _PORTBbits 0 0 `i -> 0 `i < _i -> 10000 `i 3260  ]
 [e :U 3261 ]
-"477
-[; ;MainCode.c: 477:         return 1;
-[e ) -> 1 `i ]
-[e $UE 3257  ]
+"515
+[; ;MainCode.c: 515:     if (i >= 10000)
+[e $ ! >= _i -> 10000 `i 3262  ]
+"516
+[; ;MainCode.c: 516:         return 0;
+[e ) -> 0 `i ]
+[e $UE 3258  ]
+[e $U 3263  ]
+"517
+[; ;MainCode.c: 517:     else
 [e :U 3262 ]
-"478
-[; ;MainCode.c: 478: }
-[e :UE 3257 ]
+"518
+[; ;MainCode.c: 518:         return 1;
+[e ) -> 1 `i ]
+[e $UE 3258  ]
+[e :U 3263 ]
+"519
+[; ;MainCode.c: 519: }
+[e :UE 3258 ]
 }
-"480
-[; ;MainCode.c: 480: int waitForSensor3(void) {
+"521
+[; ;MainCode.c: 521: int waitForSensor3(void) {
 [v _waitForSensor3 `(i ~T0 @X0 1 ef ]
 {
 [e :U _waitForSensor3 ]
 [f ]
-"481
-[; ;MainCode.c: 481:     int i = 0;
+"522
+[; ;MainCode.c: 522:     int i = 0;
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-"482
-[; ;MainCode.c: 482:     TMR1H = 0;
+"523
+[; ;MainCode.c: 523:     TMR1H = 0;
 [e = _TMR1H -> -> 0 `i `uc ]
-"483
-[; ;MainCode.c: 483:     TMR1L = 0;
+"524
+[; ;MainCode.c: 524:     TMR1L = 0;
 [e = _TMR1L -> -> 0 `i `uc ]
-"484
-[; ;MainCode.c: 484:     T1CONbits.TMR1ON = 1;
+"525
+[; ;MainCode.c: 525:     T1CONbits.TMR1ON = 1;
 [e = . . _T1CONbits 1 0 -> -> 1 `i `uc ]
-"485
-[; ;MainCode.c: 485:     while (!PORTAbits.RA5 && (i < 10000))
-[e $U 3264  ]
-[e :U 3265 ]
-"486
-[; ;MainCode.c: 486:         i = (TMR1H << 8) | TMR1L;
-[e = _i | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
-[e :U 3264 ]
-"485
-[; ;MainCode.c: 485:     while (!PORTAbits.RA5 && (i < 10000))
-[e $ && ! != -> . . _PORTAbits 0 5 `i -> 0 `i < _i -> 10000 `i 3265  ]
+"526
+[; ;MainCode.c: 526:     while (!PORTAbits.RA5 && (i < 10000))
+[e $U 3265  ]
 [e :U 3266 ]
-"487
-[; ;MainCode.c: 487:     if (i >= 10000)
-[e $ ! >= _i -> 10000 `i 3267  ]
-"488
-[; ;MainCode.c: 488:         return 0;
-[e ) -> 0 `i ]
-[e $UE 3263  ]
-[e $U 3268  ]
-"489
-[; ;MainCode.c: 489:     else
+"527
+[; ;MainCode.c: 527:         i = (TMR1H << 8) | TMR1L;
+[e = _i | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
+[e :U 3265 ]
+"526
+[; ;MainCode.c: 526:     while (!PORTAbits.RA5 && (i < 10000))
+[e $ && ! != -> . . _PORTAbits 0 5 `i -> 0 `i < _i -> 10000 `i 3266  ]
 [e :U 3267 ]
-"490
-[; ;MainCode.c: 490:         return 1;
-[e ) -> 1 `i ]
-[e $UE 3263  ]
+"528
+[; ;MainCode.c: 528:     if (i >= 10000)
+[e $ ! >= _i -> 10000 `i 3268  ]
+"529
+[; ;MainCode.c: 529:         return 0;
+[e ) -> 0 `i ]
+[e $UE 3264  ]
+[e $U 3269  ]
+"530
+[; ;MainCode.c: 530:     else
 [e :U 3268 ]
-"491
-[; ;MainCode.c: 491: }
-[e :UE 3263 ]
+"531
+[; ;MainCode.c: 531:         return 1;
+[e ) -> 1 `i ]
+[e $UE 3264  ]
+[e :U 3269 ]
+"532
+[; ;MainCode.c: 532: }
+[e :UE 3264 ]
 }
-"493
-[; ;MainCode.c: 493: int waitForSensor4(void) {
+"534
+[; ;MainCode.c: 534: int waitForSensor4(void) {
 [v _waitForSensor4 `(i ~T0 @X0 1 ef ]
 {
 [e :U _waitForSensor4 ]
 [f ]
-"494
-[; ;MainCode.c: 494:     int i = 0;
+"535
+[; ;MainCode.c: 535:     int i = 0;
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-"495
-[; ;MainCode.c: 495:     TMR1H = 0;
+"536
+[; ;MainCode.c: 536:     TMR1H = 0;
 [e = _TMR1H -> -> 0 `i `uc ]
-"496
-[; ;MainCode.c: 496:     TMR1L = 0;
+"537
+[; ;MainCode.c: 537:     TMR1L = 0;
 [e = _TMR1L -> -> 0 `i `uc ]
-"497
-[; ;MainCode.c: 497:     T1CONbits.TMR1ON = 1;
+"538
+[; ;MainCode.c: 538:     T1CONbits.TMR1ON = 1;
 [e = . . _T1CONbits 1 0 -> -> 1 `i `uc ]
-"498
-[; ;MainCode.c: 498:     while (!PORTBbits.RB4 && (i < 10000))
-[e $U 3270  ]
-[e :U 3271 ]
-"499
-[; ;MainCode.c: 499:         i = (TMR1H << 8) | TMR1L;
-[e = _i | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
-[e :U 3270 ]
-"498
-[; ;MainCode.c: 498:     while (!PORTBbits.RB4 && (i < 10000))
-[e $ && ! != -> . . _PORTBbits 0 4 `i -> 0 `i < _i -> 10000 `i 3271  ]
+"539
+[; ;MainCode.c: 539:     while (!PORTBbits.RB4 && (i < 10000))
+[e $U 3271  ]
 [e :U 3272 ]
-"500
-[; ;MainCode.c: 500:     if (i >= 10000)
-[e $ ! >= _i -> 10000 `i 3273  ]
-"501
-[; ;MainCode.c: 501:         return 0;
-[e ) -> 0 `i ]
-[e $UE 3269  ]
-[e $U 3274  ]
-"502
-[; ;MainCode.c: 502:     else
+"540
+[; ;MainCode.c: 540:         i = (TMR1H << 8) | TMR1L;
+[e = _i | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
+[e :U 3271 ]
+"539
+[; ;MainCode.c: 539:     while (!PORTBbits.RB4 && (i < 10000))
+[e $ && ! != -> . . _PORTBbits 0 4 `i -> 0 `i < _i -> 10000 `i 3272  ]
 [e :U 3273 ]
-"503
-[; ;MainCode.c: 503:         return 1;
-[e ) -> 1 `i ]
-[e $UE 3269  ]
+"541
+[; ;MainCode.c: 541:     if (i >= 10000)
+[e $ ! >= _i -> 10000 `i 3274  ]
+"542
+[; ;MainCode.c: 542:         return 0;
+[e ) -> 0 `i ]
+[e $UE 3270  ]
+[e $U 3275  ]
+"543
+[; ;MainCode.c: 543:     else
 [e :U 3274 ]
-"504
-[; ;MainCode.c: 504: }
-[e :UE 3269 ]
+"544
+[; ;MainCode.c: 544:         return 1;
+[e ) -> 1 `i ]
+[e $UE 3270  ]
+[e :U 3275 ]
+"545
+[; ;MainCode.c: 545: }
+[e :UE 3270 ]
 }
-"506
-[; ;MainCode.c: 506: int waitForSensor5(void) {
+"547
+[; ;MainCode.c: 547: int waitForSensor5(void) {
 [v _waitForSensor5 `(i ~T0 @X0 1 ef ]
 {
 [e :U _waitForSensor5 ]
 [f ]
-"507
-[; ;MainCode.c: 507:     int i = 0;
+"548
+[; ;MainCode.c: 548:     int i = 0;
 [v _i `i ~T0 @X0 1 a ]
 [e = _i -> 0 `i ]
-"508
-[; ;MainCode.c: 508:     TMR1H = 0;
+"549
+[; ;MainCode.c: 549:     TMR1H = 0;
 [e = _TMR1H -> -> 0 `i `uc ]
-"509
-[; ;MainCode.c: 509:     TMR1L = 0;
+"550
+[; ;MainCode.c: 550:     TMR1L = 0;
 [e = _TMR1L -> -> 0 `i `uc ]
-"510
-[; ;MainCode.c: 510:     T1CONbits.TMR1ON = 1;
+"551
+[; ;MainCode.c: 551:     T1CONbits.TMR1ON = 1;
 [e = . . _T1CONbits 1 0 -> -> 1 `i `uc ]
-"511
-[; ;MainCode.c: 511:     while (!PORTAbits.RA4 && (i < 10000))
-[e $U 3276  ]
-[e :U 3277 ]
-"512
-[; ;MainCode.c: 512:         i = (TMR1H << 8) | TMR1L;
-[e = _i | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
-[e :U 3276 ]
-"511
-[; ;MainCode.c: 511:     while (!PORTAbits.RA4 && (i < 10000))
-[e $ && ! != -> . . _PORTAbits 0 4 `i -> 0 `i < _i -> 10000 `i 3277  ]
+"552
+[; ;MainCode.c: 552:     while (!PORTAbits.RA4 && (i < 10000))
+[e $U 3277  ]
 [e :U 3278 ]
-"513
-[; ;MainCode.c: 513:     if (i >= 10000)
-[e $ ! >= _i -> 10000 `i 3279  ]
-"514
-[; ;MainCode.c: 514:         return 0;
-[e ) -> 0 `i ]
-[e $UE 3275  ]
-[e $U 3280  ]
-"515
-[; ;MainCode.c: 515:     else
+"553
+[; ;MainCode.c: 553:         i = (TMR1H << 8) | TMR1L;
+[e = _i | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
+[e :U 3277 ]
+"552
+[; ;MainCode.c: 552:     while (!PORTAbits.RA4 && (i < 10000))
+[e $ && ! != -> . . _PORTAbits 0 4 `i -> 0 `i < _i -> 10000 `i 3278  ]
 [e :U 3279 ]
-"516
-[; ;MainCode.c: 516:         return 1;
-[e ) -> 1 `i ]
-[e $UE 3275  ]
+"554
+[; ;MainCode.c: 554:     if (i >= 10000)
+[e $ ! >= _i -> 10000 `i 3280  ]
+"555
+[; ;MainCode.c: 555:         return 0;
+[e ) -> 0 `i ]
+[e $UE 3276  ]
+[e $U 3281  ]
+"556
+[; ;MainCode.c: 556:     else
 [e :U 3280 ]
-"517
-[; ;MainCode.c: 517: }
-[e :UE 3275 ]
+"557
+[; ;MainCode.c: 557:         return 1;
+[e ) -> 1 `i ]
+[e $UE 3276  ]
+[e :U 3281 ]
+"558
+[; ;MainCode.c: 558: }
+[e :UE 3276 ]
 }
-"519
-[; ;MainCode.c: 519: int getDistance1(void) {
+"560
+[; ;MainCode.c: 560: int getDistance1(void) {
 [v _getDistance1 `(i ~T0 @X0 1 ef ]
 {
 [e :U _getDistance1 ]
 [f ]
-"520
-[; ;MainCode.c: 520:     int ticks = 0;
+"561
+[; ;MainCode.c: 561:     int ticks = 0;
 [v _ticks `i ~T0 @X0 1 a ]
 [e = _ticks -> 0 `i ]
-"521
-[; ;MainCode.c: 521:     TMR1H = 0;
+"562
+[; ;MainCode.c: 562:     TMR1H = 0;
 [e = _TMR1H -> -> 0 `i `uc ]
-"522
-[; ;MainCode.c: 522:     TMR1L = 0;
+"563
+[; ;MainCode.c: 563:     TMR1L = 0;
 [e = _TMR1L -> -> 0 `i `uc ]
-"524
-[; ;MainCode.c: 524:     while (PORTBbits.RB1 && (ticks < 15000))
-[e $U 3282  ]
-[e :U 3283 ]
-"525
-[; ;MainCode.c: 525:         ticks = (TMR1H << 8) | TMR1L;
-[e = _ticks | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
-[e :U 3282 ]
-"524
-[; ;MainCode.c: 524:     while (PORTBbits.RB1 && (ticks < 15000))
-[e $ && != -> . . _PORTBbits 0 1 `i -> 0 `i < _ticks -> 15000 `i 3283  ]
+"565
+[; ;MainCode.c: 565:     while (PORTBbits.RB1 && (ticks < 15000))
+[e $U 3283  ]
 [e :U 3284 ]
-"527
-[; ;MainCode.c: 527:     T1CONbits.TMR1ON = 0;
-[e = . . _T1CONbits 1 0 -> -> 0 `i `uc ]
-"529
-[; ;MainCode.c: 529:     if (ticks >= 15000)
-[e $ ! >= _ticks -> 15000 `i 3285  ]
-"530
-[; ;MainCode.c: 530:         return -1;
-[e ) -U -> 1 `i ]
-[e $UE 3281  ]
-[e $U 3286  ]
-"532
-[; ;MainCode.c: 532:     else
+"566
+[; ;MainCode.c: 566:         ticks = (TMR1H << 8) | TMR1L;
+[e = _ticks | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
+[e :U 3283 ]
+"565
+[; ;MainCode.c: 565:     while (PORTBbits.RB1 && (ticks < 15000))
+[e $ && != -> . . _PORTBbits 0 1 `i -> 0 `i < _ticks -> 15000 `i 3284  ]
 [e :U 3285 ]
-"533
-[; ;MainCode.c: 533:         return ticks;
-[e ) _ticks ]
-[e $UE 3281  ]
+"568
+[; ;MainCode.c: 568:     T1CONbits.TMR1ON = 0;
+[e = . . _T1CONbits 1 0 -> -> 0 `i `uc ]
+"570
+[; ;MainCode.c: 570:     if (ticks >= 15000)
+[e $ ! >= _ticks -> 15000 `i 3286  ]
+"571
+[; ;MainCode.c: 571:         return -1;
+[e ) -U -> 1 `i ]
+[e $UE 3282  ]
+[e $U 3287  ]
+"573
+[; ;MainCode.c: 573:     else
 [e :U 3286 ]
-"534
-[; ;MainCode.c: 534: }
-[e :UE 3281 ]
+"574
+[; ;MainCode.c: 574:         return ticks;
+[e ) _ticks ]
+[e $UE 3282  ]
+[e :U 3287 ]
+"575
+[; ;MainCode.c: 575: }
+[e :UE 3282 ]
 }
-"536
-[; ;MainCode.c: 536: int getDistance2(void) {
+"577
+[; ;MainCode.c: 577: int getDistance2(void) {
 [v _getDistance2 `(i ~T0 @X0 1 ef ]
 {
 [e :U _getDistance2 ]
 [f ]
-"537
-[; ;MainCode.c: 537:     int ticks = 0;
+"578
+[; ;MainCode.c: 578:     int ticks = 0;
 [v _ticks `i ~T0 @X0 1 a ]
 [e = _ticks -> 0 `i ]
-"538
-[; ;MainCode.c: 538:     TMR1H = 0;
+"579
+[; ;MainCode.c: 579:     TMR1H = 0;
 [e = _TMR1H -> -> 0 `i `uc ]
-"539
-[; ;MainCode.c: 539:     TMR1L = 0;
+"580
+[; ;MainCode.c: 580:     TMR1L = 0;
 [e = _TMR1L -> -> 0 `i `uc ]
-"541
-[; ;MainCode.c: 541:     while (PORTBbits.RB0 && (ticks < 15000))
-[e $U 3288  ]
-[e :U 3289 ]
-"542
-[; ;MainCode.c: 542:         ticks = (TMR1H << 8) | TMR1L;
-[e = _ticks | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
-[e :U 3288 ]
-"541
-[; ;MainCode.c: 541:     while (PORTBbits.RB0 && (ticks < 15000))
-[e $ && != -> . . _PORTBbits 0 0 `i -> 0 `i < _ticks -> 15000 `i 3289  ]
+"582
+[; ;MainCode.c: 582:     while (PORTBbits.RB0 && (ticks < 15000))
+[e $U 3289  ]
 [e :U 3290 ]
-"544
-[; ;MainCode.c: 544:     T1CONbits.TMR1ON = 0;
-[e = . . _T1CONbits 1 0 -> -> 0 `i `uc ]
-"546
-[; ;MainCode.c: 546:     if (ticks >= 15000)
-[e $ ! >= _ticks -> 15000 `i 3291  ]
-"547
-[; ;MainCode.c: 547:         return -1;
-[e ) -U -> 1 `i ]
-[e $UE 3287  ]
-[e $U 3292  ]
-"549
-[; ;MainCode.c: 549:     else
+"583
+[; ;MainCode.c: 583:         ticks = (TMR1H << 8) | TMR1L;
+[e = _ticks | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
+[e :U 3289 ]
+"582
+[; ;MainCode.c: 582:     while (PORTBbits.RB0 && (ticks < 15000))
+[e $ && != -> . . _PORTBbits 0 0 `i -> 0 `i < _ticks -> 15000 `i 3290  ]
 [e :U 3291 ]
-"550
-[; ;MainCode.c: 550:         return ticks;
-[e ) _ticks ]
-[e $UE 3287  ]
+"585
+[; ;MainCode.c: 585:     T1CONbits.TMR1ON = 0;
+[e = . . _T1CONbits 1 0 -> -> 0 `i `uc ]
+"587
+[; ;MainCode.c: 587:     if (ticks >= 15000)
+[e $ ! >= _ticks -> 15000 `i 3292  ]
+"588
+[; ;MainCode.c: 588:         return -1;
+[e ) -U -> 1 `i ]
+[e $UE 3288  ]
+[e $U 3293  ]
+"590
+[; ;MainCode.c: 590:     else
 [e :U 3292 ]
-"551
-[; ;MainCode.c: 551: }
-[e :UE 3287 ]
+"591
+[; ;MainCode.c: 591:         return ticks;
+[e ) _ticks ]
+[e $UE 3288  ]
+[e :U 3293 ]
+"592
+[; ;MainCode.c: 592: }
+[e :UE 3288 ]
 }
-"553
-[; ;MainCode.c: 553: int getDistance3(void) {
+"594
+[; ;MainCode.c: 594: int getDistance3(void) {
 [v _getDistance3 `(i ~T0 @X0 1 ef ]
 {
 [e :U _getDistance3 ]
 [f ]
-"554
-[; ;MainCode.c: 554:     int ticks = 0;
+"595
+[; ;MainCode.c: 595:     int ticks = 0;
 [v _ticks `i ~T0 @X0 1 a ]
 [e = _ticks -> 0 `i ]
-"555
-[; ;MainCode.c: 555:     TMR1H = 0;
+"596
+[; ;MainCode.c: 596:     TMR1H = 0;
 [e = _TMR1H -> -> 0 `i `uc ]
-"556
-[; ;MainCode.c: 556:     TMR1L = 0;
+"597
+[; ;MainCode.c: 597:     TMR1L = 0;
 [e = _TMR1L -> -> 0 `i `uc ]
-"558
-[; ;MainCode.c: 558:     while (PORTAbits.RA5 && (ticks < 15000))
-[e $U 3294  ]
-[e :U 3295 ]
-"559
-[; ;MainCode.c: 559:         ticks = (TMR1H << 8) | TMR1L;
-[e = _ticks | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
-[e :U 3294 ]
-"558
-[; ;MainCode.c: 558:     while (PORTAbits.RA5 && (ticks < 15000))
-[e $ && != -> . . _PORTAbits 0 5 `i -> 0 `i < _ticks -> 15000 `i 3295  ]
+"599
+[; ;MainCode.c: 599:     while (PORTAbits.RA5 && (ticks < 15000))
+[e $U 3295  ]
 [e :U 3296 ]
-"561
-[; ;MainCode.c: 561:     T1CONbits.TMR1ON = 0;
-[e = . . _T1CONbits 1 0 -> -> 0 `i `uc ]
-"563
-[; ;MainCode.c: 563:     if (ticks >= 15000)
-[e $ ! >= _ticks -> 15000 `i 3297  ]
-"564
-[; ;MainCode.c: 564:         return -1;
-[e ) -U -> 1 `i ]
-[e $UE 3293  ]
-[e $U 3298  ]
-"566
-[; ;MainCode.c: 566:     else
+"600
+[; ;MainCode.c: 600:         ticks = (TMR1H << 8) | TMR1L;
+[e = _ticks | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
+[e :U 3295 ]
+"599
+[; ;MainCode.c: 599:     while (PORTAbits.RA5 && (ticks < 15000))
+[e $ && != -> . . _PORTAbits 0 5 `i -> 0 `i < _ticks -> 15000 `i 3296  ]
 [e :U 3297 ]
-"567
-[; ;MainCode.c: 567:         return ticks;
-[e ) _ticks ]
-[e $UE 3293  ]
+"602
+[; ;MainCode.c: 602:     T1CONbits.TMR1ON = 0;
+[e = . . _T1CONbits 1 0 -> -> 0 `i `uc ]
+"604
+[; ;MainCode.c: 604:     if (ticks >= 15000)
+[e $ ! >= _ticks -> 15000 `i 3298  ]
+"605
+[; ;MainCode.c: 605:         return -1;
+[e ) -U -> 1 `i ]
+[e $UE 3294  ]
+[e $U 3299  ]
+"607
+[; ;MainCode.c: 607:     else
 [e :U 3298 ]
-"568
-[; ;MainCode.c: 568: }
-[e :UE 3293 ]
+"608
+[; ;MainCode.c: 608:         return ticks;
+[e ) _ticks ]
+[e $UE 3294  ]
+[e :U 3299 ]
+"609
+[; ;MainCode.c: 609: }
+[e :UE 3294 ]
 }
-"570
-[; ;MainCode.c: 570: int getDistance4(void) {
+"611
+[; ;MainCode.c: 611: int getDistance4(void) {
 [v _getDistance4 `(i ~T0 @X0 1 ef ]
 {
 [e :U _getDistance4 ]
 [f ]
-"571
-[; ;MainCode.c: 571:     int ticks = 0;
+"612
+[; ;MainCode.c: 612:     int ticks = 0;
 [v _ticks `i ~T0 @X0 1 a ]
 [e = _ticks -> 0 `i ]
-"572
-[; ;MainCode.c: 572:     TMR1H = 0;
+"613
+[; ;MainCode.c: 613:     TMR1H = 0;
 [e = _TMR1H -> -> 0 `i `uc ]
-"573
-[; ;MainCode.c: 573:     TMR1L = 0;
+"614
+[; ;MainCode.c: 614:     TMR1L = 0;
 [e = _TMR1L -> -> 0 `i `uc ]
-"575
-[; ;MainCode.c: 575:     while (PORTBbits.RB4 && (ticks < 15000))
-[e $U 3300  ]
-[e :U 3301 ]
-"576
-[; ;MainCode.c: 576:         ticks = (TMR1H << 8) | TMR1L;
-[e = _ticks | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
-[e :U 3300 ]
-"575
-[; ;MainCode.c: 575:     while (PORTBbits.RB4 && (ticks < 15000))
-[e $ && != -> . . _PORTBbits 0 4 `i -> 0 `i < _ticks -> 15000 `i 3301  ]
+"616
+[; ;MainCode.c: 616:     while (PORTBbits.RB4 && (ticks < 15000))
+[e $U 3301  ]
 [e :U 3302 ]
-"578
-[; ;MainCode.c: 578:     T1CONbits.TMR1ON = 0;
-[e = . . _T1CONbits 1 0 -> -> 0 `i `uc ]
-"580
-[; ;MainCode.c: 580:     if (ticks >= 15000)
-[e $ ! >= _ticks -> 15000 `i 3303  ]
-"581
-[; ;MainCode.c: 581:         return -1;
-[e ) -U -> 1 `i ]
-[e $UE 3299  ]
-[e $U 3304  ]
-"583
-[; ;MainCode.c: 583:     else
+"617
+[; ;MainCode.c: 617:         ticks = (TMR1H << 8) | TMR1L;
+[e = _ticks | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
+[e :U 3301 ]
+"616
+[; ;MainCode.c: 616:     while (PORTBbits.RB4 && (ticks < 15000))
+[e $ && != -> . . _PORTBbits 0 4 `i -> 0 `i < _ticks -> 15000 `i 3302  ]
 [e :U 3303 ]
-"584
-[; ;MainCode.c: 584:         return ticks;
-[e ) _ticks ]
-[e $UE 3299  ]
+"619
+[; ;MainCode.c: 619:     T1CONbits.TMR1ON = 0;
+[e = . . _T1CONbits 1 0 -> -> 0 `i `uc ]
+"621
+[; ;MainCode.c: 621:     if (ticks >= 15000)
+[e $ ! >= _ticks -> 15000 `i 3304  ]
+"622
+[; ;MainCode.c: 622:         return -1;
+[e ) -U -> 1 `i ]
+[e $UE 3300  ]
+[e $U 3305  ]
+"624
+[; ;MainCode.c: 624:     else
 [e :U 3304 ]
-"585
-[; ;MainCode.c: 585: }
-[e :UE 3299 ]
+"625
+[; ;MainCode.c: 625:         return ticks;
+[e ) _ticks ]
+[e $UE 3300  ]
+[e :U 3305 ]
+"626
+[; ;MainCode.c: 626: }
+[e :UE 3300 ]
 }
-"587
-[; ;MainCode.c: 587: int getDistance5(void) {
+"628
+[; ;MainCode.c: 628: int getDistance5(void) {
 [v _getDistance5 `(i ~T0 @X0 1 ef ]
 {
 [e :U _getDistance5 ]
 [f ]
-"588
-[; ;MainCode.c: 588:     int ticks = 0;
+"629
+[; ;MainCode.c: 629:     int ticks = 0;
 [v _ticks `i ~T0 @X0 1 a ]
 [e = _ticks -> 0 `i ]
-"589
-[; ;MainCode.c: 589:     TMR1H = 0;
+"630
+[; ;MainCode.c: 630:     TMR1H = 0;
 [e = _TMR1H -> -> 0 `i `uc ]
-"590
-[; ;MainCode.c: 590:     TMR1L = 0;
+"631
+[; ;MainCode.c: 631:     TMR1L = 0;
 [e = _TMR1L -> -> 0 `i `uc ]
-"592
-[; ;MainCode.c: 592:     while (PORTAbits.RA4 && (ticks < 15000))
-[e $U 3306  ]
-[e :U 3307 ]
-"593
-[; ;MainCode.c: 593:         ticks = (TMR1H << 8) | TMR1L;
-[e = _ticks | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
-[e :U 3306 ]
-"592
-[; ;MainCode.c: 592:     while (PORTAbits.RA4 && (ticks < 15000))
-[e $ && != -> . . _PORTAbits 0 4 `i -> 0 `i < _ticks -> 15000 `i 3307  ]
+"633
+[; ;MainCode.c: 633:     while (PORTAbits.RA4 && (ticks < 15000))
+[e $U 3307  ]
 [e :U 3308 ]
-"595
-[; ;MainCode.c: 595:     T1CONbits.TMR1ON = 0;
-[e = . . _T1CONbits 1 0 -> -> 0 `i `uc ]
-"597
-[; ;MainCode.c: 597:     if (ticks >= 15000)
-[e $ ! >= _ticks -> 15000 `i 3309  ]
-"598
-[; ;MainCode.c: 598:         return -1;
-[e ) -U -> 1 `i ]
-[e $UE 3305  ]
-[e $U 3310  ]
-"600
-[; ;MainCode.c: 600:     else
+"634
+[; ;MainCode.c: 634:         ticks = (TMR1H << 8) | TMR1L;
+[e = _ticks | << -> _TMR1H `i -> 8 `i -> _TMR1L `i ]
+[e :U 3307 ]
+"633
+[; ;MainCode.c: 633:     while (PORTAbits.RA4 && (ticks < 15000))
+[e $ && != -> . . _PORTAbits 0 4 `i -> 0 `i < _ticks -> 15000 `i 3308  ]
 [e :U 3309 ]
-"601
-[; ;MainCode.c: 601:         return ticks;
-[e ) _ticks ]
-[e $UE 3305  ]
+"636
+[; ;MainCode.c: 636:     T1CONbits.TMR1ON = 0;
+[e = . . _T1CONbits 1 0 -> -> 0 `i `uc ]
+"638
+[; ;MainCode.c: 638:     if (ticks >= 15000)
+[e $ ! >= _ticks -> 15000 `i 3310  ]
+"639
+[; ;MainCode.c: 639:         return -1;
+[e ) -U -> 1 `i ]
+[e $UE 3306  ]
+[e $U 3311  ]
+"641
+[; ;MainCode.c: 641:     else
 [e :U 3310 ]
-"602
-[; ;MainCode.c: 602: }
-[e :UE 3305 ]
+"642
+[; ;MainCode.c: 642:         return ticks;
+[e ) _ticks ]
+[e $UE 3306  ]
+[e :U 3311 ]
+"643
+[; ;MainCode.c: 643: }
+[e :UE 3306 ]
 }
-"604
-[; ;MainCode.c: 604: void wait2US(void) {
+"645
+[; ;MainCode.c: 645: void wait2US(void) {
 [v _wait2US `(v ~T0 @X0 1 ef ]
 {
 [e :U _wait2US ]
 [f ]
-"605
-[; ;MainCode.c: 605:     for (long i = 0; i < 2; i++) {
+"646
+[; ;MainCode.c: 646:     for (long i = 0; i < 2; i++) {
 {
 [v _i `l ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `l ]
-[e $ < _i -> -> 2 `i `l 3312  ]
-[e $U 3313  ]
-[e :U 3312 ]
+[e $ < _i -> -> 2 `i `l 3313  ]
+[e $U 3314  ]
+[e :U 3313 ]
 {
-"606
-[; ;MainCode.c: 606:         __nop();
+"647
+[; ;MainCode.c: 647:         __nop();
 [e ( ___nop ..  ]
-"607
-[; ;MainCode.c: 607:     }
+"648
+[; ;MainCode.c: 648:     }
 }
 [e ++ _i -> -> 1 `i `l ]
-[e $ < _i -> -> 2 `i `l 3312  ]
-[e :U 3313 ]
+[e $ < _i -> -> 2 `i `l 3313  ]
+[e :U 3314 ]
 }
-"608
-[; ;MainCode.c: 608: }
-[e :UE 3311 ]
+"649
+[; ;MainCode.c: 649: }
+[e :UE 3312 ]
 }
-"610
-[; ;MainCode.c: 610: void wait10US(void) {
+"651
+[; ;MainCode.c: 651: void wait10US(void) {
 [v _wait10US `(v ~T0 @X0 1 ef ]
 {
 [e :U _wait10US ]
 [f ]
-"611
-[; ;MainCode.c: 611:     for (long i = 0; i < 6; i++) {
+"652
+[; ;MainCode.c: 652:     for (long i = 0; i < 6; i++) {
 {
 [v _i `l ~T0 @X0 1 a ]
 [e = _i -> -> 0 `i `l ]
-[e $ < _i -> -> 6 `i `l 3316  ]
-[e $U 3317  ]
-[e :U 3316 ]
+[e $ < _i -> -> 6 `i `l 3317  ]
+[e $U 3318  ]
+[e :U 3317 ]
 {
-"612
-[; ;MainCode.c: 612:         __nop();
+"653
+[; ;MainCode.c: 653:         __nop();
 [e ( ___nop ..  ]
-"613
-[; ;MainCode.c: 613:     }
+"654
+[; ;MainCode.c: 654:     }
 }
 [e ++ _i -> -> 1 `i `l ]
-[e $ < _i -> -> 6 `i `l 3316  ]
-[e :U 3317 ]
+[e $ < _i -> -> 6 `i `l 3317  ]
+[e :U 3318 ]
 }
-"614
-[; ;MainCode.c: 614: }
-[e :UE 3315 ]
+"655
+[; ;MainCode.c: 655: }
+[e :UE 3316 ]
 }
-"616
-[; ;MainCode.c: 616: void initCAN(void) {
+"657
+[; ;MainCode.c: 657: void initCAN(void) {
 [v _initCAN `(v ~T0 @X0 1 ef ]
 {
 [e :U _initCAN ]
 [f ]
-"621
-[; ;MainCode.c: 621:     RB2PPS = 0b110011;
+"662
+[; ;MainCode.c: 662:     RB2PPS = 0b110011;
 [e = _RB2PPS -> -> 51 `i `uc ]
-"623
-[; ;MainCode.c: 623:     TRISBbits.TRISB2 = 0;
+"664
+[; ;MainCode.c: 664:     TRISBbits.TRISB2 = 0;
 [e = . . _TRISBbits 0 2 -> -> 0 `i `uc ]
-"624
-[; ;MainCode.c: 624:     TRISBbits.TRISB3 = 1;
+"665
+[; ;MainCode.c: 665:     TRISBbits.TRISB3 = 1;
 [e = . . _TRISBbits 0 3 -> -> 1 `i `uc ]
-"626
-[; ;MainCode.c: 626:     ANSELBbits.ANSELB2 = 0;
+"667
+[; ;MainCode.c: 667:     ANSELBbits.ANSELB2 = 0;
 [e = . . _ANSELBbits 0 2 -> -> 0 `i `uc ]
-"627
-[; ;MainCode.c: 627:     ANSELBbits.ANSELB3 = 0;
+"668
+[; ;MainCode.c: 668:     ANSELBbits.ANSELB3 = 0;
 [e = . . _ANSELBbits 0 3 -> -> 0 `i `uc ]
-"629
-[; ;MainCode.c: 629:     CANCONbits.REQOP2 = 1;
+"670
+[; ;MainCode.c: 670:     CANCONbits.REQOP2 = 1;
 [e = . . _CANCONbits 2 7 -> -> 1 `i `uc ]
-"630
-[; ;MainCode.c: 630:     CANCONbits.REQOP1 = 0;
+"671
+[; ;MainCode.c: 671:     CANCONbits.REQOP1 = 0;
 [e = . . _CANCONbits 2 6 -> -> 0 `i `uc ]
-"631
-[; ;MainCode.c: 631:     CANCONbits.REQOP0 = 0;
+"672
+[; ;MainCode.c: 672:     CANCONbits.REQOP0 = 0;
 [e = . . _CANCONbits 2 5 -> -> 0 `i `uc ]
-"633
-[; ;MainCode.c: 633:     while (CANSTATbits.OPMODE != 0b100);
-[e $U 3320  ]
-[e :U 3321 ]
-[e :U 3320 ]
-[e $ != -> . . _CANSTATbits 0 5 `i -> 4 `i 3321  ]
+"674
+[; ;MainCode.c: 674:     while (CANSTATbits.OPMODE != 0b100);
+[e $U 3321  ]
 [e :U 3322 ]
-"635
-[; ;MainCode.c: 635:     BRGCON1bits.BRP = 0b011111;
-[e = . . _BRGCON1bits 1 0 -> -> 31 `i `uc ]
-"637
-[; ;MainCode.c: 637:     RXF0SIDH = 0;
-[e = _RXF0SIDH -> -> 0 `i `uc ]
-"638
-[; ;MainCode.c: 638:     RXF0SIDLbits.SID = 1;
-[e = . . _RXF0SIDLbits 2 2 -> -> 1 `i `uc ]
-"639
-[; ;MainCode.c: 639:     RXF0SIDLbits.EXIDEN = 0;
-[e = . . _RXF0SIDLbits 0 3 -> -> 0 `i `uc ]
-"640
-[; ;MainCode.c: 640:     RXM0SIDH = 255;
-[e = _RXM0SIDH -> -> 255 `i `uc ]
-"641
-[; ;MainCode.c: 641:     RXM0SIDLbits.SID = 0b111;
-[e = . . _RXM0SIDLbits 2 2 -> -> 7 `i `uc ]
-"642
-[; ;MainCode.c: 642:     RXB0CONbits.RXM1 = 0;
-[e = . . _RXB0CONbits 0 6 -> -> 0 `i `uc ]
-"643
-[; ;MainCode.c: 643:     RXB0CONbits.RXM0 = 1;
-[e = . . _RXB0CONbits 2 5 -> -> 1 `i `uc ]
-"644
-[; ;MainCode.c: 644:     RXB0CONbits.FILHIT0 = 0;
-[e = . . _RXB0CONbits 0 0 -> -> 0 `i `uc ]
-"646
-[; ;MainCode.c: 646:     RXF1SIDH = 255;
-[e = _RXF1SIDH -> -> 255 `i `uc ]
-"647
-[; ;MainCode.c: 647:     RXF1SIDLbits.SID = 0b111;
-[e = . . _RXF1SIDLbits 2 2 -> -> 7 `i `uc ]
-"648
-[; ;MainCode.c: 648:     RXF1SIDLbits.EXIDEN = 0;
-[e = . . _RXF1SIDLbits 0 3 -> -> 0 `i `uc ]
-"649
-[; ;MainCode.c: 649:     RXM1SIDH = 255;
-[e = _RXM1SIDH -> -> 255 `i `uc ]
-"650
-[; ;MainCode.c: 650:     RXM1SIDLbits.SID = 0b111;
-[e = . . _RXM1SIDLbits 2 2 -> -> 7 `i `uc ]
-"651
-[; ;MainCode.c: 651:     RXB1CONbits.RXM1 = 0;
-[e = . . _RXB1CONbits 0 6 -> -> 0 `i `uc ]
-"652
-[; ;MainCode.c: 652:     RXB1CONbits.RXM0 = 1;
-[e = . . _RXB1CONbits 1 3 -> -> 1 `i `uc ]
-"653
-[; ;MainCode.c: 653:     RXB1CONbits.FILHIT0 = 0;
-[e = . . _RXB1CONbits 0 0 -> -> 0 `i `uc ]
-"655
-[; ;MainCode.c: 655:     CANCONbits.REQOP = 0b000;
-[e = . . _CANCONbits 0 5 -> -> 0 `i `uc ]
-"657
-[; ;MainCode.c: 657:     while (CANSTATbits.OPMODE != 0b000);
-[e $U 3323  ]
-[e :U 3324 ]
+[e :U 3321 ]
+[e $ != -> . . _CANSTATbits 0 5 `i -> 4 `i 3322  ]
 [e :U 3323 ]
-[e $ != -> . . _CANSTATbits 0 5 `i -> 0 `i 3324  ]
+"676
+[; ;MainCode.c: 676:     BRGCON1bits.BRP = 0b011111;
+[e = . . _BRGCON1bits 1 0 -> -> 31 `i `uc ]
+"678
+[; ;MainCode.c: 678:     RXF0SIDH = 0;
+[e = _RXF0SIDH -> -> 0 `i `uc ]
+"679
+[; ;MainCode.c: 679:     RXF0SIDLbits.SID = 1;
+[e = . . _RXF0SIDLbits 2 2 -> -> 1 `i `uc ]
+"680
+[; ;MainCode.c: 680:     RXF0SIDLbits.EXIDEN = 0;
+[e = . . _RXF0SIDLbits 0 3 -> -> 0 `i `uc ]
+"681
+[; ;MainCode.c: 681:     RXM0SIDH = 255;
+[e = _RXM0SIDH -> -> 255 `i `uc ]
+"682
+[; ;MainCode.c: 682:     RXM0SIDLbits.SID = 0b111;
+[e = . . _RXM0SIDLbits 2 2 -> -> 7 `i `uc ]
+"683
+[; ;MainCode.c: 683:     RXB0CONbits.RXM1 = 0;
+[e = . . _RXB0CONbits 0 6 -> -> 0 `i `uc ]
+"684
+[; ;MainCode.c: 684:     RXB0CONbits.RXM0 = 1;
+[e = . . _RXB0CONbits 2 5 -> -> 1 `i `uc ]
+"685
+[; ;MainCode.c: 685:     RXB0CONbits.FILHIT0 = 0;
+[e = . . _RXB0CONbits 0 0 -> -> 0 `i `uc ]
+"687
+[; ;MainCode.c: 687:     RXF1SIDH = 255;
+[e = _RXF1SIDH -> -> 255 `i `uc ]
+"688
+[; ;MainCode.c: 688:     RXF1SIDLbits.SID = 0b111;
+[e = . . _RXF1SIDLbits 2 2 -> -> 7 `i `uc ]
+"689
+[; ;MainCode.c: 689:     RXF1SIDLbits.EXIDEN = 0;
+[e = . . _RXF1SIDLbits 0 3 -> -> 0 `i `uc ]
+"690
+[; ;MainCode.c: 690:     RXM1SIDH = 255;
+[e = _RXM1SIDH -> -> 255 `i `uc ]
+"691
+[; ;MainCode.c: 691:     RXM1SIDLbits.SID = 0b111;
+[e = . . _RXM1SIDLbits 2 2 -> -> 7 `i `uc ]
+"692
+[; ;MainCode.c: 692:     RXB1CONbits.RXM1 = 0;
+[e = . . _RXB1CONbits 0 6 -> -> 0 `i `uc ]
+"693
+[; ;MainCode.c: 693:     RXB1CONbits.RXM0 = 1;
+[e = . . _RXB1CONbits 1 3 -> -> 1 `i `uc ]
+"694
+[; ;MainCode.c: 694:     RXB1CONbits.FILHIT0 = 0;
+[e = . . _RXB1CONbits 0 0 -> -> 0 `i `uc ]
+"696
+[; ;MainCode.c: 696:     CANCONbits.REQOP = 0b000;
+[e = . . _CANCONbits 0 5 -> -> 0 `i `uc ]
+"698
+[; ;MainCode.c: 698:     while (CANSTATbits.OPMODE != 0b000);
+[e $U 3324  ]
 [e :U 3325 ]
-"659
-[; ;MainCode.c: 659: }
-[e :UE 3319 ]
+[e :U 3324 ]
+[e $ != -> . . _CANSTATbits 0 5 `i -> 0 `i 3325  ]
+[e :U 3326 ]
+"700
+[; ;MainCode.c: 700: }
+[e :UE 3320 ]
 }
-"661
-[; ;MainCode.c: 661: void sendCANmessage(int id, int message [8], int length) {
+"702
+[; ;MainCode.c: 702: void sendCANmessage(int id, int message [8], int length) {
 [v _sendCANmessage `(v ~T0 @X0 1 ef3`i`*i`i ]
 {
 [e :U _sendCANmessage ]
@@ -5461,99 +5603,99 @@ Version 4.0 HI-TECH Software Intermediate Code
 [v _message `*i ~T0 @X0 1 r2 ]
 [v _length `i ~T0 @X0 1 r3 ]
 [f ]
-"662
-[; ;MainCode.c: 662:     TXB0CONbits.TXREQ = 0;
+"703
+[; ;MainCode.c: 703:     TXB0CONbits.TXREQ = 0;
 [e = . . _TXB0CONbits 0 2 -> -> 0 `i `uc ]
-"664
-[; ;MainCode.c: 664:     CANCONbits.WIN = 0b000;
+"705
+[; ;MainCode.c: 705:     CANCONbits.WIN = 0b000;
 [e = . . _CANCONbits 1 1 -> -> 0 `i `uc ]
-"666
-[; ;MainCode.c: 666:     TXB0CONbits.TXPRI = 0b11;
+"707
+[; ;MainCode.c: 707:     TXB0CONbits.TXPRI = 0b11;
 [e = . . _TXB0CONbits 0 0 -> -> 3 `i `uc ]
-"668
-[; ;MainCode.c: 668:     TXB0D0 = message[0];
+"709
+[; ;MainCode.c: 709:     TXB0D0 = message[0];
 [e = _TXB0D0 -> *U + _message * -> -> 0 `i `x -> -> # *U _message `i `x `uc ]
-"669
-[; ;MainCode.c: 669:     TXB0D1 = message[1];
+"710
+[; ;MainCode.c: 710:     TXB0D1 = message[1];
 [e = _TXB0D1 -> *U + _message * -> -> 1 `i `x -> -> # *U _message `i `x `uc ]
-"670
-[; ;MainCode.c: 670:     TXB0D2 = message[2];
+"711
+[; ;MainCode.c: 711:     TXB0D2 = message[2];
 [e = _TXB0D2 -> *U + _message * -> -> 2 `i `x -> -> # *U _message `i `x `uc ]
-"671
-[; ;MainCode.c: 671:     TXB0D3 = message[3];
+"712
+[; ;MainCode.c: 712:     TXB0D3 = message[3];
 [e = _TXB0D3 -> *U + _message * -> -> 3 `i `x -> -> # *U _message `i `x `uc ]
-"672
-[; ;MainCode.c: 672:     TXB0D4 = message[4];
+"713
+[; ;MainCode.c: 713:     TXB0D4 = message[4];
 [e = _TXB0D4 -> *U + _message * -> -> 4 `i `x -> -> # *U _message `i `x `uc ]
-"673
-[; ;MainCode.c: 673:     TXB0D5 = message[5];
+"714
+[; ;MainCode.c: 714:     TXB0D5 = message[5];
 [e = _TXB0D5 -> *U + _message * -> -> 5 `i `x -> -> # *U _message `i `x `uc ]
-"674
-[; ;MainCode.c: 674:     TXB0D6 = message[6];
+"715
+[; ;MainCode.c: 715:     TXB0D6 = message[6];
 [e = _TXB0D6 -> *U + _message * -> -> 6 `i `x -> -> # *U _message `i `x `uc ]
-"675
-[; ;MainCode.c: 675:     TXB0D7 = message[7];
+"716
+[; ;MainCode.c: 716:     TXB0D7 = message[7];
 [e = _TXB0D7 -> *U + _message * -> -> 7 `i `x -> -> # *U _message `i `x `uc ]
-"677
-[; ;MainCode.c: 677:     TXB0SIDLbits.SID = id;
+"718
+[; ;MainCode.c: 718:     TXB0SIDLbits.SID = id;
 [e = . . _TXB0SIDLbits 2 2 -> _id `uc ]
-"678
-[; ;MainCode.c: 678:     TXB0SIDH = id >> 3;
+"719
+[; ;MainCode.c: 719:     TXB0SIDH = id >> 3;
 [e = _TXB0SIDH -> >> _id -> 3 `i `uc ]
-"680
-[; ;MainCode.c: 680:     TXB0DLCbits.DLC = length;
+"721
+[; ;MainCode.c: 721:     TXB0DLCbits.DLC = length;
 [e = . . _TXB0DLCbits 0 0 -> _length `uc ]
-"681
-[; ;MainCode.c: 681:     TXB0DLCbits.TXRTR = 0;
+"722
+[; ;MainCode.c: 722:     TXB0DLCbits.TXRTR = 0;
 [e = . . _TXB0DLCbits 0 2 -> -> 0 `i `uc ]
-"683
-[; ;MainCode.c: 683:     TXB0CONbits.TXREQ = 1;
+"724
+[; ;MainCode.c: 724:     TXB0CONbits.TXREQ = 1;
 [e = . . _TXB0CONbits 0 2 -> -> 1 `i `uc ]
-"685
-[; ;MainCode.c: 685:     while (TXB0CONbits.TXREQ == 0);
-[e $U 3327  ]
-[e :U 3328 ]
-[e :U 3327 ]
-[e $ == -> . . _TXB0CONbits 0 2 `i -> 0 `i 3328  ]
+"726
+[; ;MainCode.c: 726:     while (TXB0CONbits.TXREQ == 0);
+[e $U 3328  ]
 [e :U 3329 ]
-"686
-[; ;MainCode.c: 686: }
-[e :UE 3326 ]
+[e :U 3328 ]
+[e $ == -> . . _TXB0CONbits 0 2 `i -> 0 `i 3329  ]
+[e :U 3330 ]
+"727
+[; ;MainCode.c: 727: }
+[e :UE 3327 ]
 }
-"688
-[; ;MainCode.c: 688: int readADC(int ch) {
+"729
+[; ;MainCode.c: 729: int readADC(int ch) {
 [v _readADC `(i ~T0 @X0 1 ef1`i ]
 {
 [e :U _readADC ]
 [v _ch `i ~T0 @X0 1 r1 ]
 [f ]
-"689
-[; ;MainCode.c: 689:     if (ch == 0) ADPCHbits.ADPCH = 0b010110;
-[e $ ! == _ch -> 0 `i 3331  ]
+"730
+[; ;MainCode.c: 730:     if (ch == 0) ADPCHbits.ADPCH = 0b010110;
+[e $ ! == _ch -> 0 `i 3332  ]
 [e = . . _ADPCHbits 0 0 -> -> 22 `i `uc ]
-[e $U 3332  ]
-"690
-[; ;MainCode.c: 690:     else if (ch == 1) ADPCHbits.ADPCH = 0b010101;
-[e :U 3331 ]
-[e $ ! == _ch -> 1 `i 3333  ]
-[e = . . _ADPCHbits 0 0 -> -> 21 `i `uc ]
-[e :U 3333 ]
+[e $U 3333  ]
+"731
+[; ;MainCode.c: 731:     else if (ch == 1) ADPCHbits.ADPCH = 0b010101;
 [e :U 3332 ]
-"691
-[; ;MainCode.c: 691:     ADCON0bits.GO = 1;
-[e = . . _ADCON0bits 0 0 -> -> 1 `i `uc ]
-"692
-[; ;MainCode.c: 692:     while (ADCON0bits.GO);
-[e $U 3334  ]
-[e :U 3335 ]
+[e $ ! == _ch -> 1 `i 3334  ]
+[e = . . _ADPCHbits 0 0 -> -> 21 `i `uc ]
 [e :U 3334 ]
-[e $ != -> . . _ADCON0bits 0 0 `i -> 0 `i 3335  ]
+[e :U 3333 ]
+"732
+[; ;MainCode.c: 732:     ADCON0bits.GO = 1;
+[e = . . _ADCON0bits 0 0 -> -> 1 `i `uc ]
+"733
+[; ;MainCode.c: 733:     while (ADCON0bits.GO);
+[e $U 3335  ]
 [e :U 3336 ]
-"693
-[; ;MainCode.c: 693:     return (ADRESH << 8) +ADRESL;
+[e :U 3335 ]
+[e $ != -> . . _ADCON0bits 0 0 `i -> 0 `i 3336  ]
+[e :U 3337 ]
+"734
+[; ;MainCode.c: 734:     return (ADRESH << 8) +ADRESL;
 [e ) + << -> _ADRESH `i -> 8 `i -> _ADRESL `i ]
-[e $UE 3330  ]
-"694
-[; ;MainCode.c: 694: }
-[e :UE 3330 ]
+[e $UE 3331  ]
+"735
+[; ;MainCode.c: 735: }
+[e :UE 3331 ]
 }

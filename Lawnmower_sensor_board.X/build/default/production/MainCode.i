@@ -7,6 +7,7 @@
 # 1 "D:\\MPLAB\\pic\\include\\language_support.h" 1 3
 # 2 "<built-in>" 2
 # 1 "MainCode.c" 2
+
 # 1 "D:\\MPLAB\\pic\\include\\xc.h" 1 3
 # 18 "D:\\MPLAB\\pic\\include\\xc.h" 3
 extern const char __xc8_OPTIM_SPEED;
@@ -36318,8 +36319,8 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 #pragma intrinsic(_delay3)
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 32 "D:\\MPLAB\\pic\\include\\xc.h" 2 3
-# 1 "MainCode.c" 2
-# 10 "MainCode.c"
+# 2 "MainCode.c" 2
+# 11 "MainCode.c"
 #pragma config RSTOSC = HFINTOSC_64MHZ
 
 #pragma config CLKOUTEN = OFF
@@ -36406,6 +36407,11 @@ int distance2 = 0;
 int distance3 = 0;
 int distance4 = 0;
 int distance5 = 0;
+int valid_distance1 = 0;
+int valid_distance2 = 0;
+int valid_distance3 = 0;
+int valid_distance4 = 0;
+int valid_distance5 = 0;
 int perimeter = 0;
 int sign_perimeter = 0;
 int con_perimeter = 0;
@@ -36439,7 +36445,12 @@ int main() {
         PORTCbits.RC1 = 0;
         if (waitForSensor1() == 1) {
             distance1 = getDistance1();
-        } else distance1 = -1;
+            valid_distance1 = 1;
+        }
+        else{
+            distance1 = 0;
+            valid_distance1 = 0;
+        }
         wait10US();
 
 
@@ -36450,7 +36461,12 @@ int main() {
         PORTCbits.RC2 = 0;
         if (waitForSensor2() == 1) {
             distance2 = getDistance2();
-        } else distance2 = -1;
+            valid_distance2 = 1;
+        }
+        else{
+            distance2 = 0;
+            valid_distance2 = 0;
+        }
         wait10US();
 
         PORTCbits.RC7 = 0;
@@ -36460,7 +36476,13 @@ int main() {
         PORTCbits.RC7 = 0;
         if (waitForSensor3() == 1) {
             distance3 = getDistance3();
-        } else distance3 = -1;
+            valid_distance3 = 1;
+        }
+        else{
+            distance3 = 0;
+            valid_distance3 = 0;
+        }
+
         wait10US();
 
         PORTAbits.RA1 = 0;
@@ -36470,7 +36492,12 @@ int main() {
         PORTAbits.RA1 = 0;
         if (waitForSensor4() == 1) {
             distance4 = getDistance4();
-        } else distance4 = -1;
+            valid_distance4 = 1;
+        }
+        else{
+            distance4 = 0;
+            valid_distance4 = 0;
+        }
         wait10US();
 
         PORTAbits.RA2 = 0;
@@ -36480,9 +36507,13 @@ int main() {
         PORTAbits.RA2 = 0;
         if (waitForSensor5() == 1) {
             distance5 = getDistance5();
-        } else distance5 = -1;
+            valid_distance5 = 1;
+        }
+        else{
+            distance5 = 0;
+            valid_distance5 = 0;
+        }
         wait10US();
-
         int temp0 = readADC(0);
         int temp1 = readADC(1);
         ADCvalueHigh0 = (temp0 >> 8) & 0xFF;
@@ -36528,27 +36559,32 @@ void __attribute__((picinterrupt(("irq(RXB0IF), high_priority")))) canRecInt(voi
             case 3:
                 message[0] = distance1 >> 8 & 0xFF;
                 message[1] = distance1 & 0xFF;
-                sendCANmessage(0, message, 2);
+                message[2] = valid_distance1;
+                sendCANmessage(0, message, 3);
                 break;
             case 4:
                 message[0] = distance2 >> 8 & 0xFF;
                 message[1] = distance2 & 0xFF;
-                sendCANmessage(0, message, 2);
+                message[2] = valid_distance2;
+                sendCANmessage(0, message, 3);
                 break;
             case 5:
                 message[0] = distance3 >> 8 & 0xFF;
                 message[1] = distance3 & 0xFF;
-                sendCANmessage(0, message, 2);
+                message[2] = valid_distance3;
+                sendCANmessage(0, message, 3);
                 break;
             case 6:
                 message[0] = distance4 >> 8 & 0xFF;
                 message[1] = distance4 & 0xFF;
-                sendCANmessage(0, message, 2);
+                message[2] = valid_distance4;
+                sendCANmessage(0, message, 3);
                 break;
             case 7:
                 message[0] = distance5 >> 8 & 0xFF;
                 message[1] = distance5 & 0xFF;
-                sendCANmessage(0, message, 2);
+                message[2] = valid_distance5;
+                sendCANmessage(0, message, 3);
                 break;
             case 8:
                 message[0] = perimeter;
@@ -36557,7 +36593,7 @@ void __attribute__((picinterrupt(("irq(RXB0IF), high_priority")))) canRecInt(voi
                 sendCANmessage(0, message, 3);
                 break;
         }
-# 270 "MainCode.c"
+# 306 "MainCode.c"
         RXB0CONbits.RXFUL = 0;
     }
     PIR5bits.RXB0IF = 0;
@@ -36565,9 +36601,11 @@ void __attribute__((picinterrupt(("irq(RXB0IF), high_priority")))) canRecInt(voi
 }
 
 int readI2C(char reg, int * conOK) {
-# 292 "MainCode.c"
+# 328 "MainCode.c"
+    I2C1STAT1bits.TXWE = 0;
+    I2C1STAT1bits.RXRE = 0;
     unsigned char data;
-    * conOK = 1;
+    int tmpOK = 1;
     I2C1ADB1 = 0X10;
     I2C1TXB = reg;
     while (!I2C1STAT0bits.BFRE);
@@ -36578,7 +36616,7 @@ int readI2C(char reg, int * conOK) {
     while (!I2C1CON0bits.MDR && counter < 25000) {
         counter++;
     }
-    if (counter >= 25000) *conOK = 0;
+    if (counter >= 25000) tmpOK = 0;
 
 
 
@@ -36590,23 +36628,25 @@ int readI2C(char reg, int * conOK) {
     while (!I2C1STAT1bits.RXBF && counter < 25000) {
         counter++;
     }
-    if (counter >= 25000) *conOK = 0;
+    if (counter >= 25000) tmpOK = 0;
+
+    else data = I2C1RXB;
 
 
 
-    data = I2C1RXB;
+
 
     counter = 0;
     while (!I2C1PIRbits.PCIF && counter < 25000) {
         counter++;
     }
-    if (counter >= 25000) *conOK = 0;
+    if (counter >= 25000) tmpOK = 0;
 
 
     I2C1PIRbits.PCIF = 0;
     I2C1PIRbits.SCIF = 0;
     I2C1STAT1bits.CLRBF = 1;
-
+    * conOK = tmpOK;
     return data;
 }
 
@@ -36650,6 +36690,7 @@ void initI2C(void) {
     I2C1ERR = 0;
     I2C1CON0bits.EN = 1;
     I2C1ERRbits.NACKIE = 1;
+    I2C1PIEbits.ACKTIE = 1;
 }
 
 void initADC(void) {
@@ -36670,7 +36711,7 @@ void initADC(void) {
     ADPCHbits.ADPCH = 0b010110;
 
     ADCON0bits.ON = 1;
-# 415 "MainCode.c"
+# 456 "MainCode.c"
 }
 
 void initHCSR04(void) {

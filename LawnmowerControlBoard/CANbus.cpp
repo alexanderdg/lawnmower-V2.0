@@ -60,7 +60,14 @@ int CANbus::readDistanceSensor(int sensor) {
     bool temp = readCANReg(sensor + 2, & inMsg);
     if (temp)
     {
-      data = (inMsg.buf[0] << 8 | inMsg.buf[1]) / 11.7;
+      if(inMsg.buf[2] != 1)
+      {
+        data = -2;
+      }
+      else
+      { 
+        data = (inMsg.buf[0] << 8 | inMsg.buf[1]) / 11.7;
+      }
     }
   }
   return data;

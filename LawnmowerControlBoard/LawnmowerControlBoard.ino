@@ -52,7 +52,6 @@ void loop() {
   Serial.println("---------------------------------------------");
   Serial.println(canbus.readDistanceSensor(1));
   Serial.println(canbus.readDistanceSensor(2));
-  Serial.println(canbus.readDistanceSensor(2));
   Serial.println(canbus.readDistanceSensor(3));
   Serial.println(canbus.readDistanceSensor(4));
   Serial.println(canbus.readDistanceSensor(5));
