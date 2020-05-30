@@ -60,3 +60,13 @@ void Speaker::playStuck(void)
 {
   playFile("STUCK.WAV");
 }
+
+void Speaker::playStartCharging(void)
+{
+  playFile("SCHRG.WAV");
+}
+
+void Speaker::playChargingComplete(void)
+{
+  playFile("CHRGC.WAV");
+}

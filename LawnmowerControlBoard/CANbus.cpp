@@ -2,19 +2,7 @@
 #include<Arduino.h>
 #include <FlexCAN.h>
 
-static uint8_t hex[17] = "0123456789abcdef";
 
-static void hexDump(uint8_t dumpLen, uint8_t *bytePtr)
-{
-  uint8_t working;
-  while ( dumpLen-- ) {
-    working = *bytePtr++;
-    Serial.write( hex[ working >> 4 ] );
-    Serial.write( hex[ working & 15 ] );
-  }
-  Serial.write('\r');
-  Serial.write('\n');
-}
 
 CANbus::CANbus() {
   //pinMode(CANTX, OUTPUT);
@@ -31,7 +19,31 @@ CANbus::CANbus() {
 
 bool CANbus::initCAN(void) {
   Can0.begin(250000);
+  offsetPressure1 = readPressure1();
+  offsetPressure2 = readPressure2();
   return true;
+}
+
+int CANbus::readPressure1(void) {
+  int data = -1;
+  CAN_message_t inMsg;
+  bool temp = readCANReg(1, & inMsg);
+  if (temp)
+  {
+    data = (inMsg.buf[0] << 4 | ((inMsg.buf[1] >> 4) & 0xFF));
+  }
+  return data - offsetPressure1;
+}
+
+int CANbus::readPressure2(void) {
+  int data = -1;
+  CAN_message_t inMsg;
+  bool temp = readCANReg(2, & inMsg);
+  if (temp)
+  {
+    data = (inMsg.buf[0] << 4 | ((inMsg.buf[1] >> 4) & 0xFF));
+  }
+  return data - offsetPressure2;
 }
 
 void CANbus::readPerimeter(int * value, int * sign) {
@@ -39,15 +51,15 @@ void CANbus::readPerimeter(int * value, int * sign) {
   * sign = -1;
   CAN_message_t inMsg;
   bool temp = readCANReg(8, & inMsg);
-  if(temp)
+  if (temp)
   {
-    if(inMsg.buf[2] != 1)
+    if (inMsg.buf[2] != 1)
     {
       *value = -2;
     }
     else
     {
-      * value = inMsg.buf[0]; 
+      * value = inMsg.buf[0];
     }
   }
 }
@@ -60,12 +72,12 @@ int CANbus::readDistanceSensor(int sensor) {
     bool temp = readCANReg(sensor + 2, & inMsg);
     if (temp)
     {
-      if(inMsg.buf[2] != 1)
+      if (inMsg.buf[2] != 1)
       {
         data = -2;
       }
       else
-      { 
+      {
         data = (inMsg.buf[0] << 8 | inMsg.buf[1]) / 11.7;
       }
     }

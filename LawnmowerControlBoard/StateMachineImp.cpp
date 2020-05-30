@@ -19,6 +19,7 @@ StateType StateMachineImp::SM_STATE = RUN;
 MotorDriver *StateMachineImp::motordriver = new MotorDriver();
 Battery *StateMachineImp::batterydriver = new Battery();
 Speaker *StateMachineImp::speaker = new Speaker();
+CANbus *StateMachineImp::canbus = new CANbus();
 bool StateMachineImp::enter_state = true;
 
 void StateMachineImp::RunStatemachine(void)
@@ -39,6 +40,8 @@ void StateMachineImp::RunStatemachine(void)
 void StateMachineImp::initStatemachine(void)
 {
   speaker -> init();
+  canbus -> initCAN();
+  motordriver -> coastBrake();
 }
 
 void StateMachineImp::SM_RUN(void)
@@ -52,7 +55,8 @@ void StateMachineImp::SM_RUN(void)
   }
   else
   {
-    if(motordriver -> getLeftCurrent() > 1.6 or motordriver -> getRightCurrent() > 1.6)
+    checkForCharger();
+    if(motordriver -> getLeftCurrent() > 1.6 or motordriver -> getRightCurrent() > 1.6 or canbus -> readPressure1() > 75 or canbus -> readPressure2() > 75)
     {
       changeState(TRY_LEFT);
     }
@@ -154,6 +158,14 @@ void StateMachineImp::SM_CHARGING(void)
   {
     Serial.println("Enter CHARGING state");
     enter_state = false;
+    speaker -> playStartCharging();
+    //batterydriver -> disableCharger();
+  }
+  else
+  {
+      ChargeState state = batterydriver -> readChargeState();
+      Serial.println(batterydriver -> enumToString(state));
+      //Serial.println(state);
   }
 }
 
@@ -161,4 +173,17 @@ void StateMachineImp::changeState(StateType newState)
 {
   SM_STATE = newState;
   enter_state = true;
+}
+
+
+//---------------------------------------------------------------------
+//---         Check methods                                         ---
+//---------------------------------------------------------------------
+
+void StateMachineImp::checkForCharger(void)
+{
+  if(batterydriver -> isChargerPresent())
+  {
+    changeState(CHARGING);
+  }
 }

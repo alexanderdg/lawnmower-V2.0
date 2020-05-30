@@ -5,6 +5,7 @@
 #include "MotorDriver.h"
 #include "Battery.h"
 #include "Speaker.h"
+#include "CANbus.h"
 
 #define NUM_STATES 11
 
@@ -50,6 +51,7 @@ class StateMachineImp
     static void SM_TRY_BACKWARD(void);
     static void SM_STUCK(void);
     static void SM_CHARGING(void);
+    static void checkForCharger(void);
 
     static void changeState(StateType newState);
 
@@ -68,6 +70,7 @@ class StateMachineImp
     static MotorDriver *motordriver;
     static Battery *batterydriver;
     static Speaker *speaker;
+    static CANbus *canbus;
     static bool enter_state;
 
 };

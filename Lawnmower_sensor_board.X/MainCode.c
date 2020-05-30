@@ -417,6 +417,10 @@ void initI2C(void) {
 }
 
 void initADC(void) {
+    //Setup the 2.048V voltage reference
+    FVRCONbits.EN = 1;
+    FVRCONbits.CDAFVR = 0b10;
+    FVRCONbits.ADFVR = 0b10;
     //Set the output as input and turn analog function on
     TRISCbits.TRISC6 = 1;
     TRISCbits.TRISC5 = 1;
@@ -429,7 +433,7 @@ void initADC(void) {
     ADCON0bits.FM = 0;
     //set VDD and VSS as reference
     ADREFbits.NREF = 0;
-    ADREFbits.PREF = 00;
+    ADREFbits.PREF = 11;
     //select RA0 as input channel
     ADPCHbits.ADPCH = 0b010110;
     //set the ADC on

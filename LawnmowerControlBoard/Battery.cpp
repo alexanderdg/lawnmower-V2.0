@@ -4,12 +4,16 @@
 
 
 //define the impedance of the battery in milliOhms
-//to simplify the calculations, a constant impedance is used 
+//to simplify the calculations, a constant impedance is used
 #define impedance 65
 
 Battery::Battery(void) {
   pinMode(CHRG_EN, OUTPUT);
   pinMode(CHRG_PRESENT, INPUT);
+  pinMode(CHARGE, INPUT);
+  pinMode(FAULT, INPUT);
+  pinMode(READY, INPUT);
+  pinMode(TOC, INPUT);
   Wire.begin();
   initBattery();
 }
@@ -44,6 +48,73 @@ bool Battery::isChargerPresent(void) {
   return not(digitalRead(CHRG_PRESENT));
 }
 
+ChargeState Battery::readChargeState(void)
+{
+  ChargeState status = UNDEFINED;
+  if (digitalRead(CHRG_PRESENT) == 1)
+  {
+    status = NO_CHARGER_PRESENT;
+  }
+  else
+  {
+    if (digitalRead(CHRG_EN) == 0)
+    {
+      if (digitalRead(FAULT) == 0)
+      {
+        status = FAULT;
+      }
+      else if (digitalRead(CHARGE) == 0 && digitalRead(READY) == 0 && digitalRead(TOC) == 1)
+      {
+        status = FAST_CHARGE;
+      }
+      else if (digitalRead(CHARGE) == 0 && digitalRead(READY) == 0 && digitalRead(TOC) == 0)
+      {
+        status = TOP_OFF_CHARGE;
+      }
+      else if (digitalRead(CHARGE) == 1 && digitalRead(READY) == 0 && digitalRead(TOC) == 1)
+      {
+        status = CHARGE_COMPLETE;
+      }
+    }
+    else
+    {
+      status = CHARGER_DISABLED;
+    }
+  }
+  return status;
+}
+
+String Battery::enumToString(ChargeState state)
+{
+  String temp = "";
+  ChargeState status = state;
+  switch (state)
+  {
+    case ChargeState::NO_CHARGER_PRESENT:
+      temp = "No charger detected at the main board";
+      break;
+    case ChargeState::FAST_CHARGE:
+      temp = "Battery is fast charged by the charger";
+      break;
+    case ChargeState::TOP_OFF_CHARGE:
+      temp = "Battery is top off charged by the charger";
+      break;
+    case ChargeState::CHARGE_COMPLETE:
+      temp = "Battery is fully charged by the charger";
+      break;
+    case ChargeState::CHARGER_DISABLED:
+      temp = "Charger is disabled by the main board";
+      break;
+    case ChargeState::FAULT:
+      temp = "Fault is detected with the charger";
+      break;
+    case ChargeState::UNDEFINED:
+      temp = "Charger is in an undefined state";
+      break;
+  }
+  return temp;
+}
+
 float Battery::readPower(void) {
   int MSBdata, LSBdata;
   readI2CByte(0x03, & MSBdata, & LSBdata);
@@ -71,19 +142,19 @@ float Battery::readVoltage(void) {
 float Battery::readOpenVoltage(void) {
   float voltage = readVoltage();
   float current = readCurrent();
-  float openVoltage = voltage + (current * (impedance/1000.0));
+  float openVoltage = voltage + (current * (impedance / 1000.0));
   return openVoltage;
 }
 
 int Battery::readBatteryLevel(void) {
   float voltage = readVoltage();
   float current = readCurrent();
-  float openVoltage = voltage + (current * (impedance/1000.0));
+  float openVoltage = voltage + (current * (impedance / 1000.0));
   //Serial.println(current * (impedance/1000.0));
   int foundIndex = -1;
-  for(int i = 0; i < 15; i ++)
+  for (int i = 0; i < 15; i ++)
   {
-    if(openVoltage > dischargeGraph[i])
+    if (openVoltage > dischargeGraph[i])
     {
       foundIndex = i;
       break;

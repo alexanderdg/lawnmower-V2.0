@@ -20,6 +20,8 @@ class Speaker
     void playNoConnectionWithPerimeter(void);
     void playLostConnectionWithPerimeter(void);
     void playStuck(void);
+    void playStartCharging(void);
+    void playChargingComplete(void);
 
   private:
     AudioPlaySdWav playWav1;

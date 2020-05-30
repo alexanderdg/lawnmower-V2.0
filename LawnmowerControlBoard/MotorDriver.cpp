@@ -235,8 +235,8 @@ void MotorDriver::resetCounter() {
     MotorDriverS -> SetpointR = 0;
     MotorDriverS -> setLeftSpeed(0);
     MotorDriverS -> setRightSpeed(0);
-    Serial.println(MotorDriverS -> OutputL);
-    Serial.println(MotorDriverS -> OutputR);
+    //Serial.println(MotorDriverS -> OutputL);
+    //Serial.println(MotorDriverS -> OutputR);
   }
   /*
   Serial.print("Input PID: ");

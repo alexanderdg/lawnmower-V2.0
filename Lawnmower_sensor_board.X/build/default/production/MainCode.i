@@ -36695,6 +36695,10 @@ void initI2C(void) {
 
 void initADC(void) {
 
+    FVRCONbits.EN = 1;
+    FVRCONbits.CDAFVR = 0b10;
+    FVRCONbits.ADFVR = 0b10;
+
     TRISCbits.TRISC6 = 1;
     TRISCbits.TRISC5 = 1;
     ANSELCbits.ANSELC6 = 1;
@@ -36706,12 +36710,12 @@ void initADC(void) {
     ADCON0bits.FM = 0;
 
     ADREFbits.NREF = 0;
-    ADREFbits.PREF = 00;
+    ADREFbits.PREF = 11;
 
     ADPCHbits.ADPCH = 0b010110;
 
     ADCON0bits.ON = 1;
-# 456 "MainCode.c"
+# 460 "MainCode.c"
 }
 
 void initHCSR04(void) {
