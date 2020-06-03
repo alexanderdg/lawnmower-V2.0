@@ -20,6 +20,11 @@ void Speaker::init(void)
   SD.begin(SDCARD_CS_PIN);
 }
 
+bool Speaker::selfTest(void)
+{
+  return true;
+}
+
 void Speaker::playFile(const char *filename)
 {
   Serial.print("Playing file: ");

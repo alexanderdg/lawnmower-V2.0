@@ -7,10 +7,11 @@
 #include "Speaker.h"
 #include "CANbus.h"
 
-#define NUM_STATES 11
+#define NUM_STATES 12
 
 enum StateType
 {
+  SELF_TEST,
   RUN,
   RUN_SLOW,
   TRY_LEFT,
@@ -40,6 +41,7 @@ class StateMachineImp
 
   private:
 
+    static void SM_SELF_TEST(void);
     static void SM_RUN(void);
     static void SM_RUN_SLOW(void);      
     static void SM_TRY_LEFT(void);      

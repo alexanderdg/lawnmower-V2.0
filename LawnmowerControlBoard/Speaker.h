@@ -23,6 +23,8 @@ class Speaker
     void playStartCharging(void);
     void playChargingComplete(void);
 
+    bool selfTest(void);
+
   private:
     AudioPlaySdWav playWav1;
     AudioOutputI2S audioOutput;

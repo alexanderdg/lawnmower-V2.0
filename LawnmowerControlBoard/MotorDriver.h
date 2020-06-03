@@ -32,6 +32,8 @@ class MotorDriver
     float getRightCurrent(void);
     float getBladeCurrent(void);
 
+    bool selfTest(void);
+
   private:
     static void EncoderInteruptL();
     static void EncoderInteruptR();

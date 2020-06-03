@@ -5,7 +5,14 @@
 #include <FlexCAN.h>
 
 static CAN_message_t msg;
-static CAN_message_t inMsg;
+
+enum DistanceSensor {
+  LL,
+  LM,
+  RM,
+  RR,
+  B
+};
 
 class CANbus
 {
@@ -16,7 +23,9 @@ class CANbus
     int readPressure1(void);
     int readPressure2(void);
     void readPerimeter(int * value, int * sign);
-    int readDistanceSensor(int sensor);
+    int readDistanceSensor(DistanceSensor sensor);
+
+    bool selfTest(void);
 
   private:
     //pin definitions used for the CAN receiver/transceiver

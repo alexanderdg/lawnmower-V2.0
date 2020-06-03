@@ -17,6 +17,17 @@ CANbus::CANbus() {
   msg.buf[0] = 0;
 }
 
+bool CANbus::selfTest(void) {
+  bool temp = false;
+  int value, sign;
+  readPerimeter(&value, &sign);
+  if (readPressure1() > 0 && readPressure2() > 0
+      && readDistanceSensor(1) > 0 && readDistanceSensor(2) > 0
+      && readDistanceSensor(3) > 0 && readDistanceSensor(4) > 0
+      && readDistanceSensor(5) > 0 && value > 0) temp = true;
+  return temp;
+}
+
 bool CANbus::initCAN(void) {
   Can0.begin(250000);
   offsetPressure1 = readPressure1();
@@ -64,7 +75,7 @@ void CANbus::readPerimeter(int * value, int * sign) {
   }
 }
 
-int CANbus::readDistanceSensor(int sensor) {
+int CANbus::readDistanceSensor(DistanceSensor sensor) {
   int data = -1;
   CAN_message_t inMsg;
   if (sensor > 0 && sensor < 6)

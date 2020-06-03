@@ -24,6 +24,7 @@ class Battery {
     float readPower(void);
     int readBatteryLevel(void);
     bool isChargerPresent(void);
+    bool selfTest(void);
 
     void enableCharger(void);
     void disableCharger(void);

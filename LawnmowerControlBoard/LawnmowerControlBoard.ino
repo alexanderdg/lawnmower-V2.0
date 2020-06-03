@@ -3,26 +3,16 @@
 
 
 StateMachineImp SM;
-static uint8_t hex[17] = "0123456789abcdef";
 Battery battery;
 
-static void hexDump(uint8_t dumpLen, uint8_t *bytePtr)
-{
-  uint8_t working;
-  while( dumpLen-- ) {
-    working = *bytePtr++;
-    Serial.write( hex[ working>>4 ] );
-    Serial.write( hex[ working&15 ] );
-  }
-  Serial.write('\r');
-  Serial.write('\n');
-}
+
 
 void setup() {
-  Serial3.begin(9600);
+  Serial3.begin(115200);
+  Serial3.print("AT+BAUD4");
   SM.initStatemachine();
   //battery.enableCharger();
-  delay(500);
+  Serial3.begin(115200);
   
   //motioncontrol.enableVBlade();
   //motioncontrol.startTurning();
@@ -65,27 +55,9 @@ void loop() {
     Serial.print("CAN bus 0: "); hexDump(8, inMsg.buf);
   }
   */
-  /*
-  Serial3.print("l current: ");
-  Serial3.println(motioncontrol.getLeftCurrent());
-  Serial3.print("r current: ");
-  Serial3.println(motioncontrol.getRightCurrent());
-  Serial3.print("Speed L: ");
-  Serial3.println(motioncontrol.getLeftSpeed());
-  Serial3.print("Speed R: ");
-  Serial3.println(motioncontrol.getRightSpeed());
-  Serial3.print("blade current: ");
-  Serial3.println(motioncontrol.getBladeCurrent());
-  battery.readVoltage();
-  Serial3.print("Battery voltage: ");
-  Serial3.println(battery.readVoltage());
-  Serial3.print("Battery current: ");
-  Serial3.println(battery.readCurrent());
-  Serial3.print("Battery status: ");
-  Serial3.println(battery.readBatteryLevel());
-  */
+  Serial3.println("Run statemachine :) ");
   SM.RunStatemachine();
-  delay(100);
+  delay(20);
 }
 
 void serialEvent3() {

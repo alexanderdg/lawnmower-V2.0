@@ -34,6 +34,17 @@ MotorDriver::MotorDriver() : LPID(&InputL, &OutputL, &SetpointL, 5, 40, 0.5, DIR
   RPID.SetMode(AUTOMATIC);
 }
 
+bool MotorDriver::selfTest(void) {
+  bool temp = false;
+  total_counter_1 = 0;
+  total_counter_r = 0;
+  Forward(0.3);
+  delay(500);
+  coastBrake();
+  if((total_counter_1 > 0) && (total_counter_r > 0)) temp = true;
+  return temp;
+}
+
 bool MotorDriver::Forward(float speed) {
   digitalWrite(RL_EN, LOW);
   digitalWrite(RL_SLEEP, HIGH);
@@ -95,6 +106,7 @@ bool MotorDriver::coastBrake(void) {
   LPID.SetMode(MANUAL);
   RPID.SetMode(MANUAL);
   digitalWrite(RL_EN, HIGH);
+  return true;
 }
 
 bool MotorDriver::dynamicBrake(void) {
@@ -107,18 +119,21 @@ bool MotorDriver::dynamicBrake(void) {
   RPID.SetMode(MANUAL);
   setLeftSpeed(0);
   setRightSpeed(0);
+  return true;
 }
 
 bool MotorDriver::takeRandomTurnRight(void) {
   turnRight(0.5);
   delay(random(500,2000));
   coastBrake();
+  return true;
 }
 
 bool MotorDriver::takeRandomTurnLeft(void) {
   turnLeft(0.5);
   delay(random(500,2000));
   coastBrake();
+  return true;
 }
 
 int MotorDriver::MStoCPMSconverter(float speed) {

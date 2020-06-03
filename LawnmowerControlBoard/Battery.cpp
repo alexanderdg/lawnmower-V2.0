@@ -18,6 +18,15 @@ Battery::Battery(void) {
   initBattery();
 }
 
+bool Battery::selfTest(void) {
+  bool temp = false;
+  if(digitalRead(FAULT) == 1) 
+  {
+    if(readVoltage() > 9) temp = true;
+  }
+  return temp; 
+}
+
 bool Battery::initBattery(void) {
   //RST = 1: Activate reset
   //BRNG = 1: FSR of busvoltage at 32V

@@ -2,6 +2,7 @@
 #include "StateMachineImp.h"
 
 StateMachineType StateMachineImp::stateMachine[] =       {
+  {SELF_TEST, SM_SELF_TEST},
   {RUN, SM_RUN},
   {RUN_SLOW, SM_RUN_SLOW},
   {TRY_LEFT, SM_TRY_LEFT},
@@ -15,7 +16,7 @@ StateMachineType StateMachineImp::stateMachine[] =       {
   {CHARGING, SM_CHARGING}
 };
 
-StateType StateMachineImp::SM_STATE = RUN;
+StateType StateMachineImp::SM_STATE = SELF_TEST;
 MotorDriver *StateMachineImp::motordriver = new MotorDriver();
 Battery *StateMachineImp::batterydriver = new Battery();
 Speaker *StateMachineImp::speaker = new Speaker();
@@ -42,6 +43,48 @@ void StateMachineImp::initStatemachine(void)
   speaker -> init();
   canbus -> initCAN();
   motordriver -> coastBrake();
+  delay(100);
+}
+
+void StateMachineImp::SM_SELF_TEST(void)
+{
+  /*
+  Serial.println("Starting selftest of the motordriver");
+  if(motordriver -> selfTest() == true)
+  {
+    Serial.println("Selftest of the motordriver is ok");
+    Serial.println("Starting selftest of the sensorboard");
+    if(canbus -> selfTest() == true)
+    {
+       Serial.println("Selftest of the sensorboard is ok");
+       Serial.println("Starting selftest of the battery driver");
+       if(batterydriver -> selfTest() == true)
+       {
+            Serial.println("Selftest of the batterydrive is ok");
+            Serial.println("Selftest of al the components is finished");
+       }
+       else
+       {
+            Serial.println("Selftest of the batterydriver is failed");
+       }
+    }
+    else
+    {
+      Serial.println("Selftest of the sensorboard is failed");
+    }
+  }
+  else
+  {
+     Serial.println("Selftest of the motordriver is failed");
+  }
+  delay(1000);
+  changeState(STUCK);
+  */
+  Serial.println(canbus -> readDistanceSensor(1));
+  Serial.println(canbus -> readDistanceSensor(2));
+  Serial.println(canbus -> readDistanceSensor(3));
+  Serial.println(canbus -> readDistanceSensor(4));
+  Serial.println(canbus -> readDistanceSensor(5));
 }
 
 void StateMachineImp::SM_RUN(void)
@@ -60,14 +103,9 @@ void StateMachineImp::SM_RUN(void)
     {
       changeState(TRY_LEFT);
     }
-    if(batterydriver -> isChargerPresent())
-    {
-      changeState(CHARGING);
-    }
     //Serial.println("State RUN");
     //Serial.print("blade current: ");
     //Serial.println(motordriver -> getLeftCurrent());
-    delay(10);
     
   }
 }
@@ -90,6 +128,9 @@ void StateMachineImp::SM_TRY_LEFT(void)
   else
   {
     Serial.println("State TRY_LEFT");
+    motordriver -> Backward(0.3);
+    delay(1000);
+    motordriver -> takeRandomTurnRight();
     delay(1000);
     changeState(TRY_RIGHT);
   }
