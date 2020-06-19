@@ -7,13 +7,15 @@
 #include "Speaker.h"
 #include "CANbus.h"
 
-#define NUM_STATES 12
+#define NUM_STATES 18
 
 enum StateType
 {
+  INIT,
   SELF_TEST,
   RUN,
   RUN_SLOW,
+  AVOID_PERI,
   TRY_LEFT,
   TRY_RIGHT,
   TRY_INSTEAD_LEFT,
@@ -22,7 +24,11 @@ enum StateType
   TRY_LAST_TIME_RIGHT,
   TRY_BACKWARD,
   STUCK,
-  CHARGING
+  FIND_PERIMETER,
+  RANDOM_TURN,
+  RETURN_HOME,
+  CHARGING,
+  SERROR,
 };
 
 struct StateMachineType
@@ -36,14 +42,18 @@ class StateMachineImp
 
   public:
 
+    StateMachineImp();
     static void RunStatemachine(void);
     static void initStatemachine(void);
+    static void changeState(StateType newState);
 
   private:
 
+    static void SM_INIT(void);
     static void SM_SELF_TEST(void);
     static void SM_RUN(void);
-    static void SM_RUN_SLOW(void);      
+    static void SM_RUN_SLOW(void);
+    static void SM_AVOID_PERI(void);      
     static void SM_TRY_LEFT(void);      
     static void SM_TRY_RIGHT(void);    
     static void SM_TRY_INSTEAD_LEFT(void);
@@ -52,28 +62,29 @@ class StateMachineImp
     static void SM_TRY_LAST_TIME_RIGHT(void);
     static void SM_TRY_BACKWARD(void);
     static void SM_STUCK(void);
+    static void SM_FIND_PERIMETER(void);
+    static void SM_RANDOM_TURN(void);
+    static void SM_RETURN_HOME(void);
     static void SM_CHARGING(void);
+    static void SM_SERROR(void);
+    
     static void checkForCharger(void);
 
-    static void changeState(StateType newState);
+    
 
-
-    /*
-      StateMachineType stateMachine[]=
-      {
-      {STATE_ONE, SM_STATE_ONE},
-      {STATE_TWO, SM_STATE_TWO},
-      {STATE_THREE, SM_STATE_THREE},
-      {STATE_FOUR, SM_STATE_FOUR}
-      };
-    */
     static StateMachineType stateMachine[];
     static StateType SM_STATE;
     static MotorDriver *motordriver;
     static Battery *batterydriver;
     static Speaker *speaker;
     static CANbus *canbus;
+    
     static bool enter_state;
+    static long savedTimestamp;
+
+    //PID variables
+    static PID * perimeterPID;
+    double Setpoint, Input, Output;
 
 };
 

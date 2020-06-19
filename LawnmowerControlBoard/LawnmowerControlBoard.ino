@@ -8,11 +8,11 @@ Battery battery;
 
 
 void setup() {
-  Serial3.begin(115200);
-  Serial3.print("AT+BAUD4");
+  //Serial3.begin(9600);
+  //Serial3.print("AT+BAUD8");
   SM.initStatemachine();
   //battery.enableCharger();
-  Serial3.begin(115200);
+  Serial3.begin(9600);
   
   //motioncontrol.enableVBlade();
   //motioncontrol.startTurning();
@@ -55,13 +55,27 @@ void loop() {
     Serial.print("CAN bus 0: "); hexDump(8, inMsg.buf);
   }
   */
-  Serial3.println("Run statemachine :) ");
+  //Serial3.println("Run statemachine :) ");
   SM.RunStatemachine();
-  delay(20);
+  delay(10);
 }
 
+
 void serialEvent3() {
-  while (Serial3.available()) {
-    Serial3.println(Serial3.read());
+  if (Serial3.available() > 0) {
+    byte temp = Serial3.read();
+    //Serial3.println(temp);
+    if(temp == 's')
+    {
+      SM.changeState(RUN);
+    }
+    else if(temp == 'h')
+    {
+      SM.changeState(INIT);
+    }
+    else if(temp == 't')
+    {
+      SM.changeState(FIND_PERIMETER);
+    }
   }
 }

@@ -20,6 +20,9 @@ class MotorDriver
     bool takeRandomTurnRight(void);
     bool takeRandomTurnLeft(void);
 
+    bool rawRight(bool direction, int pwm);
+    bool rawLeft(bool direction, int pwm);
+
     bool enableVBlade(void);
     bool disableVBlade(void);
     bool startTurning(void);

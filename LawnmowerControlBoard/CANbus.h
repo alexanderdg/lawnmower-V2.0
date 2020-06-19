@@ -9,9 +9,9 @@ static CAN_message_t msg;
 enum DistanceSensor {
   LL,
   LM,
+  B,
   RM,
   RR,
-  B
 };
 
 class CANbus

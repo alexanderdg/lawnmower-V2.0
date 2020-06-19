@@ -97,6 +97,36 @@ bool MotorDriver::turnRight(float speed) {
   return true;
 }
 
+bool MotorDriver::rawRight(bool direction, int pwm) {
+  digitalWrite(RL_EN, LOW);
+  digitalWrite(RL_SLEEP, HIGH);
+  digitalWrite(R_DIR, direction);
+  en_pid = false;
+  SetpointL = 0;
+  SetpointR = 0;
+  OutputL = 0;
+  OutputR = 0;
+  LPID.SetMode(MANUAL);
+  RPID.SetMode(MANUAL);
+  setRightSpeed(pwm);
+  return true;
+}
+
+bool MotorDriver::rawLeft(bool direction, int pwm) {
+  digitalWrite(RL_EN, LOW);
+  digitalWrite(RL_SLEEP, HIGH);
+  digitalWrite(L_DIR, direction);
+  en_pid = false;
+  SetpointL = 0;
+  SetpointR = 0;
+  OutputL = 0;
+  OutputR = 0;
+  LPID.SetMode(MANUAL);
+  RPID.SetMode(MANUAL);
+  setLeftSpeed(pwm);
+  return true;
+}
+
 bool MotorDriver::coastBrake(void) {
   en_pid = false;
   SetpointL = 0;
@@ -106,6 +136,8 @@ bool MotorDriver::coastBrake(void) {
   LPID.SetMode(MANUAL);
   RPID.SetMode(MANUAL);
   digitalWrite(RL_EN, HIGH);
+  setRightSpeed(0);
+  setLeftSpeed(0);
   return true;
 }
 
@@ -248,8 +280,8 @@ void MotorDriver::resetCounter() {
   {
     MotorDriverS -> SetpointL = 0;
     MotorDriverS -> SetpointR = 0;
-    MotorDriverS -> setLeftSpeed(0);
-    MotorDriverS -> setRightSpeed(0);
+    //MotorDriverS -> setLeftSpeed(0);
+    //MotorDriverS -> setRightSpeed(0);
     //Serial.println(MotorDriverS -> OutputL);
     //Serial.println(MotorDriverS -> OutputR);
   }

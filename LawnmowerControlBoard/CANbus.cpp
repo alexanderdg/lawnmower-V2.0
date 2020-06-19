@@ -66,11 +66,13 @@ void CANbus::readPerimeter(int * value, int * sign) {
   {
     if (inMsg.buf[2] != 1)
     {
-      *value = -2;
+      * value = -2;
+      * sign = -2; 
     }
     else
     {
       * value = inMsg.buf[0];
+      * sign = inMsg.buf[1];
     }
   }
 }
@@ -78,9 +80,9 @@ void CANbus::readPerimeter(int * value, int * sign) {
 int CANbus::readDistanceSensor(DistanceSensor sensor) {
   int data = -1;
   CAN_message_t inMsg;
-  if (sensor > 0 && sensor < 6)
+  if (sensor >= 0 && sensor < 5)
   {
-    bool temp = readCANReg(sensor + 2, & inMsg);
+    bool temp = readCANReg(sensor + 3, & inMsg);
     if (temp)
     {
       if (inMsg.buf[2] != 1)
