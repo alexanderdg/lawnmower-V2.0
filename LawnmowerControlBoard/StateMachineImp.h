@@ -46,6 +46,11 @@ class StateMachineImp
     static void RunStatemachine(void);
     static void initStatemachine(void);
     static void changeState(StateType newState);
+    static void printDiagnostics(void);
+    static void printPIDValues(void);
+    static void changePValue(float value);
+    static void changeIValue(float value);
+    static void changeDValue(float value);
 
   private:
 
@@ -83,8 +88,9 @@ class StateMachineImp
     static long savedTimestamp;
 
     //PID variables
-    static PID * perimeterPID;
-    double Setpoint, Input, Output;
+    static  PID * perimeterPID;
+    static  double  Setpoint, Input, Output;
+    static float pvalue, ivalue, dvalue;
 
 };
 

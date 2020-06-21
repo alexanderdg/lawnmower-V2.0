@@ -77,6 +77,23 @@ void CANbus::readPerimeter(int * value, int * sign) {
   }
 }
 
+void CANbus::readPerimeterPID(int *value, int *sign, int *PIDvalue) {
+    int returnvalue = 0;
+    int lvalue, lsign;
+    readPerimeter(&lvalue, &lsign);
+    if(lsign == 0)
+    {
+      returnvalue = 500;
+    }
+    else if(lsign == 1)
+    {
+      returnvalue = lvalue;
+    }
+    * PIDvalue = returnvalue;
+    * value = lvalue;
+    * sign = lsign;
+}
+
 int CANbus::readDistanceSensor(DistanceSensor sensor) {
   int data = -1;
   CAN_message_t inMsg;

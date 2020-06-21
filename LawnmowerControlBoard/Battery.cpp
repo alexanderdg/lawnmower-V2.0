@@ -96,7 +96,7 @@ ChargeState Battery::readChargeState(void)
 String Battery::enumToString(ChargeState state)
 {
   String temp = "";
-  ChargeState status = state;
+  //ChargeState status = state;
   switch (state)
   {
     case ChargeState::NO_CHARGER_PRESENT:

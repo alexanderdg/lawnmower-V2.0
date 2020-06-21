@@ -23,6 +23,7 @@ class CANbus
     int readPressure1(void);
     int readPressure2(void);
     void readPerimeter(int * value, int * sign);
+    void readPerimeterPID(int * value, int * sign, int * PIDvalue);
     int readDistanceSensor(DistanceSensor sensor);
 
     bool selfTest(void);

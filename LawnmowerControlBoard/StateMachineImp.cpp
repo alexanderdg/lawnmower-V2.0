@@ -22,12 +22,18 @@ StateMachineType StateMachineImp::stateMachine[] =       {
   {SERROR, SM_SERROR}
 };
 
+double StateMachineImp::Input = 0;
+double StateMachineImp::Output = 0;
+double StateMachineImp::Setpoint = 0;
+float StateMachineImp::pvalue = 0;
+float StateMachineImp::ivalue = 0;
+float StateMachineImp::dvalue = 0;
 StateType StateMachineImp::SM_STATE = RUN;
 MotorDriver *StateMachineImp::motordriver = new MotorDriver();
 Battery *StateMachineImp::batterydriver = new Battery();
 Speaker *StateMachineImp::speaker = new Speaker();
 CANbus *StateMachineImp::canbus = new CANbus();
-//PID *StateMachineImp::perimeterPID = new PID(&Input, &Output, &Setpoint, 5, 40, 0.5, DIRECT);
+PID *StateMachineImp::perimeterPID = new PID(&Input, &Output, &Setpoint, 5, 40, 0.5, DIRECT);
 bool StateMachineImp::enter_state = true;
 long StateMachineImp::savedTimestamp = 0;
 
@@ -56,7 +62,8 @@ void StateMachineImp::initStatemachine(void)
   speaker -> init();
   canbus -> initCAN();
   motordriver -> coastBrake();
-  perimeterPID -> SetOutputLimits(0, 1000);
+  perimeterPID -> SetOutputLimits(0, 1900);
+  perimeterPID -> SetMode(AUTOMATIC);
   delay(100);
 }
 
@@ -417,16 +424,21 @@ void StateMachineImp::SM_FIND_PERIMETER(void)
   {
     Serial3.println("Enter FIND_PERIMETER state");
     enter_state = false;
+    Setpoint = 50;
   }
   else
   {
-    int value, sign;
-    canbus -> readPerimeter(&value, &sign);
-    Serial3.print(sign);
+    int value, sign, PIDvalue;
+    canbus -> readPerimeterPID(&value, &sign, &PIDvalue);
+    //canbus -> readPerimeter(&value, &sign);
+    
+    Serial3.print(PIDvalue);
     Serial3.print(" : ");
-    Serial3.println(value);
-    motordriver -> rawLeft(0, 2000);
-    motordriver -> rawRight(0, 1000);
+    Serial3.println(Output);
+    Input = PIDvalue;
+    perimeterPID -> Compute();
+    motordriver -> rawLeft(0, 1900 - Output);
+    motordriver -> rawRight(1, Output);
   }
 }
 
@@ -469,6 +481,43 @@ void StateMachineImp::changeState(StateType newState)
   enter_state = true;
 }
 
+void StateMachineImp::printDiagnostics(void)
+{
+  int value, sign, PIDvalue;
+  canbus -> readPerimeterPID(&value, &sign, &PIDvalue);
+  Serial3.println("---------------------------------------------------------");
+  Serial3.println("---                   Diagnostics                     ---");
+  Serial3.println("---------------------------------------------------------");
+  Serial3.println("Distancesensor LL: " + String(canbus -> readDistanceSensor(LL)));
+  Serial3.println("Distancesensor LM: " + String(canbus -> readDistanceSensor(LM)));
+  Serial3.println("Distancesensor B: " + String(canbus -> readDistanceSensor(B)));
+  Serial3.println("Distancesensor RM: " + String(canbus -> readDistanceSensor(RM)));
+  Serial3.println("Distancesensor RR: " + String(canbus -> readDistanceSensor(RR)));
+  Serial3.println("Perimeter Magnitude: " + String(value));
+  Serial3.println("Perimeter sign: " + String(sign));
+  Serial3.println("Perimeter PID value: " + String(PIDvalue));
+  Serial3.println("Pressure1: " + String(canbus -> readPressure1()));
+  Serial3.println("Pressure2: " + String(canbus -> readPressure2()));
+  Serial3.println("Battery voltage: " + String(batterydriver -> readVoltage()));
+  Serial3.println("Battery current: " + String(batterydriver -> readCurrent()));
+  Serial3.println("Battery level: " + String(batterydriver -> readBatteryLevel()));
+  Serial3.println("Left motor current: " + String(motordriver -> getLeftCurrent()));
+  Serial3.println("Right motor current: " + String(motordriver -> getRightCurrent()));
+  Serial3.println("Left motor speed: " + String(motordriver -> getLeftSpeed()));
+  Serial3.println("Right motor speed: " + String(motordriver -> getRightSpeed()));
+  Serial3.println("---------------------------------------------------------");
+}
+
+void StateMachineImp::printPIDValues(void)
+{
+  Serial3.print(pvalue);
+  Serial3.print(":");
+  Serial3.print(ivalue);
+  Serial3.print(":");
+  Serial3.print(dvalue);
+}
+
+
 
 //---------------------------------------------------------------------
 //---         Check methods                                         ---
@@ -480,4 +529,23 @@ void StateMachineImp::checkForCharger(void)
   {
     changeState(CHARGING);
   }
+}
+
+
+void StateMachineImp::changePValue(float value)
+{
+  pvalue = value;
+  perimeterPID -> SetTunings(pvalue, ivalue, dvalue);
+}
+
+void StateMachineImp::changeIValue(float value)
+{
+  ivalue = value;
+  perimeterPID -> SetTunings(pvalue, ivalue, dvalue);
+}
+
+void StateMachineImp::changeDValue(float value)
+{
+  dvalue = value;
+  perimeterPID -> SetTunings(pvalue, ivalue, dvalue);
 }
