@@ -13,7 +13,7 @@ void setup() {
   SM.initStatemachine();
   //battery.enableCharger();M
   Serial3.begin(115200);
-
+  
   //motioncontrol.enableVBlade();
   //motioncontrol.startTurning();
   //delay(5000);
@@ -69,7 +69,7 @@ void serialEvent3() {
     if (temp == 13)
     {
       Serial3.println();
-      String commandText = receivedText.substring(0,5);
+      String commandText = receivedText.substring(0, 5);
       String dataText = receivedText.substring(6);
       if (commandText == "s")
       {
@@ -108,6 +108,12 @@ void serialEvent3() {
         Serial3.print("Change PID D setting to ");
         Serial3.println(dataText);
         SM.changeDValue(dataText.toFloat());
+      }
+      else if (commandText == "PID_T")
+      {
+        Serial3.print("Change PID Setpoint to ");
+        Serial3.println(dataText);
+        SM.changePIDSetpoint(dataText.toFloat());
       }
       receivedText = "";
     }

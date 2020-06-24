@@ -6,7 +6,7 @@
 #include <SPI.h>
 #include <SD.h>
 #include <SerialFlash.h>
-#include<Arduino.h>
+#include <Arduino.h>
 
 class Speaker
 {

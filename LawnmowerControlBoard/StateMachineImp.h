@@ -6,6 +6,7 @@
 #include "Battery.h"
 #include "Speaker.h"
 #include "CANbus.h"
+#include "Settings.h"
 
 #define NUM_STATES 18
 
@@ -51,6 +52,7 @@ class StateMachineImp
     static void changePValue(float value);
     static void changeIValue(float value);
     static void changeDValue(float value);
+    static void changePIDSetpoint(float value);
 
   private:
 
@@ -83,6 +85,7 @@ class StateMachineImp
     static Battery *batterydriver;
     static Speaker *speaker;
     static CANbus *canbus;
+    static Settings *setting;
     
     static bool enter_state;
     static long savedTimestamp;

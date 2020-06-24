@@ -33,13 +33,14 @@ MotorDriver *StateMachineImp::motordriver = new MotorDriver();
 Battery *StateMachineImp::batterydriver = new Battery();
 Speaker *StateMachineImp::speaker = new Speaker();
 CANbus *StateMachineImp::canbus = new CANbus();
+Settings *StateMachineImp::setting = new Settings();
 PID *StateMachineImp::perimeterPID = new PID(&Input, &Output, &Setpoint, 5, 40, 0.5, DIRECT);
 bool StateMachineImp::enter_state = true;
 long StateMachineImp::savedTimestamp = 0;
 
 StateMachineImp::StateMachineImp(void)
 {
-  
+
 }
 
 void StateMachineImp::RunStatemachine(void)
@@ -62,7 +63,11 @@ void StateMachineImp::initStatemachine(void)
   speaker -> init();
   canbus -> initCAN();
   motordriver -> coastBrake();
+  setting -> readPIDValues(&pvalue, &ivalue, &dvalue);
+  setting -> readPIDSetpoint(&Setpoint); 
+  perimeterPID -> SetTunings(pvalue, ivalue, dvalue);
   perimeterPID -> SetOutputLimits(0, 1900);
+  perimeterPID -> SetSampleTime(15);
   perimeterPID -> SetMode(AUTOMATIC);
   delay(100);
 }
@@ -420,21 +425,22 @@ void StateMachineImp::SM_STUCK(void)
 
 void StateMachineImp::SM_FIND_PERIMETER(void)
 {
-  if(enter_state == true)
+  if (enter_state == true)
   {
     Serial3.println("Enter FIND_PERIMETER state");
     enter_state = false;
-    Setpoint = 50;
   }
   else
   {
     int value, sign, PIDvalue;
     canbus -> readPerimeterPID(&value, &sign, &PIDvalue);
     //canbus -> readPerimeter(&value, &sign);
-    
+
     Serial3.print(PIDvalue);
     Serial3.print(" : ");
-    Serial3.println(Output);
+    Serial3.print(Output);
+    Serial3.print(" : ");
+    Serial3.println(Setpoint);
     Input = PIDvalue;
     perimeterPID -> Compute();
     motordriver -> rawLeft(0, 1900 - Output);
@@ -536,16 +542,26 @@ void StateMachineImp::changePValue(float value)
 {
   pvalue = value;
   perimeterPID -> SetTunings(pvalue, ivalue, dvalue);
+  setting -> writePIDValues(pvalue, ivalue, dvalue);
 }
 
 void StateMachineImp::changeIValue(float value)
 {
   ivalue = value;
   perimeterPID -> SetTunings(pvalue, ivalue, dvalue);
+  setting -> writePIDValues(pvalue, ivalue, dvalue);
 }
 
 void StateMachineImp::changeDValue(float value)
 {
   dvalue = value;
   perimeterPID -> SetTunings(pvalue, ivalue, dvalue);
+  setting -> writePIDValues(pvalue, ivalue, dvalue);
 }
+
+void StateMachineImp::changePIDSetpoint(float value)
+{
+  Setpoint = value;
+  setting -> writePIDSetpoint(value);
+}
+ 
