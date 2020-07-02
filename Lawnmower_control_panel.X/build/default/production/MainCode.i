@@ -36320,7 +36320,13 @@ extern __attribute__((nonreentrant)) void _delaywdt(unsigned long);
 extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 32 "D:\\MPLAB\\pic\\include\\xc.h" 2 3
 # 2 "MainCode.c" 2
-# 11 "MainCode.c"
+
+
+
+
+
+
+
 #pragma config RSTOSC = HFINTOSC_64MHZ
 
 #pragma config CLKOUTEN = OFF
@@ -36374,157 +36380,71 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 
 void initCAN(void);
 void initADC(void);
-void initHCSR04(void);
-void initI2C(void);
-int readI2C(char reg, int * conOK);
-void sendTrigger1(void);
-void sendTrigger2(void);
-void sendTrigger3(void);
-void sendTrigger4(void);
-void sendTrigger5(void);
-int waitForSensor1(void);
-int waitForSensor2(void);
-int waitForSensor3(void);
-int waitForSensor4(void);
-int waitForSensor5(void);
-int getDistance1(void);
-int getDistance2(void);
-int getDistance3(void);
-int getDistance4(void);
-int getDistance5(void);
-void wait2US(void);
-void wait10US(void);
+
 void sendCANmessage(int id, int message [8], int length);
 void readCANmessage(void);
 int readADC(int ch);
+
+void Lcd_Port(char a);
+void Lcd_Cmd(char a);
+void Lcd_Clear(void);
+void Lcd_Set_Cursor(char a, char b);
+void Lcd_Init(void);
+void Lcd_Write_Char(char a);
+void Lcd_Write_String(char *a);
+void Lcd_Shift_Right(void);
+void Lcd_Shift_Left(void);
 
 int ADCvalueHigh0 = 0;
 int ADCvalueLow0 = 0;
 int ADCvalueHigh1 = 0;
 int ADCvalueLow1 = 0;
-int distance1 = 0;
-int distance2 = 0;
-int distance3 = 0;
-int distance4 = 0;
-int distance5 = 0;
-int valid_distance1 = 0;
-int valid_distance2 = 0;
-int valid_distance3 = 0;
-int valid_distance4 = 0;
-int valid_distance5 = 0;
-int perimeter = 0;
-int sign_perimeter = 0;
-int con_perimeter = 0;
+volatile unsigned char status = 0b0;
+int tick_count=0;
 
-int main() {
+void main() {
 
     OSCCON1 = 0b01100000;
     initCAN();
 
-    initADC();
-    initHCSR04();
-    initI2C();
+
+    ANSELAbits.ANSELA0 = 0;
+    INT0PPS = 0x00;
+    TRISAbits.TRISA0 = 1;
+    PIE1bits.INT0IE = 1;
+    PIR1bits.INT0IF = 0;
+    INTCON0bits.INT0EDG = 0;
 
     INTCON0bits.GIEL = 1;
+    INTCON0bits.GIE = 1;
 
     INTCON0bits.IPEN = 0;
 
     PIE5bits.RXB0IE = 1;
     PIE5bits.RXB1IE = 1;
+    tick_count = 4;
     (INTCON0bits.GIE = 1);
+    tick_count = 5;
+    Lcd_Init();
+    tick_count = 6;
 
+    tick_count = 7;
 
+    tick_count = 8;
 
-
+    tick_count = 10;
+# 140 "MainCode.c"
     while (1) {
-
-        PORTCbits.RC1 = 0;
-        wait2US();
-        PORTCbits.RC1 = 1;
-        wait10US();
-        PORTCbits.RC1 = 0;
-        if (waitForSensor1() == 1) {
-            distance1 = getDistance1();
-            valid_distance1 = 1;
-        }
-        else{
-            distance1 = 0;
-            valid_distance1 = 0;
-        }
-        wait10US();
-
-
-        PORTCbits.RC2 = 0;
-        wait2US();
-        PORTCbits.RC2 = 1;
-        wait10US();
-        PORTCbits.RC2 = 0;
-        if (waitForSensor2() == 1) {
-            distance2 = getDistance2();
-            valid_distance2 = 1;
-        }
-        else{
-            distance2 = 0;
-            valid_distance2 = 0;
-        }
-        wait10US();
-
-        PORTCbits.RC7 = 0;
-        wait2US();
-        PORTCbits.RC7 = 1;
-        wait10US();
-        PORTCbits.RC7 = 0;
-        if (waitForSensor3() == 1) {
-            distance3 = getDistance3();
-            valid_distance3 = 1;
-        }
-        else{
-            distance3 = 0;
-            valid_distance3 = 0;
-        }
-
-        wait10US();
-
-        PORTAbits.RA1 = 0;
-        wait2US();
-        PORTAbits.RA1 = 1;
-        wait10US();
-        PORTAbits.RA1 = 0;
-        if (waitForSensor4() == 1) {
-            distance4 = getDistance4();
-            valid_distance4 = 1;
-        }
-        else{
-            distance4 = 0;
-            valid_distance4 = 0;
-        }
-        wait10US();
-
-        PORTAbits.RA2 = 0;
-        wait2US();
-        PORTAbits.RA2 = 1;
-        wait10US();
-        PORTAbits.RA2 = 0;
-        if (waitForSensor5() == 1) {
-            distance5 = getDistance5();
-            valid_distance5 = 1;
-        }
-        else{
-            distance5 = 0;
-            valid_distance5 = 0;
-        }
-        wait10US();
-        int temp0 = readADC(0);
-        int temp1 = readADC(1);
-        ADCvalueHigh0 = (temp0 >> 8) & 0xFF;
-        ADCvalueLow0 = temp0 & 0xFF;
-        ADCvalueHigh1 = (temp1 >> 8) & 0xFF;
-        ADCvalueLow1 = temp1 & 0xFF;
-        perimeter = readI2C(0x09, &con_perimeter);
-        sign_perimeter = readI2C(0x0A, &con_perimeter);
-
+        tick_count ++;
+        _delay((unsigned long)((1000)*(64000000/4000.0)));
+# 159 "MainCode.c"
     }
-    return 0;
+}
+
+void __attribute__((picinterrupt(("irq(INT0), high_priority")))) encInt(void) {
+    PORTBbits.RB0 = 0;
+    tick_count ++;
+    PIR1bits.INT0IF = 0;
 }
 
 void __attribute__((picinterrupt(("irq(AD), high_priority")))) adcInt(void) {
@@ -36535,6 +36455,9 @@ void __attribute__((picinterrupt(("irq(AD), high_priority")))) adcInt(void) {
 
 void __attribute__((picinterrupt(("irq(RXB0IF), high_priority")))) canRecInt(void) {
 
+
+
+    PORTBbits.RB0 = 1;
     if (RXB0CONbits.RXFUL == 1) {
 
 
@@ -36543,380 +36466,140 @@ void __attribute__((picinterrupt(("irq(RXB0IF), high_priority")))) canRecInt(voi
 
 
             case 0:
-                message[0] = 1;
+                message[0] = tick_count;
                 sendCANmessage(0, message, 1);
                 break;
-            case 1:
-                message[0] = ADCvalueHigh0;
-                message[1] = ADCvalueLow0;
-                sendCANmessage(0, message, 2);
-                break;
-            case 2:
-                message[0] = ADCvalueHigh1;
-                message[1] = ADCvalueLow1;
-                sendCANmessage(0, message, 2);
-                break;
-            case 3:
-                message[0] = distance1 >> 8 & 0xFF;
-                message[1] = distance1 & 0xFF;
-                message[2] = valid_distance1;
-                sendCANmessage(0, message, 3);
-                break;
-            case 4:
-                message[0] = distance2 >> 8 & 0xFF;
-                message[1] = distance2 & 0xFF;
-                message[2] = valid_distance2;
-                sendCANmessage(0, message, 3);
-                break;
-            case 5:
-                message[0] = distance3 >> 8 & 0xFF;
-                message[1] = distance3 & 0xFF;
-                message[2] = valid_distance3;
-                sendCANmessage(0, message, 3);
-                break;
-            case 6:
-                message[0] = distance4 >> 8 & 0xFF;
-                message[1] = distance4 & 0xFF;
-                message[2] = valid_distance4;
-                sendCANmessage(0, message, 3);
-                break;
-            case 7:
-                message[0] = distance5 >> 8 & 0xFF;
-                message[1] = distance5 & 0xFF;
-                message[2] = valid_distance5;
-                sendCANmessage(0, message, 3);
-                break;
-            case 8:
-                message[0] = perimeter;
-                message[1] = sign_perimeter;
-                message[2] = con_perimeter;
-                sendCANmessage(0, message, 3);
-                break;
+
+
         }
-# 306 "MainCode.c"
+# 216 "MainCode.c"
         RXB0CONbits.RXFUL = 0;
     }
     PIR5bits.RXB0IF = 0;
     return;
 }
 
-int readI2C(char reg, int * conOK) {
-# 328 "MainCode.c"
-    I2C1STAT1bits.TXWE = 0;
-    I2C1STAT1bits.RXRE = 0;
-    unsigned char data;
-    int tmpOK = 1;
-    I2C1ADB1 = 0X10;
-    I2C1TXB = reg;
-    while (!I2C1STAT0bits.BFRE);
-    I2C1CNT = 1;
-    I2C1CON0bits.RSEN = 1;
-    I2C1CON0bits.S = 1;
-    int counter = 0;
-    while (!I2C1CON0bits.MDR && counter < 25000) {
-        counter++;
-    }
-    if (counter >= 25000) tmpOK = 0;
 
+void Lcd_Port(char a)
+{
+ if(a & 1)
+  PORTCbits.RC2 = 1;
+ else
+  PORTCbits.RC2 = 0;
 
+ if(a & 2)
+  PORTCbits.RC5 = 1;
+ else
+  PORTCbits.RC5 = 0;
 
-    I2C1ADB1 = (0x11);
-    I2C1CNT = 1;
-    I2C1CON0bits.S = 1;
-    I2C1CON0bits.RSEN = 0;
-    counter = 0;
-    while (!I2C1STAT1bits.RXBF && counter < 25000) {
-        counter++;
-    }
-    if (counter >= 25000) tmpOK = 0;
+ if(a & 4)
+  PORTCbits.RC6 = 1;
+ else
+  PORTCbits.RC6 = 0;
 
-    else data = I2C1RXB;
-
-
-
-
-
-    counter = 0;
-    while (!I2C1PIRbits.PCIF && counter < 25000) {
-        counter++;
-    }
-    if (counter >= 25000) tmpOK = 0;
-
-
-    I2C1PIRbits.PCIF = 0;
-    I2C1PIRbits.SCIF = 0;
-    I2C1STAT1bits.CLRBF = 1;
-    * conOK = tmpOK;
-    return data;
+ if(a & 8)
+  PORTCbits.RC7 = 1;
+ else
+  PORTCbits.RC7 = 0;
 }
-
-void initI2C(void) {
-    LATCbits.LATC3 = 0;
-    LATCbits.LATC4 = 0;
-    TRISCbits.TRISC3 = 0;
-    TRISCbits.TRISC4 = 0;
-    ANSELCbits.ANSELC3 = 0;
-    ANSELCbits.ANSELC4 = 0;
-    ODCONCbits.ODCC3 = 1;
-    ODCONCbits.ODCC4 = 1;
-    RC3I2C = 0x01;
-
-
-    SLRCONCbits.SLRC3 = 0;
-    RC4I2C = 0x01;
-    SLRCONCbits.SLRC4 = 0;
-
-
-    int state = (unsigned char) GIE;
-    GIE = 0;
-    PPSLOCK = 0x55;
-    PPSLOCK = 0xAA;
-    PPSLOCKbits.PPSLOCKED = 0x00;
-    RC3PPS = 0x21;
-    RC4PPS = 0x22;
-    I2C1SDAPPSbits.I2C1SDAPPS = 0x14;
-    I2C1SCLPPSbits.I2C1SCLPPS = 0x13;
-    PPSLOCK = 0x55;
-    PPSLOCK = 0xAA;
-    PPSLOCKbits.PPSLOCKED = 0x01;
-    GIE = state;
-    I2C1CON0 = 0x04;
-    I2C1CON1 = 0x80;
-    I2C1CON2 = 0x24;
-
-
-    I2C1CLK = 0x03;
-    I2C1PIR = 0;
-    I2C1ERR = 0;
-    I2C1CON0bits.EN = 1;
-    I2C1ERRbits.NACKIE = 1;
-    I2C1PIEbits.ACKTIE = 1;
-}
-
-void initADC(void) {
-
-    FVRCONbits.EN = 1;
-    FVRCONbits.CDAFVR = 0b10;
-    FVRCONbits.ADFVR = 0b10;
-
-    TRISCbits.TRISC6 = 1;
-    TRISCbits.TRISC5 = 1;
-    ANSELCbits.ANSELC6 = 1;
-    ANSELCbits.ANSELC5 = 1;
-
-    ADCON0bits.ON = 1;
-    ADCLKbits.CS = 0b011100;
-
-    ADCON0bits.FM = 0;
-
-    ADREFbits.NREF = 0;
-    ADREFbits.PREF = 11;
-
-    ADPCHbits.ADPCH = 0b010110;
-
-    ADCON0bits.ON = 1;
-# 460 "MainCode.c"
-}
-
-void initHCSR04(void) {
-    T1CLK = 0x01;
-    T1CONbits.CKPS = 0b11;
-    TMR1H = 0x00;
-    TMR1L = 0x00;
-
-    ANSELCbits.ANSELC1 = 0;
-    ANSELCbits.ANSELC2 = 0;
-    ANSELCbits.ANSELC7 = 0;
-    ANSELAbits.ANSELA1 = 0;
-    ANSELAbits.ANSELA2 = 0;
-
-    ANSELBbits.ANSELB1 = 0;
-    ANSELBbits.ANSELB0 = 0;
-    ANSELAbits.ANSELA5 = 0;
-    ANSELBbits.ANSELB4 = 0;
-    ANSELAbits.ANSELA4 = 0;
-
-    TRISCbits.TRISC1 = 0;
-    TRISCbits.TRISC2 = 0;
-    TRISCbits.TRISC7 = 0;
-    TRISAbits.TRISA1 = 0;
-    TRISAbits.TRISA2 = 0;
-
-    TRISBbits.TRISB1 = 1;
-    TRISBbits.TRISB0 = 1;
-    TRISAbits.TRISA5 = 1;
-    TRISBbits.TRISB4 = 1;
-    TRISAbits.TRISA4 = 1;
-
+void Lcd_Cmd(char a)
+{
+ PORTCbits.RC0 = 0;
+ Lcd_Port(a);
+ PORTCbits.RC1 = 1;
+    _delay((unsigned long)((4)*(64000000/4000.0)));
     PORTCbits.RC1 = 0;
-    PORTCbits.RC2 = 0;
-    PORTCbits.RC7 = 0;
-    PORTAbits.RA1 = 0;
-    PORTAbits.RA2 = 0;
 }
 
-int waitForSensor1(void) {
-    int i = 0;
-    TMR1H = 0;
-    TMR1L = 0;
-    T1CONbits.TMR1ON = 1;
-    while (!PORTBbits.RB1 && (i < 10000))
-        i = (TMR1H << 8) | TMR1L;
-    if (i >= 10000)
-        return 0;
-    else
-        return 1;
+void Lcd_Clear(void)
+{
+ Lcd_Cmd(0);
+ Lcd_Cmd(1);
 }
 
-int waitForSensor2(void) {
-    int i = 0;
-    TMR1H = 0;
-    TMR1L = 0;
-    T1CONbits.TMR1ON = 1;
-    while (!PORTBbits.RB0 && (i < 10000))
-        i = (TMR1H << 8) | TMR1L;
-    if (i >= 10000)
-        return 0;
-    else
-        return 1;
-}
-
-int waitForSensor3(void) {
-    int i = 0;
-    TMR1H = 0;
-    TMR1L = 0;
-    T1CONbits.TMR1ON = 1;
-    while (!PORTAbits.RA5 && (i < 10000))
-        i = (TMR1H << 8) | TMR1L;
-    if (i >= 10000)
-        return 0;
-    else
-        return 1;
-}
-
-int waitForSensor4(void) {
-    int i = 0;
-    TMR1H = 0;
-    TMR1L = 0;
-    T1CONbits.TMR1ON = 1;
-    while (!PORTBbits.RB4 && (i < 10000))
-        i = (TMR1H << 8) | TMR1L;
-    if (i >= 10000)
-        return 0;
-    else
-        return 1;
-}
-
-int waitForSensor5(void) {
-    int i = 0;
-    TMR1H = 0;
-    TMR1L = 0;
-    T1CONbits.TMR1ON = 1;
-    while (!PORTAbits.RA4 && (i < 10000))
-        i = (TMR1H << 8) | TMR1L;
-    if (i >= 10000)
-        return 0;
-    else
-        return 1;
-}
-
-int getDistance1(void) {
-    int ticks = 0;
-    TMR1H = 0;
-    TMR1L = 0;
-
-    while (PORTBbits.RB1 && (ticks < 15000))
-        ticks = (TMR1H << 8) | TMR1L;
-
-    T1CONbits.TMR1ON = 0;
-
-    if (ticks >= 15000)
-        return -1;
-
-    else
-        return ticks;
-}
-
-int getDistance2(void) {
-    int ticks = 0;
-    TMR1H = 0;
-    TMR1L = 0;
-
-    while (PORTBbits.RB0 && (ticks < 15000))
-        ticks = (TMR1H << 8) | TMR1L;
-
-    T1CONbits.TMR1ON = 0;
-
-    if (ticks >= 15000)
-        return -1;
-
-    else
-        return ticks;
-}
-
-int getDistance3(void) {
-    int ticks = 0;
-    TMR1H = 0;
-    TMR1L = 0;
-
-    while (PORTAbits.RA5 && (ticks < 15000))
-        ticks = (TMR1H << 8) | TMR1L;
-
-    T1CONbits.TMR1ON = 0;
-
-    if (ticks >= 15000)
-        return -1;
-
-    else
-        return ticks;
-}
-
-int getDistance4(void) {
-    int ticks = 0;
-    TMR1H = 0;
-    TMR1L = 0;
-
-    while (PORTBbits.RB4 && (ticks < 15000))
-        ticks = (TMR1H << 8) | TMR1L;
-
-    T1CONbits.TMR1ON = 0;
-
-    if (ticks >= 15000)
-        return -1;
-
-    else
-        return ticks;
-}
-
-int getDistance5(void) {
-    int ticks = 0;
-    TMR1H = 0;
-    TMR1L = 0;
-
-    while (PORTAbits.RA4 && (ticks < 15000))
-        ticks = (TMR1H << 8) | TMR1L;
-
-    T1CONbits.TMR1ON = 0;
-
-    if (ticks >= 15000)
-        return -1;
-
-    else
-        return ticks;
-}
-
-void wait2US(void) {
-    for (long i = 0; i < 2; i++) {
-        __nop();
+void Lcd_Set_Cursor(char a, char b)
+{
+ char temp,z,y;
+ if(a == 1)
+ {
+   temp = 0x80 + b - 1;
+  z = temp>>4;
+  y = temp & 0x0F;
+  Lcd_Cmd(z);
+  Lcd_Cmd(y);
+ }
+ else if(a == 2)
+ {
+  temp = 0xC0 + b - 1;
+  z = temp>>4;
+  y = temp & 0x0F;
+  Lcd_Cmd(z);
+  Lcd_Cmd(y);
+ }
+    else if(a == 3)
+    {
+        temp = 0x94 + b - 1;
+  z = temp>>4;
+  y = temp & 0x0F;
+  Lcd_Cmd(z);
+  Lcd_Cmd(y);
+    }
+    else if(a == 4)
+    {
+        temp = 0xD4 + b - 1;
+  z = temp>>4;
+  y = temp & 0x0F;
+  Lcd_Cmd(z);
+  Lcd_Cmd(y);
     }
 }
 
-void wait10US(void) {
-    for (long i = 0; i < 6; i++) {
-        __nop();
-    }
+void Lcd_Init(void)
+{
+    TRISC = 0x00;
+    TRISBbits.TRISB0 = 0;
+    ANSELBbits.ANSELB0 = 0;
+    PORTBbits.RB0 = 1;
+    ANSELC = 0x00;
+    Lcd_Port(0x00);
+# 320 "MainCode.c"
 }
 
+void Lcd_Write_Char(char a)
+{
+   char temp,y;
+   temp = a&0x0F;
+   y = a&0xF0;
+   PORTCbits.RC0 = 1;
+   Lcd_Port(y>>4);
+   PORTCbits.RC1 = 1;
+   _delay((unsigned long)((40)*(64000000/4000000.0)));
+   PORTCbits.RC1 = 0;
+   Lcd_Port(temp);
+   PORTCbits.RC1 = 1;
+   _delay((unsigned long)((40)*(64000000/4000000.0)));
+   PORTCbits.RC1 = 0;
+}
+
+void Lcd_Write_String(char *a)
+{
+ int i;
+ for(i=0;a[i]!='\0';i++)
+    Lcd_Write_Char(a[i]);
+}
+
+void Lcd_Shift_Right()
+{
+ Lcd_Cmd(0x01);
+ Lcd_Cmd(0x0C);
+}
+
+void Lcd_Shift_Left()
+{
+ Lcd_Cmd(0x01);
+ Lcd_Cmd(0x08);
+}
+# 403 "MainCode.c"
 void initCAN(void) {
 
 
@@ -36939,7 +36622,7 @@ void initCAN(void) {
     BRGCON1bits.BRP = 0b011111;
 
     RXF0SIDH = 0;
-    RXF0SIDLbits.SID = 1;
+    RXF0SIDLbits.SID = 2;
     RXF0SIDLbits.EXIDEN = 0;
     RXM0SIDH = 255;
     RXM0SIDLbits.SID = 0b111;

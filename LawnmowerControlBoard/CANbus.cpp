@@ -38,7 +38,7 @@ bool CANbus::initCAN(void) {
 int CANbus::readPressure1(void) {
   int data = -1;
   CAN_message_t inMsg;
-  bool temp = readCANReg(1, & inMsg);
+  bool temp = readCANReg(1, 1, & inMsg);
   if (temp)
   {
     data = (inMsg.buf[0] << 4 | ((inMsg.buf[1] >> 4) & 0xFF));
@@ -49,7 +49,7 @@ int CANbus::readPressure1(void) {
 int CANbus::readPressure2(void) {
   int data = -1;
   CAN_message_t inMsg;
-  bool temp = readCANReg(2, & inMsg);
+  bool temp = readCANReg(1, 2, & inMsg);
   if (temp)
   {
     data = (inMsg.buf[0] << 4 | ((inMsg.buf[1] >> 4) & 0xFF));
@@ -61,13 +61,13 @@ void CANbus::readPerimeter(int * value, int * sign) {
   * value = -1;
   * sign = -1;
   CAN_message_t inMsg;
-  bool temp = readCANReg(8, & inMsg);
+  bool temp = readCANReg(1, 8, & inMsg);
   if (temp)
   {
     if (inMsg.buf[2] != 1)
     {
       * value = -2;
-      * sign = -2; 
+      * sign = -2;
     }
     else
     {
@@ -78,20 +78,20 @@ void CANbus::readPerimeter(int * value, int * sign) {
 }
 
 void CANbus::readPerimeterPID(int *value, int *sign, int *PIDvalue) {
-    int returnvalue = 0;
-    int lvalue, lsign;
-    readPerimeter(&lvalue, &lsign);
-    if(lsign == 0)
-    {
-      returnvalue = 500;
-    }
-    else if(lsign == 1)
-    {
-      returnvalue = lvalue;
-    }
-    * PIDvalue = returnvalue;
-    * value = lvalue;
-    * sign = lsign;
+  int returnvalue = 0;
+  int lvalue, lsign;
+  readPerimeter(&lvalue, &lsign);
+  if (lsign == 0)
+  {
+    returnvalue = 500;
+  }
+  else if (lsign == 1)
+  {
+    returnvalue = lvalue;
+  }
+  * PIDvalue = returnvalue;
+  * value = lvalue;
+  * sign = lsign;
 }
 
 int CANbus::readDistanceSensor(DistanceSensor sensor) {
@@ -99,7 +99,7 @@ int CANbus::readDistanceSensor(DistanceSensor sensor) {
   CAN_message_t inMsg;
   if (sensor >= 0 && sensor < 5)
   {
-    bool temp = readCANReg(sensor + 3, & inMsg);
+    bool temp = readCANReg(1, sensor + 3, & inMsg);
     if (temp)
     {
       if (inMsg.buf[2] != 1)
@@ -115,9 +115,18 @@ int CANbus::readDistanceSensor(DistanceSensor sensor) {
   return data;
 }
 
-bool CANbus::readCANReg(int reg, CAN_message_t * inMsg) {
+int CANbus::readStatus(void) {
+  int data = -1;
+  CAN_message_t inMsg;
+  bool temp = readCANReg(2, 0, & inMsg);
+  if (temp) data = inMsg.buf[0];
+  return data;
+}
+
+bool CANbus::readCANReg(int device, int reg, CAN_message_t * inMsg) {
 
   bool ok = false;
+  msg.id = device;
   msg.buf[0] = reg;
   Can0.write(msg);
   delayMicroseconds(800);
@@ -126,6 +135,6 @@ bool CANbus::readCANReg(int reg, CAN_message_t * inMsg) {
     Can0.read( * inMsg);
     ok = true;
   }
-  delayMicroseconds(800);
+  delayMicroseconds(100);
   return ok;
 }

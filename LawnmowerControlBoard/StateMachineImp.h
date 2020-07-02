@@ -90,6 +90,8 @@ class StateMachineImp
     static bool enter_state;
     static long savedTimestamp;
 
+    static bool collision;
+
     //PID variables
     static  PID * perimeterPID;
     static  double  Setpoint, Input, Output;

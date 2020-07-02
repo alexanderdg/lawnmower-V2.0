@@ -28,7 +28,7 @@ double StateMachineImp::Setpoint = 0;
 float StateMachineImp::pvalue = 0;
 float StateMachineImp::ivalue = 0;
 float StateMachineImp::dvalue = 0;
-StateType StateMachineImp::SM_STATE = RUN;
+StateType StateMachineImp::SM_STATE = INIT;
 MotorDriver *StateMachineImp::motordriver = new MotorDriver();
 Battery *StateMachineImp::batterydriver = new Battery();
 Speaker *StateMachineImp::speaker = new Speaker();
@@ -37,6 +37,7 @@ Settings *StateMachineImp::setting = new Settings();
 PID *StateMachineImp::perimeterPID = new PID(&Input, &Output, &Setpoint, 5, 40, 0.5, DIRECT);
 bool StateMachineImp::enter_state = true;
 long StateMachineImp::savedTimestamp = 0;
+bool StateMachineImp::collision = false;
 
 StateMachineImp::StateMachineImp(void)
 {
@@ -64,9 +65,9 @@ void StateMachineImp::initStatemachine(void)
   canbus -> initCAN();
   motordriver -> coastBrake();
   setting -> readPIDValues(&pvalue, &ivalue, &dvalue);
-  setting -> readPIDSetpoint(&Setpoint); 
+  setting -> readPIDSetpoint(&Setpoint);
   perimeterPID -> SetTunings(pvalue, ivalue, dvalue);
-  perimeterPID -> SetOutputLimits(0, 1900);
+  perimeterPID -> SetOutputLimits(0, 2900);
   perimeterPID -> SetSampleTime(15);
   perimeterPID -> SetMode(AUTOMATIC);
   delay(100);
@@ -84,7 +85,7 @@ void StateMachineImp::SM_INIT(void)
   }
   else
   {
-
+    checkForCharger();
   }
 }
 
@@ -129,11 +130,12 @@ void StateMachineImp::SM_RUN(void)
   {
     Serial3.println("Enter RUN state");
     enter_state = false;
-    //motordriver -> Forward(0.5);
+    motordriver -> Forward(0.5);
     motordriver -> startTurning();
   }
   else
   {
+    checkForCharger();
     //Serial3.println(canbus -> readDistanceSensor(LL));
     //Serial3.println(canbus -> readDistanceSensor(LM));
     //Serial3.println(canbus -> readDistanceSensor(RM));
@@ -175,6 +177,7 @@ void StateMachineImp::SM_RUN_SLOW(void)
   }
   else
   {
+    checkForCharger();
     long currentTimestamp = millis();
     if (motordriver -> getRightCurrent() > 2 or canbus -> readPressure2() > 75)
     {
@@ -210,6 +213,7 @@ void StateMachineImp::SM_TRY_LEFT(void)
   }
   else
   {
+    checkForCharger();
     long currentTimestamp = millis();
     int randomtime = random(500, 2000);
     //Serial3.begin(currentTimestamp);
@@ -257,6 +261,7 @@ void StateMachineImp::SM_TRY_RIGHT(void)
   }
   else
   {
+    checkForCharger();
     long currentTimestamp = millis();
     int randomtime = random(500, 2000);
     if ( (currentTimestamp - savedTimestamp) < 800 )
@@ -302,6 +307,7 @@ void StateMachineImp::SM_TRY_INSTEAD_LEFT(void)
   }
   else
   {
+    checkForCharger();
     long currentTimestamp = millis();
     int randomtime = random(500, 2000);
     if ( (currentTimestamp - savedTimestamp) < 800 )
@@ -347,6 +353,7 @@ void StateMachineImp::SM_TRY_INSTEAD_RIGHT(void)
   }
   else
   {
+    checkForCharger();
     long currentTimestamp = millis();
     int randomtime = random(500, 2000);
     if ( (currentTimestamp - savedTimestamp) < 800 )
@@ -402,7 +409,7 @@ void StateMachineImp::SM_TRY_BACKWARD(void)
   }
   else
   {
-
+    checkForCharger();
   }
 
 }
@@ -417,6 +424,7 @@ void StateMachineImp::SM_STUCK(void)
   }
   else
   {
+    checkForCharger();
     Serial.println("State STUCK");
     delay(1000);
     changeState(RUN);
@@ -424,6 +432,72 @@ void StateMachineImp::SM_STUCK(void)
 }
 
 void StateMachineImp::SM_FIND_PERIMETER(void)
+{
+  if (enter_state == true)
+  {
+    Serial3.println("Enter FIND_PERIMETER state");
+    enter_state = false;
+  }
+  else
+  {
+    if (!collision)
+    {
+      motordriver -> Forward(0.4);
+      savedTimestamp = millis();
+      if (motordriver -> getRightCurrent() > 2 or motordriver -> getLeftCurrent() > 2 or canbus -> readPressure2() > 75 or canbus -> readPressure1() > 75)
+      {
+        collision = true;
+      }
+    }
+    else
+    {
+      long currentTimestamp = millis();
+      int randomtime = random(500, 2000);
+      checkForCharger();
+      if ( (currentTimestamp - savedTimestamp) < 800 )
+      {
+        motordriver -> coastBrake();
+      }
+      else if ( (currentTimestamp - savedTimestamp) < 2000 )
+      {
+        motordriver-> Backward(0.3);
+      }
+      else if ( (currentTimestamp - savedTimestamp) < 3000)
+      {
+        motordriver -> coastBrake();
+      }
+      else if ( (currentTimestamp - savedTimestamp) < 4000 )
+      {
+        motordriver -> turnRight(0.3);
+      }
+      else if ( (currentTimestamp - savedTimestamp) < (5000 + randomtime))
+      {
+        motordriver -> coastBrake();
+      }
+      else if ( (currentTimestamp - savedTimestamp) < (6000 + randomtime))
+      {
+        collision = false;
+      }
+      if ((motordriver -> getRightCurrent() > 2 or motordriver -> getLeftCurrent() > 2 or canbus -> readPressure2() > 75 or canbus -> readPressure1() > 75) and (currentTimestamp - savedTimestamp))
+      {
+        savedTimestamp = currentTimestamp;
+      }
+      int value, sign;
+      canbus -> readPerimeter(&value, &sign);
+      if(value > 50)
+      {
+        changeState(RETURN_HOME);
+      }
+    }
+  }
+}
+
+void StateMachineImp::SM_RANDOM_TURN(void)
+{
+
+}
+
+void StateMachineImp::SM_RETURN_HOME(void)
 {
   if (enter_state == true)
   {
@@ -443,19 +517,9 @@ void StateMachineImp::SM_FIND_PERIMETER(void)
     Serial3.println(Setpoint);
     Input = PIDvalue;
     perimeterPID -> Compute();
-    motordriver -> rawLeft(0, 1900 - Output);
+    motordriver -> rawLeft(0, 2900 - Output);
     motordriver -> rawRight(1, Output);
   }
-}
-
-void StateMachineImp::SM_RANDOM_TURN(void)
-{
-
-}
-
-void StateMachineImp::SM_RETURN_HOME(void)
-{
-
 }
 
 void StateMachineImp::SM_SERROR(void)
@@ -504,6 +568,7 @@ void StateMachineImp::printDiagnostics(void)
   Serial3.println("Perimeter PID value: " + String(PIDvalue));
   Serial3.println("Pressure1: " + String(canbus -> readPressure1()));
   Serial3.println("Pressure2: " + String(canbus -> readPressure2()));
+  Serial3.println("Status: " + String(canbus -> readStatus()));
   Serial3.println("Battery voltage: " + String(batterydriver -> readVoltage()));
   Serial3.println("Battery current: " + String(batterydriver -> readCurrent()));
   Serial3.println("Battery level: " + String(batterydriver -> readBatteryLevel()));
@@ -564,4 +629,3 @@ void StateMachineImp::changePIDSetpoint(float value)
   Setpoint = value;
   setting -> writePIDSetpoint(value);
 }
- 

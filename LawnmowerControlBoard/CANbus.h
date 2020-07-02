@@ -26,6 +26,9 @@ class CANbus
     void readPerimeterPID(int * value, int * sign, int * PIDvalue);
     int readDistanceSensor(DistanceSensor sensor);
 
+    int readStatus(void);
+    bool setStatus(int);
+
     bool selfTest(void);
 
   private:
@@ -34,7 +37,7 @@ class CANbus
     int CANRX = 4;
     int offsetPressure1 = 0;
     int offsetPressure2 = 0;
-    bool readCANReg(int reg, CAN_message_t * inMsg);
+    bool readCANReg(int device, int reg, CAN_message_t * inMsg);
 
 };
 

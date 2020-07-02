@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project>
-  <executable name="dist/default/production\Lawnmower_sensor_board.X.production.hex">
+  <executable name="dist/default/production\Lawnmower_control_panel.X.production.hex">
     <memory name="program">
       <units>bytes</units>
       <length>32768</length>
-      <used>3256</used>
-      <free>29512</free>
+      <used>806</used>
+      <free>31962</free>
     </memory>
     <memory name="data">
       <units>bytes</units>
       <length>2048</length>
-      <used>74</used>
-      <free>1974</free>
+      <used>40</used>
+      <free>2008</free>
     </memory>
   </executable>
 </project>
