@@ -36400,7 +36400,7 @@ int ADCvalueLow0 = 0;
 int ADCvalueHigh1 = 0;
 int ADCvalueLow1 = 0;
 volatile unsigned char status = 0b0;
-int tick_count=0;
+volatile int tick_count=0;
 
 void main() {
 
@@ -36435,9 +36435,12 @@ void main() {
     tick_count = 10;
 # 140 "MainCode.c"
     while (1) {
+
+        _delay((unsigned long)((1)*(64000000/4000.0)));
+        _delay((unsigned long)((1)*(64000000/4000.0)));
+        _delay((unsigned long)((1)*(64000000/4000.0)));
         tick_count ++;
-        _delay((unsigned long)((1000)*(64000000/4000.0)));
-# 159 "MainCode.c"
+# 161 "MainCode.c"
     }
 }
 
@@ -36472,7 +36475,7 @@ void __attribute__((picinterrupt(("irq(RXB0IF), high_priority")))) canRecInt(voi
 
 
         }
-# 216 "MainCode.c"
+# 218 "MainCode.c"
         RXB0CONbits.RXFUL = 0;
     }
     PIR5bits.RXB0IF = 0;
@@ -36562,7 +36565,7 @@ void Lcd_Init(void)
     PORTBbits.RB0 = 1;
     ANSELC = 0x00;
     Lcd_Port(0x00);
-# 320 "MainCode.c"
+# 322 "MainCode.c"
 }
 
 void Lcd_Write_Char(char a)
@@ -36599,7 +36602,7 @@ void Lcd_Shift_Left()
  Lcd_Cmd(0x01);
  Lcd_Cmd(0x08);
 }
-# 403 "MainCode.c"
+# 405 "MainCode.c"
 void initCAN(void) {
 
 

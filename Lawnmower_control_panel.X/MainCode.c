@@ -79,7 +79,7 @@ int ADCvalueLow0 = 0;
 int ADCvalueHigh1 = 0;
 int ADCvalueLow1 = 0;
 volatile unsigned char status = 0b0;
-int tick_count=0;
+volatile int tick_count=0;
 
 void main() {
     //set intern oscilator frequency to 64MHz
@@ -138,9 +138,11 @@ void main() {
     }
     */
     while (1) {
-        tick_count ++;
-        __delay_ms(1000);
         
+        __delay_ms(1);
+        __delay_ms(1);
+        __delay_ms(1);
+        tick_count ++;
         /*
         int temp0 = readADC(0);
         int temp1 = readADC(1);

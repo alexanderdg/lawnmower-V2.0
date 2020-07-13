@@ -90,6 +90,7 @@ void serialEvent3() {
       else if (commandText == "PID")
       {
         SM.printPIDValues();
+        
       }
       else if (commandText == "PID_P")
       {

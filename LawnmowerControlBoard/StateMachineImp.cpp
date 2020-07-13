@@ -437,16 +437,23 @@ void StateMachineImp::SM_FIND_PERIMETER(void)
   {
     Serial3.println("Enter FIND_PERIMETER state");
     enter_state = false;
+    motordriver -> Forward(0.4);
   }
   else
   {
     if (!collision)
     {
-      motordriver -> Forward(0.4);
+      motordriver -> Forward(0.3);
       savedTimestamp = millis();
       if (motordriver -> getRightCurrent() > 2 or motordriver -> getLeftCurrent() > 2 or canbus -> readPressure2() > 75 or canbus -> readPressure1() > 75)
       {
         collision = true;
+      }
+      int value, sign;
+      canbus -> readPerimeter(&value, &sign);
+      if(value > (Setpoint - 10))
+      {
+        changeState(RETURN_HOME);
       }
     }
     else
@@ -482,12 +489,7 @@ void StateMachineImp::SM_FIND_PERIMETER(void)
       {
         savedTimestamp = currentTimestamp;
       }
-      int value, sign;
-      canbus -> readPerimeter(&value, &sign);
-      if(value > 50)
-      {
-        changeState(RETURN_HOME);
-      }
+      
     }
   }
 }
@@ -501,7 +503,7 @@ void StateMachineImp::SM_RETURN_HOME(void)
 {
   if (enter_state == true)
   {
-    Serial3.println("Enter FIND_PERIMETER state");
+    Serial3.println("Enter RETURN_HOME state");
     enter_state = false;
   }
   else
@@ -531,7 +533,7 @@ void StateMachineImp::SM_CHARGING(void)
 {
   if (enter_state == true)
   {
-    Serial.println("Enter CHARGING state");
+    Serial3.println("Enter CHARGING state");
     enter_state = false;
     speaker -> playStartCharging();
     //batterydriver -> disableCharger();
@@ -539,8 +541,8 @@ void StateMachineImp::SM_CHARGING(void)
   }
   else
   {
-    ChargeState state = batterydriver -> readChargeState();
-    Serial.println(batterydriver -> enumToString(state));
+    //ChargeState state = batterydriver -> readChargeState();
+    //Serial3.println(batterydriver -> enumToString(state));
     //Serial.println(state);
   }
 }
@@ -576,6 +578,7 @@ void StateMachineImp::printDiagnostics(void)
   Serial3.println("Right motor current: " + String(motordriver -> getRightCurrent()));
   Serial3.println("Left motor speed: " + String(motordriver -> getLeftSpeed()));
   Serial3.println("Right motor speed: " + String(motordriver -> getRightSpeed()));
+  Serial3.println("Current state: " + StateType(SM_STATE));
   Serial3.println("---------------------------------------------------------");
 }
 
@@ -586,6 +589,8 @@ void StateMachineImp::printPIDValues(void)
   Serial3.print(ivalue);
   Serial3.print(":");
   Serial3.print(dvalue);
+  Serial3.print(":");
+  Serial3.println(Setpoint);
 }
 
 

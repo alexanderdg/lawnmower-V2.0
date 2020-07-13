@@ -29,23 +29,23 @@
 [v ___omul __omul `(uo  1 e 8 0 ]
 "84 D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
 [v _main main `(v  1 e 1 0 ]
-"162
+"164
 [v _encInt encInt `IIH(v  1 e 1 0 ]
-"168
+"170
 [v _adcInt adcInt `IIH(v  1 e 1 0 ]
-"174
+"176
 [v _canRecInt canRecInt `IIH(v  1 e 1 0 ]
-"223
+"225
 [v _Lcd_Port Lcd_Port `(v  1 e 1 0 ]
-"245
+"247
 [v _Lcd_Cmd Lcd_Cmd `(v  1 e 1 0 ]
-"297
+"299
 [v _Lcd_Init Lcd_Init `(v  1 e 1 0 ]
-"322
+"324
 [v _Lcd_Write_Char Lcd_Write_Char `(v  1 e 1 0 ]
-"403
+"405
 [v _initCAN initCAN `(v  1 e 1 0 ]
-"448
+"450
 [v _sendCANmessage sendCANmessage `(v  1 e 1 0 ]
 [s S554 . 1 `uc 1 BRP0 1 0 :1:0 
 `uc 1 BRP1 1 0 :1:1 
@@ -528,53 +528,53 @@
 "81 D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
 [v _status status `VEuc  1 e 1 0 ]
 "82
-[v _tick_count tick_count `i  1 e 2 0 ]
+[v _tick_count tick_count `VEi  1 e 2 0 ]
 "84
 [v _main main `(v  1 e 1 0 ]
 {
-"160
+"162
 } 0
-"403
+"405
 [v _initCAN initCAN `(v  1 e 1 0 ]
 {
-"446
+"448
 } 0
-"297
+"299
 [v _Lcd_Init Lcd_Init `(v  1 e 1 0 ]
 {
-"320
+"322
 } 0
-"223
+"225
 [v _Lcd_Port Lcd_Port `(v  1 e 1 0 ]
 {
 [v Lcd_Port@a a `uc  1 a 1 wreg ]
 [v Lcd_Port@a a `uc  1 a 1 wreg ]
-"225
+"227
 [v Lcd_Port@a a `uc  1 a 1 26 ]
-"244
+"246
 } 0
-"162
+"164
 [v _encInt encInt `IIH(v  1 e 1 0 ]
 {
-"166
-} 0
 "168
+} 0
+"170
 [v _adcInt adcInt `IIH(v  1 e 1 0 ]
 {
-"172
-} 0
 "174
+} 0
+"176
 [v _canRecInt canRecInt `IIH(v  1 e 1 0 ]
 {
-"182
+"184
 [v canRecInt@message message `[8]i  1 a 16 10 ]
-"220
+"222
 } 0
-"448
+"450
 [v _sendCANmessage sendCANmessage `(v  1 e 1 0 ]
 {
 [v sendCANmessage@id id `i  1 p 2 0 ]
 [v sendCANmessage@message message `*.39i  1 p 2 2 ]
 [v sendCANmessage@length length `i  1 p 2 4 ]
-"473
+"475
 } 0
