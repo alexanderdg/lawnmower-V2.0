@@ -130,8 +130,9 @@ void StateMachineImp::SM_RUN(void)
   {
     Serial3.println("Enter RUN state");
     enter_state = false;
-    motordriver -> Forward(0.5);
-    motordriver -> startTurning();
+    motordriver -> driveBackward(0.4 , 2);
+    //motordriver -> enableVBlade();
+    //motordriver -> startTurning();
   }
   else
   {
@@ -149,7 +150,7 @@ void StateMachineImp::SM_RUN(void)
     //Serial3.println("---------");
     //Serial3.println(canbus -> readPressure1());
     //Serial3.println(canbus -> readPressure2());
-    if (motordriver -> getRightCurrent() > 2 or canbus -> readPressure2() > 75)
+    if (motordriver -> getRightCurrent() > 2 or canbus -> readPressure2() > 75 or value > 45)
     {
       changeState(TRY_LEFT);
     }
@@ -157,7 +158,7 @@ void StateMachineImp::SM_RUN(void)
     {
       changeState(TRY_RIGHT);
     }
-    if (canbus -> readDistanceSensor(LL) < 100 or canbus -> readDistanceSensor(LM) < 100 or canbus -> readDistanceSensor(RM) < 100 or canbus -> readDistanceSensor(RR) < 100)
+    if (canbus -> readDistanceSensor(LL) < 100 or canbus -> readDistanceSensor(LM) < 100 or canbus -> readDistanceSensor(RM) < 100 or canbus -> readDistanceSensor(RR) < 100 or value > 30)
     {
       changeState(RUN_SLOW);
     }
@@ -178,8 +179,10 @@ void StateMachineImp::SM_RUN_SLOW(void)
   else
   {
     checkForCharger();
+    int value, sign;
+    canbus -> readPerimeter(&value, &sign);
     long currentTimestamp = millis();
-    if (motordriver -> getRightCurrent() > 2 or canbus -> readPressure2() > 75)
+    if (motordriver -> getRightCurrent() > 2 or canbus -> readPressure2() > 75 or value > 45)
     {
       changeState(TRY_LEFT);
     }
@@ -243,7 +246,7 @@ void StateMachineImp::SM_TRY_LEFT(void)
       changeState(RUN);
     }
 
-    if ((motordriver -> getRightCurrent() > 2 or motordriver -> getLeftCurrent() > 2 or canbus -> readPressure2() > 75 or canbus -> readPressure1() > 75) and (currentTimestamp - savedTimestamp) > 1000)
+    if ((motordriver -> getRightCurrent() > 2.5 or motordriver -> getLeftCurrent() > 2.5 or canbus -> readPressure2() > 100 or canbus -> readPressure1() > 100) and (currentTimestamp - savedTimestamp) > 1000)
     {
       changeState(TRY_INSTEAD_LEFT);
     }
@@ -289,7 +292,7 @@ void StateMachineImp::SM_TRY_RIGHT(void)
       changeState(RUN);
     }
 
-    if ((motordriver -> getRightCurrent() > 2 or motordriver -> getLeftCurrent() > 2 or canbus -> readPressure2() > 75 or canbus -> readPressure1() > 75) and (currentTimestamp - savedTimestamp) > 1500)
+    if ((motordriver -> getRightCurrent() > 2.5 or motordriver -> getLeftCurrent() > 2.5 or canbus -> readPressure2() > 100 or canbus -> readPressure1() > 100) and (currentTimestamp - savedTimestamp) > 1500)
     {
       changeState(TRY_INSTEAD_LEFT);
     }
@@ -335,7 +338,7 @@ void StateMachineImp::SM_TRY_INSTEAD_LEFT(void)
       changeState(RUN);
     }
 
-    if ((motordriver -> getRightCurrent() > 2 or motordriver -> getLeftCurrent() > 2 or canbus -> readPressure2() > 75 or canbus -> readPressure1() > 75) and (currentTimestamp - savedTimestamp) > 1500)
+    if ((motordriver -> getRightCurrent() > 2.5 or motordriver -> getLeftCurrent() > 2.5 or canbus -> readPressure2() > 100 or canbus -> readPressure1() > 100) and (currentTimestamp - savedTimestamp) > 1500)
     {
       changeState(TRY_BACKWARD);
     }
@@ -381,7 +384,7 @@ void StateMachineImp::SM_TRY_INSTEAD_RIGHT(void)
       changeState(RUN);
     }
 
-    if ((motordriver -> getRightCurrent() > 2 or motordriver -> getLeftCurrent() > 2 or canbus -> readPressure2() > 75 or canbus -> readPressure1() > 75) and (currentTimestamp - savedTimestamp) > 1500)
+    if ((motordriver -> getRightCurrent() > 2.5 or motordriver -> getLeftCurrent() > 2.5 or canbus -> readPressure2() > 100 or canbus -> readPressure1() > 100) and (currentTimestamp - savedTimestamp) > 1500)
     {
       changeState(TRY_BACKWARD);
     }
@@ -402,7 +405,7 @@ void StateMachineImp::SM_TRY_BACKWARD(void)
 {
   if (enter_state == true)
   {
-    Serial.println("Enter TRY_BACKWARD state");
+    Serial3.println("Enter TRY_BACKWARD state");
     enter_state = false;
     motordriver -> coastBrake();
     motordriver -> bladeStop();
@@ -549,6 +552,8 @@ void StateMachineImp::SM_CHARGING(void)
 
 void StateMachineImp::changeState(StateType newState)
 {
+  printDiagnostics();
+  delay(500);
   SM_STATE = newState;
   enter_state = true;
 }

@@ -5,6 +5,7 @@
 #include <PID_v1.h>
 
 #define DIAMETER_WHEEL 120
+#define DISTANCE_BETWEEN_WHEELS 280
 #define ENCODER_COUNTS_PER_REVOLUTION 3591.84
 
 class MotorDriver
@@ -19,6 +20,11 @@ class MotorDriver
     bool dynamicBrake(void);
     bool takeRandomTurnRight(void);
     bool takeRandomTurnLeft(void);
+    bool takeTurnRight(float speed, int angle);
+    bool takeTurnLeft(float speed, int angle);
+    bool driveForward(float speed, float distance);
+    bool driveBackward(float speed, float distance);
+    bool distanceTargetReached(void);
 
     bool rawRight(bool direction, int pwm);
     bool rawLeft(bool direction, int pwm);
@@ -59,10 +65,14 @@ class MotorDriver
     int temp_counter_l = 0;
     int temp_counter_r = 0;
     int counter_l = 0;
-    long total_counter_1 = 0;
+    long total_counter_l = 0;
     int counter_r = 0;
     long total_counter_r = 0;
-    bool en_pid = true;
+    bool en_speed_control = true;
+    bool en_distance_control = false;
+    int distance_target = 0;
+    long distance_start_value = 0;
+    bool distance_target_reached = true;
     bool en_distance = false; 
 
     //variables for the current measurment

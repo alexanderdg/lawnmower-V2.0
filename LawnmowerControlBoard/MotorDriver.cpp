@@ -36,12 +36,12 @@ MotorDriver::MotorDriver() : LPID(&InputL, &OutputL, &SetpointL, 5, 40, 0.5, DIR
 
 bool MotorDriver::selfTest(void) {
   bool temp = false;
-  total_counter_1 = 0;
+  total_counter_l = 0;
   total_counter_r = 0;
   Forward(0.3);
   delay(500);
   coastBrake();
-  if((total_counter_1 > 0) && (total_counter_r > 0)) temp = true;
+  if ((total_counter_l > 0) && (total_counter_r > 0)) temp = true;
   return temp;
 }
 
@@ -52,7 +52,8 @@ bool MotorDriver::Forward(float speed) {
   digitalWrite(L_DIR, LOW);
   SetpointL = MStoCPMSconverter(speed);
   SetpointR = MStoCPMSconverter(speed);
-  en_pid = true;
+  en_speed_control = true;
+  en_distance_control = false;
   LPID.SetMode(AUTOMATIC);
   RPID.SetMode(AUTOMATIC);
   return true;
@@ -65,7 +66,8 @@ bool MotorDriver::Backward(float speed) {
   digitalWrite(L_DIR, HIGH);
   SetpointL = MStoCPMSconverter(speed);
   SetpointR = MStoCPMSconverter(speed);
-  en_pid = true;
+  en_speed_control = true;
+  en_distance_control = false;
   LPID.SetMode(AUTOMATIC);
   RPID.SetMode(AUTOMATIC);
   return true;
@@ -78,7 +80,8 @@ bool MotorDriver::turnLeft(float speed) {
   digitalWrite(L_DIR, HIGH);
   SetpointL = MStoCPMSconverter(speed);
   SetpointR = MStoCPMSconverter(speed);
-  en_pid = true;
+  en_speed_control = true;
+  en_distance_control = false;
   LPID.SetMode(AUTOMATIC);
   RPID.SetMode(AUTOMATIC);
   return true;
@@ -91,7 +94,8 @@ bool MotorDriver::turnRight(float speed) {
   digitalWrite(L_DIR, LOW);
   SetpointL = MStoCPMSconverter(speed);
   SetpointR = MStoCPMSconverter(speed);
-  en_pid = true;
+  en_speed_control = true;
+  en_distance_control = false;
   LPID.SetMode(AUTOMATIC);
   RPID.SetMode(AUTOMATIC);
   return true;
@@ -101,7 +105,8 @@ bool MotorDriver::rawRight(bool direction, int pwm) {
   digitalWrite(RL_EN, LOW);
   digitalWrite(RL_SLEEP, HIGH);
   digitalWrite(R_DIR, direction);
-  en_pid = false;
+  en_speed_control = false;
+  en_distance_control = false;
   SetpointL = 0;
   SetpointR = 0;
   OutputL = 0;
@@ -116,7 +121,8 @@ bool MotorDriver::rawLeft(bool direction, int pwm) {
   digitalWrite(RL_EN, LOW);
   digitalWrite(RL_SLEEP, HIGH);
   digitalWrite(L_DIR, direction);
-  en_pid = false;
+  en_speed_control = false;
+  en_distance_control = false;
   SetpointL = 0;
   SetpointR = 0;
   OutputL = 0;
@@ -127,8 +133,65 @@ bool MotorDriver::rawLeft(bool direction, int pwm) {
   return true;
 }
 
+bool MotorDriver::takeTurnRight(float speed, int angle) {
+  bool returnvalue = false;
+  if (angle >= 90) {
+    //calculations to convert angle to encoder values
+    int distance_mm = (angle / 360.0) * 3.1415 * DISTANCE_BETWEEN_WHEELS;
+    int value_encoder = MStoCPMSconverter(distance_mm / 100.0);
+    turnRight(speed);
+    distance_start_value = total_counter_l;
+    distance_target = value_encoder;
+    en_distance_control = true;
+    distance_target_reached = false;
+  }
+  return returnvalue;
+}
+
+bool MotorDriver::takeTurnLeft(float speed, int angle) {
+  bool returnvalue = false;
+  if (angle >= 90) {
+    //calculations to convert angle to encoder values
+    int distance_mm = (angle / 360.0) * 3.1415 * DISTANCE_BETWEEN_WHEELS;
+    int value_encoder = MStoCPMSconverter(distance_mm / 100.0);
+    turnLeft(speed);
+    distance_start_value = total_counter_l;
+    distance_target = value_encoder;
+    en_distance_control = true;
+    distance_target_reached = false;
+  }
+  return returnvalue;
+}
+
+bool MotorDriver::driveForward(float speed, float distance) {
+  bool returnvalue = false;
+  if (distance >= 0.2) {
+    int value_encoder = MStoCPMSconverter(distance * 10);
+    Forward(speed);
+    distance_start_value = total_counter_l;
+    distance_target = value_encoder;
+    en_distance_control = true;
+    distance_target_reached = false;
+  }
+  return returnvalue;
+}
+
+bool MotorDriver::driveBackward(float speed, float distance) {
+  bool returnvalue = false;
+  if (distance >= 0.2) {
+    int value_encoder = MStoCPMSconverter(distance * 10);
+    Backward(speed);
+    distance_start_value = total_counter_l;
+    distance_target = value_encoder;
+    en_distance_control = true;
+    distance_target_reached = false;
+  }
+  return returnvalue;
+}
+
 bool MotorDriver::coastBrake(void) {
-  en_pid = false;
+  en_speed_control = false;
+  en_distance_control = false;
   SetpointL = 0;
   SetpointR = 0;
   OutputL = 0;
@@ -142,10 +205,11 @@ bool MotorDriver::coastBrake(void) {
 }
 
 bool MotorDriver::dynamicBrake(void) {
-  en_pid = false;
+  en_speed_control = false;
+  en_distance_control = false;
   SetpointL = 0;
   SetpointR = 0;
-  OutputL = 0; 
+  OutputL = 0;
   OutputR = 0;
   LPID.SetMode(MANUAL);
   RPID.SetMode(MANUAL);
@@ -156,14 +220,14 @@ bool MotorDriver::dynamicBrake(void) {
 
 bool MotorDriver::takeRandomTurnRight(void) {
   turnRight(0.5);
-  delay(random(500,2000));
+  delay(random(500, 2000));
   coastBrake();
   return true;
 }
 
 bool MotorDriver::takeRandomTurnLeft(void) {
   turnLeft(0.5);
-  delay(random(500,2000));
+  delay(random(500, 2000));
   coastBrake();
   return true;
 }
@@ -205,6 +269,10 @@ float MotorDriver::getLeftCurrent(void) {
 float MotorDriver::getRightCurrent(void) {
   float temp = (rightCurrent * 0.000806) * 5;
   return temp;
+}
+
+bool MotorDriver::distanceTargetReached(void) {
+  return distance_target_reached;
 }
 
 bool MotorDriver::enableVBlade(void) {
@@ -252,7 +320,7 @@ float MotorDriver::getBladeCurrent(void) {
 
 void MotorDriver::EncoderInteruptL() {
   MotorDriverS -> temp_counter_l ++;
-  MotorDriverS -> total_counter_1 ++;
+  MotorDriverS -> total_counter_l ++;
 }
 
 void MotorDriver::EncoderInteruptR() {
@@ -269,7 +337,7 @@ void MotorDriver::resetCounter() {
   MotorDriverS -> InputR = MotorDriverS -> counter_r;
   MotorDriverS -> LPID.Compute();
   MotorDriverS -> RPID.Compute();
-  if (MotorDriverS -> en_pid)
+  if (MotorDriverS -> en_speed_control)
   {
     MotorDriverS -> setLeftSpeed(MotorDriverS -> OutputL);
     MotorDriverS -> setRightSpeed(MotorDriverS -> OutputR);
@@ -285,13 +353,24 @@ void MotorDriver::resetCounter() {
     //Serial.println(MotorDriverS -> OutputL);
     //Serial.println(MotorDriverS -> OutputR);
   }
+
+  if (MotorDriverS -> en_distance_control)
+  {
+    int last_distance  = MotorDriverS -> total_counter_l - MotorDriverS -> distance_start_value;
+    if (last_distance >=  MotorDriverS -> distance_target)
+    {
+      MotorDriverS -> coastBrake();
+      MotorDriverS -> distance_target_reached = true;
+      Serial3.println("Distance target reached!");
+    }
+  }
   /*
-  Serial.print("Input PID: ");
-  Serial.println(MotorDriverS -> counter_l);
-  Serial.println("Setpoint PID: ");
-  Serial.println(MotorDriverS -> SetpointL);
-  Serial.println("Output PID: ");
-  Serial.println(MotorDriverS -> OutputL);
+    Serial.print("Input PID: ");
+    Serial.println(MotorDriverS -> counter_l);
+    Serial.println("Setpoint PID: ");
+    Serial.println(MotorDriverS -> SetpointL);
+    Serial.println("Output PID: ");
+    Serial.println(MotorDriverS -> OutputL);
   */
 }
 
