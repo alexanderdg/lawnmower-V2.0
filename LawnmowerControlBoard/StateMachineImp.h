@@ -89,7 +89,8 @@ class StateMachineImp
     
     static bool enter_state;
     static long savedTimestamp;
-
+    static long savedTimestamp2;
+    static int internal_state;
     static bool collision;
 
     //PID variables

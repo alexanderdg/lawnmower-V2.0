@@ -37,7 +37,9 @@ Settings *StateMachineImp::setting = new Settings();
 PID *StateMachineImp::perimeterPID = new PID(&Input, &Output, &Setpoint, 5, 40, 0.5, DIRECT);
 bool StateMachineImp::enter_state = true;
 long StateMachineImp::savedTimestamp = 0;
+long StateMachineImp::savedTimestamp2 = 0;
 bool StateMachineImp::collision = false;
+int StateMachineImp::internal_state = 0;
 
 StateMachineImp::StateMachineImp(void)
 {
@@ -120,7 +122,6 @@ void StateMachineImp::SM_SELF_TEST(void)
     Serial3.println("Selftest of the motordriver is failed");
   }
   delay(1000);
-  speaker -> playStartMowing();
   changeState(RUN);
 }
 
@@ -129,8 +130,9 @@ void StateMachineImp::SM_RUN(void)
   if (enter_state == true)
   {
     Serial3.println("Enter RUN state");
+    speaker -> playStartMowing();
     enter_state = false;
-    motordriver -> driveBackward(0.4 , 2);
+    motordriver -> Forward(0.5);
     //motordriver -> enableVBlade();
     //motordriver -> startTurning();
   }
@@ -182,11 +184,11 @@ void StateMachineImp::SM_RUN_SLOW(void)
     int value, sign;
     canbus -> readPerimeter(&value, &sign);
     long currentTimestamp = millis();
-    if (motordriver -> getRightCurrent() > 2 or canbus -> readPressure2() > 75 or value > 45)
+    if (motordriver -> getRightCurrent() > 1.6 or canbus -> readPressure2() > 75 or value > 45)
     {
       changeState(TRY_LEFT);
     }
-    if (motordriver -> getLeftCurrent() > 2 or canbus -> readPressure1() > 75)
+    if (motordriver -> getLeftCurrent() > 1.6 or canbus -> readPressure1() > 75)
     {
       changeState(TRY_RIGHT);
     }
@@ -212,6 +214,7 @@ void StateMachineImp::SM_TRY_LEFT(void)
     //Serial3.println("test");
     motordriver -> coastBrake();
     savedTimestamp = millis();
+    savedTimestamp2 = millis();
     enter_state = false;
   }
   else
@@ -219,36 +222,38 @@ void StateMachineImp::SM_TRY_LEFT(void)
     checkForCharger();
     long currentTimestamp = millis();
     int randomtime = random(500, 2000);
-    //Serial3.begin(currentTimestamp);
-    //Serial3.begin(savedTimestamp);
-    if ( (currentTimestamp - savedTimestamp) < 800 )
+    switch (internal_state)
     {
-
+      case 0:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) {
+          internal_state ++;
+          motordriver -> driveBackward(0.4, 0.5);
+        }
+        break;
+      case 1:
+        if (motordriver -> distanceTargetReached())  internal_state ++;
+        savedTimestamp = millis();
+        break;
+      case 2:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) {
+          internal_state ++;
+          motordriver -> takeTurnLeft(0.4, 90);
+        }
+        break;
+      case 3:
+        if (motordriver -> distanceTargetReached())  internal_state ++;
+        savedTimestamp = millis();
+        break;
+      case 4:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) internal_state ++;
+        break;
+      case 5:
+        changeState(RUN);
+        break;
     }
-    else if ( (currentTimestamp - savedTimestamp) < 2000 )
+    if ((motordriver -> getRightCurrent() > 2 or motordriver -> getLeftCurrent() > 2 or canbus -> readPressure2() > 100 or canbus -> readPressure1() > 100) and (currentTimestamp - savedTimestamp2) > 1500)
     {
-      motordriver-> Backward(0.3);
-    }
-    else if ( (currentTimestamp - savedTimestamp) < 3000)
-    {
-      motordriver -> coastBrake();
-    }
-    else if ( (currentTimestamp - savedTimestamp) < 4000 )
-    {
-      motordriver -> turnLeft(0.3);
-    }
-    else if ( (currentTimestamp - savedTimestamp) < (5000 + randomtime))
-    {
-      motordriver -> coastBrake();
-    }
-    else if ( (currentTimestamp - savedTimestamp) < (6000 + randomtime))
-    {
-      changeState(RUN);
-    }
-
-    if ((motordriver -> getRightCurrent() > 2.5 or motordriver -> getLeftCurrent() > 2.5 or canbus -> readPressure2() > 100 or canbus -> readPressure1() > 100) and (currentTimestamp - savedTimestamp) > 1000)
-    {
-      changeState(TRY_INSTEAD_LEFT);
+      changeState(TRY_INSTEAD_RIGHT);
     }
   }
 }
@@ -261,38 +266,44 @@ void StateMachineImp::SM_TRY_RIGHT(void)
     enter_state = false;
     motordriver -> coastBrake();
     savedTimestamp = millis();
+    savedTimestamp2 = millis();
   }
   else
   {
     checkForCharger();
     long currentTimestamp = millis();
     int randomtime = random(500, 2000);
-    if ( (currentTimestamp - savedTimestamp) < 800 )
+    switch (internal_state)
     {
+      case 0:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) {
+          internal_state ++;
+          motordriver -> driveBackward(0.4, 0.5);
+        }
+        break;
+      case 1:
+        if (motordriver -> distanceTargetReached())  internal_state ++;
+        savedTimestamp = millis();
+        break;
+      case 2:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) {
+          internal_state ++;
+          motordriver -> takeTurnRight(0.4, 90);
+        }
+        break;
+      case 3:
+        if (motordriver -> distanceTargetReached())  internal_state ++;
+        savedTimestamp = millis();
+        break;
+      case 4:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) internal_state ++;
+        break;
+      case 5:
+        changeState(RUN);
+        break;
+    }
 
-    }
-    else if ( (currentTimestamp - savedTimestamp) < 2000 )
-    {
-      motordriver-> Backward(0.3);
-    }
-    else if ( (currentTimestamp - savedTimestamp) < 3000)
-    {
-      motordriver -> coastBrake();
-    }
-    else if ( (currentTimestamp - savedTimestamp) < 4000 )
-    {
-      motordriver -> turnRight(0.3);
-    }
-    else if ( (currentTimestamp - savedTimestamp) < (5000 + randomtime))
-    {
-      motordriver -> coastBrake();
-    }
-    else if ( (currentTimestamp - savedTimestamp) < (6000 + randomtime))
-    {
-      changeState(RUN);
-    }
-
-    if ((motordriver -> getRightCurrent() > 2.5 or motordriver -> getLeftCurrent() > 2.5 or canbus -> readPressure2() > 100 or canbus -> readPressure1() > 100) and (currentTimestamp - savedTimestamp) > 1500)
+    if ((motordriver -> getRightCurrent() > 2 or motordriver -> getLeftCurrent() > 2 or canbus -> readPressure2() > 100 or canbus -> readPressure1() > 100) and (currentTimestamp - savedTimestamp2) > 1500)
     {
       changeState(TRY_INSTEAD_LEFT);
     }
@@ -307,43 +318,50 @@ void StateMachineImp::SM_TRY_INSTEAD_LEFT(void)
     enter_state = false;
     motordriver -> coastBrake();
     savedTimestamp = millis();
+    savedTimestamp2 = millis();
   }
   else
   {
     checkForCharger();
     long currentTimestamp = millis();
     int randomtime = random(500, 2000);
-    if ( (currentTimestamp - savedTimestamp) < 800 )
+    switch (internal_state)
     {
-
+      case 0:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) {
+          internal_state ++;
+          motordriver -> driveBackward(0.4, 0.5);
+        }
+        break;
+      case 1:
+        if (motordriver -> distanceTargetReached())  internal_state ++;
+        savedTimestamp = millis();
+        break;
+      case 2:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) {
+          internal_state ++;
+          motordriver -> takeTurnLeft(0.4, 90);
+        }
+        break;
+      case 3:
+        if (motordriver -> distanceTargetReached())  internal_state ++;
+        savedTimestamp = millis();
+        break;
+      case 4:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) internal_state ++;
+        break;
+      case 5:
+        changeState(RUN);
+        break;
     }
-    else if ( (currentTimestamp - savedTimestamp) < 2000 )
-    {
-      motordriver-> Backward(0.3);
-    }
-    else if ( (currentTimestamp - savedTimestamp) < 3000)
-    {
-      motordriver -> coastBrake();
-    }
-    else if ( (currentTimestamp - savedTimestamp) < 4000 )
-    {
-      motordriver -> turnRight(0.3);
-    }
-    else if ( (currentTimestamp - savedTimestamp) < (5000 + randomtime))
-    {
-      motordriver -> coastBrake();
-    }
-    else if ( (currentTimestamp - savedTimestamp) < (6000 + randomtime))
-    {
-      changeState(RUN);
-    }
-
-    if ((motordriver -> getRightCurrent() > 2.5 or motordriver -> getLeftCurrent() > 2.5 or canbus -> readPressure2() > 100 or canbus -> readPressure1() > 100) and (currentTimestamp - savedTimestamp) > 1500)
+    Serial3.println(currentTimestamp - savedTimestamp2);
+    if ((motordriver -> getRightCurrent() > 2 or motordriver -> getLeftCurrent() > 2 or canbus -> readPressure2() > 100 or canbus -> readPressure1() > 100) and (currentTimestamp - savedTimestamp2) > 1500)
     {
       changeState(TRY_BACKWARD);
     }
   }
 }
+
 
 void StateMachineImp::SM_TRY_INSTEAD_RIGHT(void)
 {
@@ -353,52 +371,48 @@ void StateMachineImp::SM_TRY_INSTEAD_RIGHT(void)
     enter_state = false;
     motordriver -> coastBrake();
     savedTimestamp = millis();
+    savedTimestamp2 = millis();
   }
   else
   {
     checkForCharger();
     long currentTimestamp = millis();
     int randomtime = random(500, 2000);
-    if ( (currentTimestamp - savedTimestamp) < 800 )
+    switch (internal_state)
     {
+      case 0:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) {
+          internal_state ++;
+          motordriver -> driveBackward(0.4, 0.5);
+        }
+        break;
+      case 1:
+        if (motordriver -> distanceTargetReached())  internal_state ++;
+        savedTimestamp = millis();
+        break;
+      case 2:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) {
+          internal_state ++;
+          motordriver -> takeTurnRight(0.4, 90);
+        }
+        break;
+      case 3:
+        if (motordriver -> distanceTargetReached())  internal_state ++;
+        savedTimestamp = millis();
+        break;
+      case 4:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) internal_state ++;
+        break;
+      case 5:
+        changeState(RUN);
+        break;
+    }
 
-    }
-    else if ( (currentTimestamp - savedTimestamp) < 2000 )
-    {
-      motordriver-> Backward(0.3);
-    }
-    else if ( (currentTimestamp - savedTimestamp) < 3000)
-    {
-      motordriver -> coastBrake();
-    }
-    else if ( (currentTimestamp - savedTimestamp) < 4000 )
-    {
-      motordriver -> turnLeft(0.3);
-    }
-    else if ( (currentTimestamp - savedTimestamp) < (5000 + randomtime))
-    {
-      motordriver -> coastBrake();
-    }
-    else if ( (currentTimestamp - savedTimestamp) < (6000 + randomtime))
-    {
-      changeState(RUN);
-    }
-
-    if ((motordriver -> getRightCurrent() > 2.5 or motordriver -> getLeftCurrent() > 2.5 or canbus -> readPressure2() > 100 or canbus -> readPressure1() > 100) and (currentTimestamp - savedTimestamp) > 1500)
+    if ((motordriver -> getRightCurrent() > 2 or motordriver -> getLeftCurrent() > 2 or canbus -> readPressure2() > 100 or canbus -> readPressure1() > 100) and (currentTimestamp - savedTimestamp2) > 1500)
     {
       changeState(TRY_BACKWARD);
     }
   }
-}
-
-void StateMachineImp::SM_TRY_LAST_TIME_LEFT(void)
-{
-
-}
-
-void StateMachineImp::SM_TRY_LAST_TIME_RIGHT(void)
-{
-
 }
 
 void StateMachineImp::SM_TRY_BACKWARD(void)
@@ -408,29 +422,168 @@ void StateMachineImp::SM_TRY_BACKWARD(void)
     Serial3.println("Enter TRY_BACKWARD state");
     enter_state = false;
     motordriver -> coastBrake();
-    motordriver -> bladeStop();
+    savedTimestamp = millis();
+    savedTimestamp2 = millis();
   }
   else
   {
     checkForCharger();
+    long currentTimestamp = millis();
+    int value, sign;
+    canbus -> readPerimeter(&value, &sign);
+    switch (internal_state)
+    {
+      case 0:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) {
+          internal_state ++;
+          motordriver -> driveBackward(0.4, 0.5);
+        }
+        break;
+      case 1:
+        if (motordriver -> distanceTargetReached())  internal_state ++;
+        savedTimestamp = millis();
+        break;
+      case 2:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) {
+          internal_state ++;
+          motordriver -> takeTurnRight(0.4, 180);
+        }
+        break;
+      case 3:
+        if (motordriver -> distanceTargetReached())  internal_state ++;
+        savedTimestamp = millis();
+        break;
+      case 4:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) internal_state ++;
+        break;
+      case 5:
+        changeState(RUN);
+        break;
+    }
+    if ((motordriver -> getRightCurrent() > 1.6 or canbus -> readPressure2() > 75 or value > 45) and (currentTimestamp - savedTimestamp2) > 1500)
+    {
+      changeState(TRY_LAST_TIME_LEFT);
+    }
+    if ((motordriver -> getLeftCurrent() > 1.6 or canbus -> readPressure1() > 75) and (currentTimestamp - savedTimestamp2) > 1500)
+    {
+      changeState(TRY_LAST_TIME_RIGHT);
+    }
   }
 
+}
+
+void StateMachineImp::SM_TRY_LAST_TIME_LEFT(void)
+{
+  if (enter_state == true)
+  {
+    Serial3.println("Enter TRY_LAST_TIME_LEFT state");
+    enter_state = false;
+    motordriver -> coastBrake();
+    savedTimestamp = millis();
+    savedTimestamp2 = millis();
+  }
+  else
+  {
+    checkForCharger();
+    long currentTimestamp = millis();
+    switch (internal_state)
+    {
+      case 0:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) {
+          internal_state ++;
+          motordriver -> driveBackward(0.4, 0.5);
+        }
+        break;
+      case 1:
+        if (motordriver -> distanceTargetReached())  internal_state ++;
+        savedTimestamp = millis();
+        break;
+      case 2:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) {
+          internal_state ++;
+          motordriver -> takeTurnLeft(0.4, 90);
+        }
+        break;
+      case 3:
+        if (motordriver -> distanceTargetReached())  internal_state ++;
+        savedTimestamp = millis();
+        break;
+      case 4:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) internal_state ++;
+        break;
+      case 5:
+        changeState(RUN);
+        break;
+    }
+    if ((motordriver -> getRightCurrent() > 2 or motordriver -> getLeftCurrent() > 2 or canbus -> readPressure2() > 100 or canbus -> readPressure1() > 100) and (currentTimestamp - savedTimestamp2) > 1500)
+    {
+      changeState(STUCK);
+    }
+  }
+}
+
+void StateMachineImp::SM_TRY_LAST_TIME_RIGHT(void)
+{
+  if (enter_state == true)
+  {
+    Serial3.println("Enter TRY_LAST_TIME_RIGHT state");
+    enter_state = false;
+    motordriver -> coastBrake();
+    savedTimestamp = millis();
+    savedTimestamp2 = millis();
+  }
+  else
+  {
+    checkForCharger();
+    long currentTimestamp = millis();
+    switch (internal_state)
+    {
+      case 0:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) {
+          internal_state ++;
+          motordriver -> driveBackward(0.4, 0.5);
+        }
+        break;
+      case 1:
+        if (motordriver -> distanceTargetReached())  internal_state ++;
+        savedTimestamp = millis();
+        break;
+      case 2:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) {
+          internal_state ++;
+          motordriver -> takeTurnRight(0.4, 90);
+        }
+        break;
+      case 3:
+        if (motordriver -> distanceTargetReached())  internal_state ++;
+        savedTimestamp = millis();
+        break;
+      case 4:
+        if ( (currentTimestamp - savedTimestamp) > 800 ) internal_state ++;
+        break;
+      case 5:
+        changeState(RUN);
+        break;
+    }
+    if ((motordriver -> getRightCurrent() > 2 or motordriver -> getLeftCurrent() > 2 or canbus -> readPressure2() > 100 or canbus -> readPressure1() > 100) and (currentTimestamp - savedTimestamp2) > 1500)
+    {
+      changeState(STUCK);
+    }
+  }
 }
 
 void StateMachineImp::SM_STUCK(void)
 {
   if (enter_state == true)
   {
-    Serial.println("Enter STUCK state");
+    Serial3.println("Enter STUCK state");
     enter_state = false;
     motordriver -> bladeStop();
+    speaker -> playStuck();
   }
   else
   {
     checkForCharger();
-    Serial.println("State STUCK");
-    delay(1000);
-    changeState(RUN);
   }
 }
 
@@ -454,7 +607,7 @@ void StateMachineImp::SM_FIND_PERIMETER(void)
       }
       int value, sign;
       canbus -> readPerimeter(&value, &sign);
-      if(value > (Setpoint - 10))
+      if (value > (Setpoint - 10))
       {
         changeState(RETURN_HOME);
       }
@@ -492,7 +645,7 @@ void StateMachineImp::SM_FIND_PERIMETER(void)
       {
         savedTimestamp = currentTimestamp;
       }
-      
+
     }
   }
 }
@@ -552,10 +705,11 @@ void StateMachineImp::SM_CHARGING(void)
 
 void StateMachineImp::changeState(StateType newState)
 {
-  printDiagnostics();
-  delay(500);
+  //printDiagnostics();
+  //delay(500);
   SM_STATE = newState;
   enter_state = true;
+  internal_state = 0;
 }
 
 void StateMachineImp::printDiagnostics(void)
