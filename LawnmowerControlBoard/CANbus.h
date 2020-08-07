@@ -27,7 +27,7 @@ class CANbus
     int readDistanceSensor(DistanceSensor sensor);
 
     int readStatus(void);
-    bool setStatus(int);
+    int setStatus(void);
 
     bool selfTest(void);
 

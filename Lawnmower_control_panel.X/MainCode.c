@@ -1,5 +1,7 @@
 //code for the lawnmower sensor board
 #include <xc.h>
+ #include <stdio.h>
+ #include <stdlib.h>
 
 #define _XTAL_FREQ 64000000
 
@@ -58,6 +60,8 @@
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF
 void initCAN(void);
+void initBuzzer(void);
+void playBuzzer(void);
 void initADC(void);
 
 void sendCANmessage(int id, int message [8], int length);
@@ -74,25 +78,35 @@ void Lcd_Write_String(char *a);
 void Lcd_Shift_Right(void);
 void Lcd_Shift_Left(void);
 
+void MenuYesNo(void);
+
+
 int ADCvalueHigh0 = 0;
 int ADCvalueLow0 = 0;
 int ADCvalueHigh1 = 0;
 int ADCvalueLow1 = 0;
-volatile unsigned char status = 0b0;
-volatile int tick_count=0;
+int tick_count=0;
+int max_tick_count = 1;
+int min_tick_count = 0;
+int status = 1;
+int feedback = 1;
 
 void main() {
     //set intern oscilator frequency to 64MHz
     OSCCON1 = 0b01100000;
     initCAN();
-
+    initBuzzer();
     //map external interupt to RA0
     ANSELAbits.ANSELA0 = 0;
-    INT0PPS = 0x00;
+    ANSELAbits.ANSELA1 = 0;
+    ANSELAbits.ANSELA2 = 0;
+    INT0PPS = 0x01;
     TRISAbits.TRISA0 = 1;
+    TRISAbits.TRISA1 = 1;
+    TRISAbits.TRISA2 = 1;
     PIE1bits.INT0IE = 1;
     PIR1bits.INT0IF = 0;
-    INTCON0bits.INT0EDG = 0;
+    INTCON0bits.INT0EDG = 1;
     //enable global interupts
     INTCON0bits.GIEL = 1;
     INTCON0bits.GIE = 1;
@@ -100,70 +114,76 @@ void main() {
     INTCON0bits.IPEN = 0;
     //enable CAN interupts
     PIE5bits.RXB0IE = 1;
-    PIE5bits.RXB1IE = 1;
-    tick_count = 4;
+    PIE5bits.RXB1IE = 0;
+    
+    
+    //tick_count = 4;
     ei();
-    tick_count = 5;
+    TRISBbits.TRISB0 = 0;
+    ANSELBbits.ANSELB0 = 0;
+    PORTBbits.RB0 = 1;
+    //tick_count = 5;
     Lcd_Init();
-    tick_count = 6;
-    //Lcd_Clear();
-    tick_count = 7;
-    //Lcd_Set_Cursor(1,1);
-    tick_count = 8;
-    //Lcd_Write_String("Welcome to the robot\0");
-    tick_count = 10;
-    /*
-    switch(status)
-    {
-        case -1:
-            Lcd_Set_Cursor(2,1);
-            Lcd_Write_String("-1");
-            break;
-        case 0:
-            Lcd_Set_Cursor(2,1);
-            Lcd_Write_String("0");
-            break;
-        case 1:
-            Lcd_Set_Cursor(2,1);
-            Lcd_Write_String("1");
-            break;
-        case 2:
-            Lcd_Set_Cursor(2,1);
-            Lcd_Write_String("2");
-            break;
-        case 3:
-            Lcd_Set_Cursor(2,1);
-            Lcd_Write_String("3");
-            break;
-    }
-    */
-    while (1) {
-        
-        __delay_ms(1);
-        __delay_ms(1);
-        __delay_ms(1);
-        tick_count ++;
-        /*
-        int temp0 = readADC(0);
-        int temp1 = readADC(1);
-        ADCvalueHigh0 = (temp0 >> 8) & 0xFF;
-        ADCvalueLow0 = temp0 & 0xFF;
-        ADCvalueHigh1 = (temp1 >> 8) & 0xFF;
-        ADCvalueLow1 = temp1 & 0xFF;
-        char str[20];
-        unsigned int value = 105;
+start:
+    //tick_count = 6;
+    Lcd_Clear();
+    //tick_count = 7;
+    Lcd_Set_Cursor(1,1);
+    //tick_count = 8;
+    Lcd_Write_String("Welcome to the robot\0");
+    //tick_count = 10;
+    Lcd_Set_Cursor(2,1);
+    Lcd_Write_String("Execute selftest?");
+    MenuYesNo();
+    if(tick_count == 1) goto mower;
+    Lcd_Clear();
+    Lcd_Set_Cursor(1,1);
+    Lcd_Write_String("Robot will move\0");
+    Lcd_Set_Cursor(2,1);
+    Lcd_Write_String("Are you sure??");
+    MenuYesNo();
+    if(tick_count == 1) goto start;
+selftest:
+    status = 2;
+    Lcd_Clear();
+    Lcd_Set_Cursor(1,1);
+    Lcd_Write_String("Executing selftest\0");
+    Lcd_Set_Cursor(2,1);
+    Lcd_Write_String(".......");
+    while(feedback != 2 & feedback != 3);
+    Lcd_Clear();
+    Lcd_Set_Cursor(1,1);
+    Lcd_Write_String("Selftest was ok!");
+    _delay(5);
+    mower:
+    Lcd_Clear();
+    Lcd_Set_Cursor(1,1);
+    Lcd_Write_String("Starting mower!");
+    while(1);
+}
 
-        //sprintf(str, "%u.%u", value / 10, value % 10);
-        //Lcd_Set_Cursor(2,1);
-        //Lcd_Write_String(str);
-        //readCANmessage();
-        */
-    }
+
+void __interrupt(irq(TMR0), low_priority) buzzerInt(void) {
+    PORTBbits.RB1 = 0;
+    T0CON0bits.EN = 0;
+    PIR3bits.TMR0IF = 0;
 }
 
 void __interrupt(irq(INT0), high_priority) encInt(void) {
-    PORTBbits.RB0 = 0;
-    tick_count ++;
+    if(PORTAbits.RA0 == 1)
+    {
+        if(tick_count > min_tick_count) {
+            tick_count --;
+            playBuzzer();
+        }
+    }
+    else
+    {
+        if(tick_count < max_tick_count) {
+            tick_count ++;
+            playBuzzer();
+        }
+    }
     PIR1bits.INT0IF = 0;
 }
 
@@ -173,11 +193,7 @@ void __interrupt(irq(AD), high_priority) adcInt(void) {
     //PIR1bits.ADIF = 0;
 }
 
-void __interrupt(irq(RXB0IF), high_priority) canRecInt(void) {
-    //LATAbits.LA0 = COMSTATbits.RXB0OVFL;
-    //Lcd_Set_Cursor(3, 1);
-    //Lcd_Write_String("CAN Gelukt");
-    PORTBbits.RB0 = 1;
+void __interrupt(irq(RXB0IF), high_priority) canRecInt2(void) {
     if (RXB0CONbits.RXFUL == 1) {
         //LATAbits.LA0 = !LATAbits.LA0;
         //haal de ontvangen data uit de registers
@@ -189,7 +205,11 @@ void __interrupt(irq(RXB0IF), high_priority) canRecInt(void) {
                 message[0] = tick_count;
                 sendCANmessage(0, message, 1);
                 break;
-            
+            case 1:
+                message[0] = status;
+                sendCANmessage(0, message, 1);
+                break;
+                      
              
         }
         //message[0] = RXB0D0 + 1;
@@ -218,7 +238,11 @@ void __interrupt(irq(RXB0IF), high_priority) canRecInt(void) {
         RXB0CONbits.RXFUL = 0;
     }
     PIR5bits.RXB0IF = 0;
-    return;
+}
+
+void __interrupt(irq(RXB1IF), high_priority) canRecInt(void) {
+    tick_count = 69;
+    PIR5bits.RXB1IF = 0;
 }
 
 
@@ -304,7 +328,7 @@ void Lcd_Init(void)
     PORTBbits.RB0 = 1;
     ANSELC = 0x00;
     Lcd_Port(0x00);
-    /*
+   
    __delay_ms(20);
   Lcd_Cmd(0x03);
 	__delay_ms(5);
@@ -318,7 +342,7 @@ void Lcd_Init(void)
   Lcd_Cmd(0x0C);
   Lcd_Cmd(0x00);
   Lcd_Cmd(0x06);
-  */
+  
 }
 
 void Lcd_Write_Char(char a)
@@ -354,6 +378,37 @@ void Lcd_Shift_Left()
 {
 	Lcd_Cmd(0x01);
 	Lcd_Cmd(0x08);
+}
+
+void MenuYesNo(void)
+{
+    while(PORTAbits.RA2)
+    {
+        char str[20];
+        unsigned int value = 105;
+        //sprintf(str, "%3d", tick_count);
+        switch(tick_count)
+        {
+            case 0:
+                Lcd_Set_Cursor(3,2);
+                Lcd_Write_String("|Yes|");
+                Lcd_Set_Cursor(4,2);
+                Lcd_Write_String(" No ");
+                break;
+            case 1:
+               Lcd_Set_Cursor(3,2);
+                Lcd_Write_String(" Yes ");
+                Lcd_Set_Cursor(4,2);
+                Lcd_Write_String("|No|");
+                break;
+            default:
+                Lcd_Set_Cursor(3,1);
+                Lcd_Write_String("Error");
+                break;
+        }
+    }
+    while(!PORTAbits.RA2);
+    playBuzzer();
 }
 
 /*
@@ -480,4 +535,27 @@ int readADC(int ch) {
     ADCON0bits.GO = 1;
     while (ADCON0bits.GO);
     return (ADRESH << 8) +ADRESL;
+}
+
+void initBuzzer(void) {
+    //init buzzer output pin
+    ANSELBbits.ANSELB1 = 0;
+    TRISBbits.TRISB1 = 0;
+    PORTBbits.RB1 = 1;
+    T0CON0bits.EN = 1;
+    T0CON0bits.MD16 = 0;
+    T0CON0bits.OUTPS = 0;
+    T0CON1bits.CS = 0b101;
+    T0CON1bits.ASYNC = 1;
+    T0CON1bits.CKPS = 0b1001;
+    TMR0L = 0;
+    TMR0H = 50;
+    PIE3bits.TMR0IE = 1;
+    PIR3bits.TMR0IF = 0;
+}
+
+void playBuzzer(void) {
+   PORTBbits.RB1 = 1;
+   T0CON0bits.EN = 1;
+   TMR0L = 0;
 }

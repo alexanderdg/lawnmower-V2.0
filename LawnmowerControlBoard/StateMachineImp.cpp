@@ -88,41 +88,56 @@ void StateMachineImp::SM_INIT(void)
   else
   {
     checkForCharger();
+    if(canbus -> readStatus() == 2)
+    {
+      changeState(SELF_TEST);
+    }
   }
 }
 
 void StateMachineImp::SM_SELF_TEST(void)
 {
-  Serial3.println("Starting selftest of the motordriver");
-  if (motordriver -> selfTest() == true)
+  if (enter_state == true)
   {
-    Serial3.println("Selftest of the motordriver is ok");
-    Serial3.println("Starting selftest of the sensorboard");
-    if (canbus -> selfTest() == true)
+    Serial3.println("Enter SELF_TEST state");
+    motordriver -> coastBrake();
+    motordriver -> bladeStop();
+    motordriver -> disableVBlade();
+    enter_state = false;
+  }
+  else
+  {
+    Serial3.println("Starting selftest of the motordriver");
+    if (motordriver -> selfTest() == true)
     {
-      Serial3.println("Selftest of the sensorboard is ok");
-      Serial3.println("Starting selftest of the battery driver");
-      if (batterydriver -> selfTest() == true)
+      Serial3.println("Selftest of the motordriver is ok");
+      Serial3.println("Starting selftest of the sensorboard");
+      if (canbus -> selfTest() == true)
       {
-        Serial3.println("Selftest of the batterydrive is ok");
-        Serial3.println("Selftest of al the components is finished");
+        Serial3.println("Selftest of the sensorboard is ok");
+        Serial3.println("Starting selftest of the battery driver");
+        if (batterydriver -> selfTest() == true)
+        {
+          Serial3.println("Selftest of the batterydrive is ok");
+          Serial3.println("Selftest of al the components is finished");
+        }
+        else
+        {
+          Serial3.println("Selftest of the batterydriver is failed");
+        }
       }
       else
       {
-        Serial3.println("Selftest of the batterydriver is failed");
+        Serial3.println("Selftest of the sensorboard is failed");
       }
     }
     else
     {
-      Serial3.println("Selftest of the sensorboard is failed");
+      Serial3.println("Selftest of the motordriver is failed");
     }
+    delay(1000);
+    changeState(RUN);
   }
-  else
-  {
-    Serial3.println("Selftest of the motordriver is failed");
-  }
-  delay(1000);
-  changeState(RUN);
 }
 
 void StateMachineImp::SM_RUN(void)
@@ -579,6 +594,7 @@ void StateMachineImp::SM_STUCK(void)
     Serial3.println("Enter STUCK state");
     enter_state = false;
     motordriver -> bladeStop();
+    motordriver -> coastBrake();
     speaker -> playStuck();
   }
   else
@@ -714,15 +730,21 @@ void StateMachineImp::changeState(StateType newState)
 
 void StateMachineImp::printDiagnostics(void)
 {
+  int tempery = canbus -> setStatus();
+  Serial3.println(tempery);
   int value, sign, PIDvalue;
   canbus -> readPerimeterPID(&value, &sign, &PIDvalue);
   Serial3.println("---------------------------------------------------------");
   Serial3.println("---                   Diagnostics                     ---");
   Serial3.println("---------------------------------------------------------");
   Serial3.println("Distancesensor LL: " + String(canbus -> readDistanceSensor(LL)));
+  delay(10);
   Serial3.println("Distancesensor LM: " + String(canbus -> readDistanceSensor(LM)));
+  delay(10);
   Serial3.println("Distancesensor B: " + String(canbus -> readDistanceSensor(B)));
+  delay(10);
   Serial3.println("Distancesensor RM: " + String(canbus -> readDistanceSensor(RM)));
+  delay(10);
   Serial3.println("Distancesensor RR: " + String(canbus -> readDistanceSensor(RR)));
   Serial3.println("Perimeter Magnitude: " + String(value));
   Serial3.println("Perimeter sign: " + String(sign));

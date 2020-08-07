@@ -13,18 +13,32 @@
 %PSECTS
 $dist/default/production\Lawnmower_control_panel.X.production.o
 ivt0x8 CODE 0 8 8 A0 1
-cinit CODE 0 2FC 2FC 22 1
-text0 CODE 0 182 182 92 1
-text1 CODE 0 214 214 6A 1
-text2 CODE 0 31E 31E 18 1
-text3 CODE 0 2D0 2D0 2C 1
-text4 CODE 0 338 338 C 1
-text5 CODE 0 344 344 2 1
-text6 CODE 0 280 280 50 1
-text7 CODE 0 AC AC D6 1
-cstackCOMRAM COMRAM 1 1 1 1C 1
-bssCOMRAM COMRAM 1 1D 1D B 1
-$C:\Users\degee\AppData\Local\Temp\sh0o.o
+cinit CODE 0 D7C D7C 44 1
+text0 CODE 0 8A4 8A4 10E 1
+text1 CODE 0 C5C C5C 6A 1
+text2 CODE 0 E3C E3C 32 1
+text3 CODE 0 A88 A88 A8 1
+text4 CODE 0 ED6 ED6 A 1
+text5 CODE 0 D2A D2A 52 1
+text6 CODE 0 E04 E04 38 1
+text7 CODE 0 B30 B30 A0 1
+text8 CODE 0 BD0 BD0 8C 1
+text9 CODE 0 EBA EBA E 1
+text10 CODE 0 E9A E9A 20 1
+text11 CODE 0 E6E E6E 2C 1
+text12 CODE 0 EE0 EE0 A 1
+text13 CODE 0 DC0 DC0 44 1
+text14 CODE 0 EEA EEA A 1
+text15 CODE 0 EFC EFC 2 1
+text16 CODE 0 CC8 CC8 62 1
+text17 CODE 0 9B2 9B2 D6 1
+text18 CODE 0 EC8 EC8 E 1
+idataCOMRAM CODE 0 EF4 EF4 6 1
+cstackCOMRAM COMRAM 1 1 1 29 1
+smallconst SMALLCONST 0 800 800 A4 1
+dataCOMRAM COMRAM 1 36 36 6 1
+bssCOMRAM COMRAM 1 2A 2A C 1
+$C:\Users\degee\AppData\Local\Temp\s684.o
 idloc IDLOC 0 200000 200000 10 1
 init CODE 0 A8 A8 4 1
 reset_vec CODE 0 0 0 4 1
@@ -46,19 +60,25 @@ BANK5 500-5FF 1
 BANK6 600-6FF 1
 BANK7 700-7FF 1
 CONST 4-7 1
-CONST 27E-27F 1
-CONST 336-337 1
-CONST 346-7FFF 1
+CONST AC-7FF 1
+CONST CC6-CC7 1
+CONST EFA-EFB 1
+CONST EFE-7FFF 1
 STACK 60-7FF 1
-SMALLCONST 800-7FFF 1
+SMALLCONST CC6-CC7 1
+SMALLCONST EFA-EFB 1
+SMALLCONST EFE-7FFF 1
 CODE 4-7 1
-CODE 27E-27F 1
-CODE 336-337 1
-CODE 346-7FFF 1
-BIGRAM 28-7FF 1
-COMRAM 28-5F 1
+CODE AC-7FF 1
+CODE CC6-CC7 1
+CODE EFA-EFB 1
+CODE EFE-7FFF 1
+BIGRAM 3C-7FF 1
+COMRAM 3C-5F 1
 EEDATA 310000-3103FF 1
-MEDIUMCONST 800-7FFF 1
+MEDIUMCONST CC6-CC7 1
+MEDIUMCONST EFA-EFB 1
+MEDIUMCONST EFE-7FFF 1
 # %LINETAB Section
 # This section enumerates the file/line to address mappings.
 # The beginning of the section is indicated by %LINETAB.
@@ -73,147 +93,314 @@ MEDIUMCONST 800-7FFF 1
 # All other numeric values are in decimal.
 %LINETAB
 $dist/default/production\Lawnmower_control_panel.X.production.o
-AC text7 CODE >450:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-AC text7 CODE >451:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-B0 text7 CODE >453:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-B4 text7 CODE >455:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-B8 text7 CODE >457:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-C8 text7 CODE >458:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-D8 text7 CODE >459:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-E8 text7 CODE >460:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-F8 text7 CODE >461:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-108 text7 CODE >462:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-118 text7 CODE >463:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-128 text7 CODE >464:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-138 text7 CODE >466:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-14C text7 CODE >467:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-16E text7 CODE >469:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-178 text7 CODE >470:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-17A text7 CODE >472:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-17C text7 CODE >474:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-280 text6 CODE >174:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-280 text6 CODE >176:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-280 text6 CODE >180:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-282 text6 CODE >181:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-288 text6 CODE >188:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-288 text6 CODE >189:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-294 text6 CODE >190:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2B0 text6 CODE >191:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2B2 text6 CODE >194:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2C8 text6 CODE >218:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2CA text6 CODE >219:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2CA text6 CODE >220:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2CE text6 CODE >222:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-344 text5 CODE >168:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-344 text5 CODE >170:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-344 text5 CODE >174:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-338 text4 CODE >164:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-338 text4 CODE >165:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-338 text4 CODE >246:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-33A text4 CODE >166:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-33E text4 CODE >167:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-342 text4 CODE >168:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2D0 text3 CODE >225:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2D2 text3 CODE >227:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2D6 text3 CODE >228:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2DA text3 CODE >229:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2DA text3 CODE >230:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2DC text3 CODE >232:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2E0 text3 CODE >233:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2E4 text3 CODE >234:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2E4 text3 CODE >235:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2E6 text3 CODE >237:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2EA text3 CODE >238:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2EE text3 CODE >239:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2EE text3 CODE >240:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2F0 text3 CODE >242:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2F4 text3 CODE >243:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2F8 text3 CODE >244:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2F8 text3 CODE >245:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2FA text3 CODE >246:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-31E text2 CODE >299:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-31E text2 CODE >301:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-322 text2 CODE >302:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-324 text2 CODE >303:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-328 text2 CODE >304:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-32A text2 CODE >305:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-32E text2 CODE >306:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-334 text2 CODE >322:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-214 text1 CODE >405:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-214 text1 CODE >410:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-21A text1 CODE >412:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-21C text1 CODE >413:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-21E text1 CODE >415:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-220 text1 CODE >416:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-222 text1 CODE >418:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-224 text1 CODE >419:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-226 text1 CODE >420:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-228 text1 CODE >422:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-234 text1 CODE >424:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-23E text1 CODE >426:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-242 text1 CODE >427:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-24A text1 CODE >428:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-24C text1 CODE >429:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-24E text1 CODE >430:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-252 text1 CODE >431:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-254 text1 CODE >432:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-256 text1 CODE >433:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-258 text1 CODE >435:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-25A text1 CODE >436:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-25E text1 CODE >437:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-260 text1 CODE >438:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-262 text1 CODE >439:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-266 text1 CODE >440:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-268 text1 CODE >441:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-26A text1 CODE >442:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-26C text1 CODE >444:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-270 text1 CODE >446:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-182 text0 CODE >84:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-182 text0 CODE >86:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-188 text0 CODE >87:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-18C text0 CODE >90:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-190 text0 CODE >91:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-194 text0 CODE >92:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-196 text0 CODE >93:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-19A text0 CODE >94:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-19C text0 CODE >95:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-19E text0 CODE >97:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1A0 text0 CODE >98:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1A2 text0 CODE >100:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1A4 text0 CODE >102:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1A6 text0 CODE >103:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1A8 text0 CODE >104:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1B0 text0 CODE >105:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1B2 text0 CODE >106:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1BA text0 CODE >107:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1BE text0 CODE >108:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1C6 text0 CODE >110:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1CE text0 CODE >112:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1D6 text0 CODE >114:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1DE text0 CODE >142:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1EE text0 CODE >143:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-1FE text0 CODE >144:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-20E text0 CODE >145:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
-2FC cinit CODE >2295:C:\Users\degee\AppData\Local\Temp\sh0o.
-2FC cinit CODE >2297:C:\Users\degee\AppData\Local\Temp\sh0o.
-2FC cinit CODE >2300:C:\Users\degee\AppData\Local\Temp\sh0o.
-2FC cinit CODE >2332:C:\Users\degee\AppData\Local\Temp\sh0o.
-300 cinit CODE >2333:C:\Users\degee\AppData\Local\Temp\sh0o.
-302 cinit CODE >2334:C:\Users\degee\AppData\Local\Temp\sh0o.
-302 cinit CODE >2335:C:\Users\degee\AppData\Local\Temp\sh0o.
-304 cinit CODE >2336:C:\Users\degee\AppData\Local\Temp\sh0o.
-306 cinit CODE >2337:C:\Users\degee\AppData\Local\Temp\sh0o.
-308 cinit CODE >2345:C:\Users\degee\AppData\Local\Temp\sh0o.
-30A cinit CODE >2346:C:\Users\degee\AppData\Local\Temp\sh0o.
-30C cinit CODE >2347:C:\Users\degee\AppData\Local\Temp\sh0o.
-30E cinit CODE >2348:C:\Users\degee\AppData\Local\Temp\sh0o.
-310 cinit CODE >2349:C:\Users\degee\AppData\Local\Temp\sh0o.
-312 cinit CODE >2350:C:\Users\degee\AppData\Local\Temp\sh0o.
-314 cinit CODE >2356:C:\Users\degee\AppData\Local\Temp\sh0o.
-314 cinit CODE >2359:C:\Users\degee\AppData\Local\Temp\sh0o.
-316 cinit CODE >2360:C:\Users\degee\AppData\Local\Temp\sh0o.
-318 cinit CODE >2361:C:\Users\degee\AppData\Local\Temp\sh0o.
-31A cinit CODE >2362:C:\Users\degee\AppData\Local\Temp\sh0o.
+EC8 text18 CODE >243:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EC8 text18 CODE >244:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EC8 text18 CODE >530:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+ED0 text18 CODE >245:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+ED4 text18 CODE >246:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+9B2 text17 CODE >505:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+9B2 text17 CODE >506:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+9B6 text17 CODE >508:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+9BA text17 CODE >510:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+9BE text17 CODE >512:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+9CE text17 CODE >513:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+9DE text17 CODE >514:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+9EE text17 CODE >515:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+9FE text17 CODE >516:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+A0E text17 CODE >517:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+A1E text17 CODE >518:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+A2E text17 CODE >519:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+A3E text17 CODE >521:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+A52 text17 CODE >522:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+A74 text17 CODE >524:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+A7E text17 CODE >525:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+A80 text17 CODE >527:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+A82 text17 CODE >529:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CC8 text16 CODE >194:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CC8 text16 CODE >196:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CC8 text16 CODE >197:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CCE text16 CODE >204:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CCE text16 CODE >205:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CDA text16 CODE >206:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CF6 text16 CODE >207:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CF8 text16 CODE >208:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CF8 text16 CODE >209:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+D06 text16 CODE >214:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+D22 text16 CODE >238:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+D24 text16 CODE >239:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+D24 text16 CODE >240:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+D28 text16 CODE >241:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EFC text15 CODE >190:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EFC text15 CODE >194:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EFC text15 CODE >561:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EEA text14 CODE >557:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EEA text14 CODE >558:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EEC text14 CODE >559:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EEE text14 CODE >560:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EF2 text14 CODE >561:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+DC0 text13 CODE >170:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+DC0 text13 CODE >172:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+DC0 text13 CODE >173:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+DC4 text13 CODE >175:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+DD8 text13 CODE >176:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+DDE text13 CODE >177:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+DE4 text13 CODE >182:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+DF8 text13 CODE >183:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+DFE text13 CODE >187:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E02 text13 CODE >188:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EE0 text12 CODE >166:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EE0 text12 CODE >167:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EE0 text12 CODE >270:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EE2 text12 CODE >168:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EE4 text12 CODE >169:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EE8 text12 CODE >170:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E6E text11 CODE >249:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E70 text11 CODE >251:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E74 text11 CODE >252:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E78 text11 CODE >253:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E78 text11 CODE >254:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E7A text11 CODE >256:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E7E text11 CODE >257:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E82 text11 CODE >258:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E82 text11 CODE >259:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E84 text11 CODE >261:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E88 text11 CODE >262:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E8C text11 CODE >263:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E8C text11 CODE >264:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E8E text11 CODE >266:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E92 text11 CODE >267:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E96 text11 CODE >268:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E96 text11 CODE >269:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E98 text11 CODE >270:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E9A text10 CODE >271:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E9C text10 CODE >273:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E9E text10 CODE >274:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EA4 text10 CODE >275:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EA6 text10 CODE >276:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EB6 text10 CODE >277:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EB8 text10 CODE >278:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EBA text9 CODE >280:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EBA text9 CODE >282:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EC0 text9 CODE >283:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EC6 text9 CODE >284:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BD0 text8 CODE >323:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BD0 text8 CODE >325:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BD4 text8 CODE >326:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BD6 text8 CODE >327:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BDA text8 CODE >328:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BDC text8 CODE >329:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BE0 text8 CODE >330:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BE6 text8 CODE >332:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BFE text8 CODE >333:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C04 text8 CODE >334:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C14 text8 CODE >335:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C1A text8 CODE >336:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C2A text8 CODE >337:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C30 text8 CODE >338:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C36 text8 CODE >339:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C3C text8 CODE >340:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C42 text8 CODE >341:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C48 text8 CODE >342:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C4E text8 CODE >343:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C54 text8 CODE >344:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C5A text8 CODE >346:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B30 text7 CODE >286:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B32 text7 CODE >289:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B38 text7 CODE >291:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B3E text7 CODE >292:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B44 text7 CODE >293:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B4A text7 CODE >294:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B50 text7 CODE >295:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B56 text7 CODE >296:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B58 text7 CODE >297:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B60 text7 CODE >299:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B66 text7 CODE >300:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B6C text7 CODE >301:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B72 text7 CODE >302:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B78 text7 CODE >303:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B7E text7 CODE >304:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B80 text7 CODE >305:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B88 text7 CODE >307:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B8E text7 CODE >308:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B94 text7 CODE >309:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B9A text7 CODE >310:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BA0 text7 CODE >311:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BA6 text7 CODE >312:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BA8 text7 CODE >313:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BB0 text7 CODE >315:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BB6 text7 CODE >316:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BBC text7 CODE >317:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BC2 text7 CODE >318:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+BC8 text7 CODE >319:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E04 text6 CODE >348:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E06 text6 CODE >351:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E0C text6 CODE >352:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E12 text6 CODE >353:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E14 text6 CODE >354:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E1C text6 CODE >355:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E1E text6 CODE >356:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E26 text6 CODE >357:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E28 text6 CODE >358:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E2E text6 CODE >359:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E30 text6 CODE >360:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E38 text6 CODE >361:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E3A text6 CODE >362:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+D2A text5 CODE >364:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+D2A text5 CODE >367:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+D34 text5 CODE >368:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+ED6 text4 CODE >557:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+ED6 text4 CODE >558:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+ED8 text4 CODE >559:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EDA text4 CODE >560:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+EDE text4 CODE >561:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+A88 text3 CODE >383:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+A88 text3 CODE >385:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+A8A text3 CODE >393:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+A94 text3 CODE >394:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+AA0 text3 CODE >395:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+AAA text3 CODE >396:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+AB6 text3 CODE >397:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+AB8 text3 CODE >399:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+AC2 text3 CODE >400:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+ACE text3 CODE >401:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+AD8 text3 CODE >402:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+AE4 text3 CODE >403:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+AE6 text3 CODE >405:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+AF0 text3 CODE >406:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+AFC text3 CODE >407:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+AFE text3 CODE >408:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B22 text3 CODE >385:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B22 text3 CODE >409:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B26 text3 CODE >410:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B2A text3 CODE >411:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+B2E text3 CODE >412:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E3C text2 CODE >540:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E3C text2 CODE >542:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E40 text2 CODE >543:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E42 text2 CODE >544:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E44 text2 CODE >545:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E46 text2 CODE >546:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E48 text2 CODE >547:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E4C text2 CODE >548:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E54 text2 CODE >549:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E56 text2 CODE >550:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E5E text2 CODE >551:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E62 text2 CODE >552:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E66 text2 CODE >553:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E6A text2 CODE >554:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+E6C text2 CODE >555:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C5C text1 CODE >460:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C5C text1 CODE >465:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C62 text1 CODE >467:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C64 text1 CODE >468:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C66 text1 CODE >470:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C68 text1 CODE >471:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C6A text1 CODE >473:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C6C text1 CODE >474:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C6E text1 CODE >475:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C70 text1 CODE >477:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C7C text1 CODE >479:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C86 text1 CODE >481:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C8A text1 CODE >482:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C92 text1 CODE >483:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C94 text1 CODE >484:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C96 text1 CODE >485:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C9A text1 CODE >486:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C9C text1 CODE >487:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+C9E text1 CODE >488:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CA0 text1 CODE >490:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CA2 text1 CODE >491:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CA6 text1 CODE >492:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CA8 text1 CODE >493:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CAA text1 CODE >494:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CAE text1 CODE >495:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CB0 text1 CODE >496:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CB2 text1 CODE >497:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CB4 text1 CODE >499:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+CB8 text1 CODE >501:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8A4 text0 CODE >94:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8A4 text0 CODE >96:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8AA text0 CODE >97:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8AE text0 CODE >98:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8B2 text0 CODE >100:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8B6 text0 CODE >101:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8B8 text0 CODE >102:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8BA text0 CODE >103:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8BE text0 CODE >104:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8C0 text0 CODE >105:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8C2 text0 CODE >106:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8C4 text0 CODE >107:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8C8 text0 CODE >108:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8CA text0 CODE >109:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8CC text0 CODE >111:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8CE text0 CODE >112:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8D0 text0 CODE >114:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8D2 text0 CODE >116:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8D4 text0 CODE >117:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8D6 text0 CODE >121:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8D8 text0 CODE >122:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8DA text0 CODE >123:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8DE text0 CODE >124:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8E0 text0 CODE >126:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8E4 text0 CODE >129:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8E8 text0 CODE >131:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8F2 text0 CODE >133:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+8FE text0 CODE >135:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+908 text0 CODE >136:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+914 text0 CODE >137:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+918 text0 CODE >138:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+920 text0 CODE >139:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+924 text0 CODE >140:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+92E text0 CODE >141:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+93A text0 CODE >142:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+944 text0 CODE >143:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+950 text0 CODE >144:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+954 text0 CODE >145:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+95C text0 CODE >147:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+964 text0 CODE >148:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+968 text0 CODE >149:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+972 text0 CODE >150:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+97E text0 CODE >151:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+988 text0 CODE >152:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+994 text0 CODE >153:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+996 text0 CODE >159:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+99A text0 CODE >160:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+9A4 text0 CODE >161:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+9B0 text0 CODE >162:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_control_panel.X\MainCode.c
+D7C cinit CODE >2550:C:\Users\degee\AppData\Local\Temp\s684.
+D7C cinit CODE >2552:C:\Users\degee\AppData\Local\Temp\s684.
+D7C cinit CODE >2555:C:\Users\degee\AppData\Local\Temp\s684.
+D7C cinit CODE >2607:C:\Users\degee\AppData\Local\Temp\s684.
+D7E cinit CODE >2608:C:\Users\degee\AppData\Local\Temp\s684.
+D80 cinit CODE >2609:C:\Users\degee\AppData\Local\Temp\s684.
+D82 cinit CODE >2610:C:\Users\degee\AppData\Local\Temp\s684.
+D84 cinit CODE >2611:C:\Users\degee\AppData\Local\Temp\s684.
+D86 cinit CODE >2612:C:\Users\degee\AppData\Local\Temp\s684.
+D88 cinit CODE >2613:C:\Users\degee\AppData\Local\Temp\s684.
+D8C cinit CODE >2614:C:\Users\degee\AppData\Local\Temp\s684.
+D90 cinit CODE >2615:C:\Users\degee\AppData\Local\Temp\s684.
+D90 cinit CODE >2616:C:\Users\degee\AppData\Local\Temp\s684.
+D92 cinit CODE >2617:C:\Users\degee\AppData\Local\Temp\s684.
+D98 cinit CODE >2618:C:\Users\degee\AppData\Local\Temp\s684.
+D9A cinit CODE >2619:C:\Users\degee\AppData\Local\Temp\s684.
+D9C cinit CODE >2620:C:\Users\degee\AppData\Local\Temp\s684.
+D9E cinit CODE >2624:C:\Users\degee\AppData\Local\Temp\s684.
+DA2 cinit CODE >2625:C:\Users\degee\AppData\Local\Temp\s684.
+DA4 cinit CODE >2626:C:\Users\degee\AppData\Local\Temp\s684.
+DA4 cinit CODE >2627:C:\Users\degee\AppData\Local\Temp\s684.
+DA6 cinit CODE >2628:C:\Users\degee\AppData\Local\Temp\s684.
+DA8 cinit CODE >2629:C:\Users\degee\AppData\Local\Temp\s684.
+DAA cinit CODE >2637:C:\Users\degee\AppData\Local\Temp\s684.
+DAC cinit CODE >2638:C:\Users\degee\AppData\Local\Temp\s684.
+DAE cinit CODE >2639:C:\Users\degee\AppData\Local\Temp\s684.
+DB0 cinit CODE >2640:C:\Users\degee\AppData\Local\Temp\s684.
+DB2 cinit CODE >2641:C:\Users\degee\AppData\Local\Temp\s684.
+DB4 cinit CODE >2642:C:\Users\degee\AppData\Local\Temp\s684.
+DB6 cinit CODE >2648:C:\Users\degee\AppData\Local\Temp\s684.
+DB6 cinit CODE >2651:C:\Users\degee\AppData\Local\Temp\s684.
+DB8 cinit CODE >2652:C:\Users\degee\AppData\Local\Temp\s684.
+DBA cinit CODE >2653:C:\Users\degee\AppData\Local\Temp\s684.
+DBC cinit CODE >2654:C:\Users\degee\AppData\Local\Temp\s684.
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -228,64 +415,84 @@ F8 text7 CODE >461:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.
 %SYMTAB
 __Lmediumconst 0 0 MEDIUMCONST 0 mediumconst dist/default/production\Lawnmower_control_panel.X.production.o
 __Hspace_0 30000A 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-__Hspace_1 28 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+__Hspace_1 3C 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Hspace_2 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-_Lcd_Init 31E 0 CODE 0 text2 dist/default/production\Lawnmower_control_panel.X.production.o
-_Lcd_Port 2D0 0 CODE 0 text3 dist/default/production\Lawnmower_control_panel.X.production.o
+_Lcd_Init BD0 0 CODE 0 text8 dist/default/production\Lawnmower_control_panel.X.production.o
+_Lcd_Port E6E 0 CODE 0 text11 dist/default/production\Lawnmower_control_panel.X.production.o
 _RXM0SIDH 37B8 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _RXM1SIDH 37BC 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Hibigdata 0 0 CODE 0 ibigdata dist/default/production\Lawnmower_control_panel.X.production.o
-__mediumconst 0 0 MEDIUMCONST 0 mediumconst C:\Users\degee\AppData\Local\Temp\sh0o.o
+__mediumconst 0 0 MEDIUMCONST 0 mediumconst C:\Users\degee\AppData\Local\Temp\s684.o
 __Heeprom_data 0 0 EEDATA 0 eeprom_data dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_RSTOSC$HFINTOSC_64MHZ 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-__end_of_Lcd_Init 336 0 CODE 0 text2 dist/default/production\Lawnmower_control_panel.X.production.o
-__end_of_Lcd_Port 2FC 0 CODE 0 text3 dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_Lcd_Init C5C 0 CODE 0 text8 dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_buzzerInt EEA 0 CODE 0 text12 dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_Lcd_Port E9A 0 CODE 0 text11 dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_WDTCCS$SC 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-__Lsmallconst 0 0 SMALLCONST 0 smallconst dist/default/production\Lawnmower_control_panel.X.production.o
-___sp 0 0 STACK 2 stack C:\Users\degee\AppData\Local\Temp\sh0o.o
-_main 182 0 CODE 0 text0 dist/default/production\Lawnmower_control_panel.X.production.o
-start A8 0 CODE 0 init C:\Users\degee\AppData\Local\Temp\sh0o.o
+__size_of_buzzerInt 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+__Lsmallconst 800 0 SMALLCONST 0 smallconst dist/default/production\Lawnmower_control_panel.X.production.o
+___sp 0 0 STACK 2 stack C:\Users\degee\AppData\Local\Temp\s684.o
+_main 8A4 0 CODE 0 text0 dist/default/production\Lawnmower_control_panel.X.production.o
+_Lcd_Write_Char E04 0 CODE 0 text6 dist/default/production\Lawnmower_control_panel.X.production.o
+start A8 0 CODE 0 init C:\Users\degee\AppData\Local\Temp\s684.o
+__end_of_MenuYesNo B30 0 CODE 0 text3 dist/default/production\Lawnmower_control_panel.X.production.o
 __size_of_main 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-Lcd_Port@a 1B 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
-__end_of_canRecInt 2D0 0 CODE 0 text6 dist/default/production\Lawnmower_control_panel.X.production.o
+Lcd_Port@a 1C 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_canRecInt ED6 0 CODE 0 text18 dist/default/production\Lawnmower_control_panel.X.production.o
 __HbssCOMRAM 0 0 ABS 0 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+__size_of_MenuYesNo 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __size_of_canRecInt 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_DEBUG$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+Lcd_Write_Char@temp 1D 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+_buzzerInt EE0 0 CODE 0 text12 dist/default/production\Lawnmower_control_panel.X.production.o
 _RXM1SIDLbits 37BD 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Hpowerup 0 0 CODE 0 powerup dist/default/production\Lawnmower_control_panel.X.production.o
-_canRecInt 280 0 CODE 0 text6 dist/default/production\Lawnmower_control_panel.X.production.o
-__accesstop 60 0 ABS 0 - C:\Users\degee\AppData\Local\Temp\sh0o.o
-intlevel0 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\sh0o.o
-intlevel1 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\sh0o.o
-intlevel2 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\sh0o.o
-intlevel3 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\sh0o.o
+__HdataCOMRAM 0 0 ABS 0 dataCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+_MenuYesNo A88 0 CODE 0 text3 dist/default/production\Lawnmower_control_panel.X.production.o
+_canRecInt EC8 0 CODE 0 text18 dist/default/production\Lawnmower_control_panel.X.production.o
+__accesstop 60 0 ABS 0 - C:\Users\degee\AppData\Local\Temp\s684.o
+intlevel0 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\s684.o
+intlevel1 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\s684.o
+intlevel2 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\s684.o
+intlevel3 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\s684.o
 __LbssCOMRAM 0 0 ABS 0 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __LnvFARRAM 0 0 FARRAM 0 nvFARRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __size_of_sendCANmessage 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _TXB0DLCbits 37E5 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Hifardata 0 0 CODE 0 ifardata dist/default/production\Lawnmower_control_panel.X.production.o
+__size_of_Lcd_Set_Cursor 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Hclrtext 0 0 ABS 0 clrtext dist/default/production\Lawnmower_control_panel.X.production.o
+__pidataCOMRAM EF4 0 CODE 0 idataCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_Lcd_Write_Char E3C 0 CODE 0 text6 dist/default/production\Lawnmower_control_panel.X.production.o
 ivt0x8_base 8 0 CODE 0 ivt0x8 dist/default/production\Lawnmower_control_panel.X.production.o
 _ADRESH 3EF0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _ADRESL 3EEF 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _ANSELC 3A60 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-___inthi_sp 0 0 STACK 2 stack C:\Users\degee\AppData\Local\Temp\sh0o.o
-___intlo_sp 0 0 STACK 2 stack C:\Users\degee\AppData\Local\Temp\sh0o.o
+___inthi_sp 0 0 STACK 2 stack C:\Users\degee\AppData\Local\Temp\s684.o
+___intlo_sp 0 0 STACK 2 stack C:\Users\degee\AppData\Local\Temp\s684.o
+__LdataCOMRAM 0 0 ABS 0 dataCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __size_of_initCAN 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Lintsave_regs 0 0 BIGRAM 1 intsave_regs dist/default/production\Lawnmower_control_panel.X.production.o
-__end_of_adcInt 346 0 CODE 0 text5 dist/default/production\Lawnmower_control_panel.X.production.o
+_canRecInt2 CC8 0 CODE 0 text16 dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_adcInt EFE 0 CODE 0 text15 dist/default/production\Lawnmower_control_panel.X.production.o
 __Hmediumconst 0 0 MEDIUMCONST 0 mediumconst dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_SAFEN$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-__end_of_encInt 344 0 CODE 0 text4 dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_encInt E04 0 CODE 0 text13 dist/default/production\Lawnmower_control_panel.X.production.o
+__LidataCOMRAM 0 0 ABS 0 idataCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+__size_of_playBuzzer 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+Lcd_Set_Cursor@temp 23 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 _INTCON0bits 3FD2 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-start_initialization 2FC 0 CODE 0 cinit dist/default/production\Lawnmower_control_panel.X.production.o
+start_initialization D7C 0 CODE 0 cinit dist/default/production\Lawnmower_control_panel.X.production.o
 __HnvFARRAM 0 0 FARRAM 0 nvFARRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_WDTCPS$WDTCPS_31 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _TRISAbits 3FC2 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _TRISBbits 3FC3 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+canRecInt2@message C 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 ___rparam_used 1 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _RB2PPS 3A0A 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _RXB0D0 3F86 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+_Lcd_Write_String D2A 0 CODE 0 text5 dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_canRecInt2 D2A 0 CODE 0 text16 dist/default/production\Lawnmower_control_panel.X.production.o
 _TXB0D0 37E6 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _TXB0D1 37E7 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _TXB0D2 37E8 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
@@ -294,8 +501,9 @@ _TXB0D4 37EA 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.product
 _TXB0D5 37EB 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _TXB0D6 37EC 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _TXB0D7 37ED 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-sendCANmessage@message 3 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
-__end_of_initCAN 27E 0 CODE 0 text1 dist/default/production\Lawnmower_control_panel.X.production.o
+sendCANmessage@message 4 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+__size_of_Lcd_Cmd 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_initCAN CC6 0 CODE 0 text1 dist/default/production\Lawnmower_control_panel.X.production.o
 _CANSTATbits 3F8E 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Hbank0 0 0 ABS 0 bank0 dist/default/production\Lawnmower_control_panel.X.production.o
 __Hbank1 0 0 ABS 0 bank1 dist/default/production\Lawnmower_control_panel.X.production.o
@@ -321,9 +529,11 @@ __Htext4 0 0 ABS 0 text4 dist/default/production\Lawnmower_control_panel.X.produ
 __Htext5 0 0 ABS 0 text5 dist/default/production\Lawnmower_control_panel.X.production.o
 __Htext6 0 0 ABS 0 text6 dist/default/production\Lawnmower_control_panel.X.production.o
 __Htext7 0 0 ABS 0 text7 dist/default/production\Lawnmower_control_panel.X.production.o
+__Htext8 0 0 ABS 0 text8 dist/default/production\Lawnmower_control_panel.X.production.o
+__Htext9 0 0 ABS 0 text9 dist/default/production\Lawnmower_control_panel.X.production.o
 __Hbigbss 0 0 BIGRAM 1 bigbss dist/default/production\Lawnmower_control_panel.X.production.o
 __Hbigram 0 0 ABS 0 bigram dist/default/production\Lawnmower_control_panel.X.production.o
-__smallconst 0 0 SMALLCONST 0 smallconst C:\Users\degee\AppData\Local\Temp\sh0o.o
+__smallconst 800 0 SMALLCONST 0 smallconst C:\Users\degee\AppData\Local\Temp\s684.o
 __Hcomram 0 0 ABS 0 comram dist/default/production\Lawnmower_control_panel.X.production.o
 __Hconfig 30000A 0 CONFIG 0 config dist/default/production\Lawnmower_control_panel.X.production.o
 __Lbank0 0 0 ABS 0 bank0 dist/default/production\Lawnmower_control_panel.X.production.o
@@ -351,8 +561,11 @@ __Ltext4 0 0 ABS 0 text4 dist/default/production\Lawnmower_control_panel.X.produ
 __Ltext5 0 0 ABS 0 text5 dist/default/production\Lawnmower_control_panel.X.production.o
 __Ltext6 0 0 ABS 0 text6 dist/default/production\Lawnmower_control_panel.X.production.o
 __Ltext7 0 0 ABS 0 text7 dist/default/production\Lawnmower_control_panel.X.production.o
-_tick_count 1D 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+__Ltext8 0 0 ABS 0 text8 dist/default/production\Lawnmower_control_panel.X.production.o
+__Ltext9 0 0 ABS 0 text9 dist/default/production\Lawnmower_control_panel.X.production.o
+_tick_count 2C 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __Hfarbss 0 0 FARRAM 0 farbss dist/default/production\Lawnmower_control_panel.X.production.o
+_PORTAbits 3FCA 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _PORTBbits 3FCB 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _PORTCbits 3FCC 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Habs1 0 0 ABS 0 abs1 dist/default/production\Lawnmower_control_panel.X.production.o
@@ -371,119 +584,180 @@ __Ltemp 0 0 COMRAM 1 temp dist/default/production\Lawnmower_control_panel.X.prod
 __Ltext 0 0 ABS 0 text dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_XINST$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_WDTCWS$WDTCWS_7 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+i2_playBuzzer EEA 0 CODE 0 text14 dist/default/production\Lawnmower_control_panel.X.production.o
 __HcstackCOMRAM 0 0 ABS 0 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __Hirdata 0 0 CODE 0 irdata dist/default/production\Lawnmower_control_panel.X.production.o
 __S0 30000A 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-__S1 28 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+__S1 3C 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __S2 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Hivt0x8 A8 0 CODE 0 ivt0x8 dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_IVT1WAY$ON 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-_adcInt 344 0 CODE 0 text5 dist/default/production\Lawnmower_control_panel.X.production.o
+_adcInt EFC 0 CODE 0 text15 dist/default/production\Lawnmower_control_panel.X.production.o
 IVTBASEH 3FD6 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 IVTBASEL 3FD5 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 IVTBASEU 3FD7 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __pivt0x8 8 0 CODE 0 ivt0x8 dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_BBEN$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+__HidataCOMRAM 0 0 ABS 0 idataCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __Lbigdata 0 0 BIGRAM 1 bigdata dist/default/production\Lawnmower_control_panel.X.production.o
-_encInt 338 0 CODE 0 text4 dist/default/production\Lawnmower_control_panel.X.production.o
+_encInt DC0 0 CODE 0 text13 dist/default/production\Lawnmower_control_panel.X.production.o
 __Hnvrram 0 0 COMRAM 1 nvrram dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_Lcd_Write_String D7C 0 CODE 0 text5 dist/default/production\Lawnmower_control_panel.X.production.o
+_initBuzzer E3C 0 CODE 0 text2 dist/default/production\Lawnmower_control_panel.X.production.o
+_min_tick_count 2A 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 _RXF0SIDLbits 37A1 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_Lcd_Clear EC8 0 CODE 0 text9 dist/default/production\Lawnmower_control_panel.X.production.o
+__size_of_Lcd_Write_String 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+Lcd_Write_String@a 20 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+Lcd_Write_String@i 24 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __Hramtop 800 0 RAM 0 ramtop dist/default/production\Lawnmower_control_panel.X.production.o
+__size_of_Lcd_Clear 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Hrparam 0 0 COMRAM 1 rparam dist/default/production\Lawnmower_control_panel.X.production.o
-_ADCvalueLow0 23 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
-_ADCvalueLow1 1F 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+_ADCvalueLow0 32 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+_ADCvalueLow1 2E 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __activetblptr 2 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+__size_ofi2_playBuzzer 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_Lcd_Cmd EBA 0 CODE 0 text10 dist/default/production\Lawnmower_control_panel.X.production.o
 __Hstruct 0 0 COMRAM 1 struct dist/default/production\Lawnmower_control_panel.X.production.o
+__Htext10 0 0 ABS 0 text10 dist/default/production\Lawnmower_control_panel.X.production.o
+__Htext11 0 0 ABS 0 text11 dist/default/production\Lawnmower_control_panel.X.production.o
+__Htext12 0 0 ABS 0 text12 dist/default/production\Lawnmower_control_panel.X.production.o
+__Htext13 0 0 ABS 0 text13 dist/default/production\Lawnmower_control_panel.X.production.o
+__Htext14 0 0 ABS 0 text14 dist/default/production\Lawnmower_control_panel.X.production.o
+__Htext15 0 0 ABS 0 text15 dist/default/production\Lawnmower_control_panel.X.production.o
+__Htext16 0 0 ABS 0 text16 dist/default/production\Lawnmower_control_panel.X.production.o
+__Htext17 0 0 ABS 0 text17 dist/default/production\Lawnmower_control_panel.X.production.o
+__Htext18 0 0 ABS 0 text18 dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_FCMEN$ON 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-_sendCANmessage AC 0 CODE 0 text7 dist/default/production\Lawnmower_control_panel.X.production.o
+_sendCANmessage 9B2 0 CODE 0 text17 dist/default/production\Lawnmower_control_panel.X.production.o
 _PIE1bits 3991 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __size_of_adcInt 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+_PIE3bits 3993 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _PIE5bits 3995 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-canRecInt@message B 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_MVECEN$ON 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext10 E9A 0 CODE 0 text10 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext11 E6E 0 CODE 0 text11 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext12 EE0 0 CODE 0 text12 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext13 DC0 0 CODE 0 text13 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext14 EEA 0 CODE 0 text14 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext15 EFC 0 CODE 0 text15 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext16 CC8 0 CODE 0 text16 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext17 9B2 0 CODE 0 text17 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext18 EC8 0 CODE 0 text18 dist/default/production\Lawnmower_control_panel.X.production.o
+_Lcd_Clear EBA 0 CODE 0 text9 dist/default/production\Lawnmower_control_panel.X.production.o
+__size_of_Lcd_Write_Char 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+_Lcd_Set_Cursor B30 0 CODE 0 text7 dist/default/production\Lawnmower_control_panel.X.production.o
 __Lbigbss 0 0 BIGRAM 1 bigbss dist/default/production\Lawnmower_control_panel.X.production.o
 __Lbigram 0 0 ABS 0 bigram dist/default/production\Lawnmower_control_panel.X.production.o
+_feedback 36 0 COMRAM 1 dataCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __Lcomram 0 0 ABS 0 comram dist/default/production\Lawnmower_control_panel.X.production.o
 __Lconfig 300000 0 CONFIG 0 config dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_CP$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_BBSIZE$BBSIZE_512 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __size_of_encInt 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_WDTE$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+__end_ofi2_playBuzzer EF4 0 CODE 0 text14 dist/default/production\Lawnmower_control_panel.X.production.o
 ivt0x8_undefint A6 0 CODE 0 ivt0x8 dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_WRTAPP$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _RXM0SIDLbits 37B9 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Lfarbss 0 0 FARRAM 0 farbss dist/default/production\Lawnmower_control_panel.X.production.o
-_status 27 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+_status 38 0 COMRAM 1 dataCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __Lfardata 0 0 FARRAM 0 fardata dist/default/production\Lawnmower_control_panel.X.production.o
-stackhi 7FF 0 ABS 0 - C:\Users\degee\AppData\Local\Temp\sh0o.o
-stacklo 60 0 ABS 0 - C:\Users\degee\AppData\Local\Temp\sh0o.o
+__end_of_initBuzzer E6E 0 CODE 0 text2 dist/default/production\Lawnmower_control_panel.X.production.o
+__size_of_canRecInt2 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+stackhi 7FF 0 ABS 0 - C:\Users\degee\AppData\Local\Temp\s684.o
+stacklo 60 0 ABS 0 - C:\Users\degee\AppData\Local\Temp\s684.o
 _OSCCON1 39D9 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Lirdata 0 0 CODE 0 irdata dist/default/production\Lawnmower_control_panel.X.production.o
 __Livt0x8 8 0 CODE 0 ivt0x8 dist/default/production\Lawnmower_control_panel.X.production.o
 _ADCON0bits 3EF8 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-sendCANmessage@id 1 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+sendCANmessage@id 2 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __Lspace_0 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Lspace_1 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Lspace_2 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-__pbssCOMRAM 1D 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+__pbssCOMRAM 2A 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_LPBOREN$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-__end_of_sendCANmessage 182 0 CODE 0 text7 dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_sendCANmessage A88 0 CODE 0 text17 dist/default/production\Lawnmower_control_panel.X.production.o
 _PIR1bits 39A1 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+_PIR3bits 39A3 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _PIR5bits 39A5 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_LVP$ON 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_CSWEN$ON 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __LcstackCOMRAM 0 0 ABS 0 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_ZCD$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _ADPCHbits 3EF1 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-end_of_initialization 314 0 CODE 0 cinit dist/default/production\Lawnmower_control_panel.X.production.o
+end_of_initialization DB6 0 CODE 0 cinit dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_Lcd_Set_Cursor BD0 0 CODE 0 text7 dist/default/production\Lawnmower_control_panel.X.production.o
 __Lnvrram 0 0 COMRAM 1 nvrram dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_STVREN$ON 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+Lcd_Set_Cursor@a 20 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+Lcd_Set_Cursor@b 1F 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+Lcd_Set_Cursor@y 22 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+Lcd_Set_Cursor@z 21 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __Hreset_vec 4 0 CODE 0 reset_vec dist/default/production\Lawnmower_control_panel.X.production.o
 _RXB1CONbits 37F0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-_initCAN 214 0 CODE 0 text1 dist/default/production\Lawnmower_control_panel.X.production.o
+_initCAN C5C 0 CODE 0 text1 dist/default/production\Lawnmower_control_panel.X.production.o
 __Lramtop 800 0 RAM 0 ramtop dist/default/production\Lawnmower_control_panel.X.production.o
 __Lrparam 0 0 COMRAM 1 rparam dist/default/production\Lawnmower_control_panel.X.production.o
 _TXB0SIDH 37E1 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-__pcinit 2FC 0 CODE 0 cinit dist/default/production\Lawnmower_control_panel.X.production.o
-__ptext0 182 0 CODE 0 text0 dist/default/production\Lawnmower_control_panel.X.production.o
-__ptext1 214 0 CODE 0 text1 dist/default/production\Lawnmower_control_panel.X.production.o
-__ptext2 31E 0 CODE 0 text2 dist/default/production\Lawnmower_control_panel.X.production.o
-__ptext3 2D0 0 CODE 0 text3 dist/default/production\Lawnmower_control_panel.X.production.o
-__ptext4 338 0 CODE 0 text4 dist/default/production\Lawnmower_control_panel.X.production.o
-__ptext5 344 0 CODE 0 text5 dist/default/production\Lawnmower_control_panel.X.production.o
-__ptext6 280 0 CODE 0 text6 dist/default/production\Lawnmower_control_panel.X.production.o
-__ptext7 AC 0 CODE 0 text7 dist/default/production\Lawnmower_control_panel.X.production.o
+__pcinit D7C 0 CODE 0 cinit dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext0 8A4 0 CODE 0 text0 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext1 C5C 0 CODE 0 text1 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext2 E3C 0 CODE 0 text2 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext3 A88 0 CODE 0 text3 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext4 ED6 0 CODE 0 text4 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext5 D2A 0 CODE 0 text5 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext6 E04 0 CODE 0 text6 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext7 B30 0 CODE 0 text7 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext8 BD0 0 CODE 0 text8 dist/default/production\Lawnmower_control_panel.X.production.o
+__ptext9 EBA 0 CODE 0 text9 dist/default/production\Lawnmower_control_panel.X.production.o
 __Lstruct 0 0 COMRAM 1 struct dist/default/production\Lawnmower_control_panel.X.production.o
-__ramtop 800 0 RAM 0 ramtop C:\Users\degee\AppData\Local\Temp\sh0o.o
+__Ltext10 0 0 ABS 0 text10 dist/default/production\Lawnmower_control_panel.X.production.o
+__Ltext11 0 0 ABS 0 text11 dist/default/production\Lawnmower_control_panel.X.production.o
+__Ltext12 0 0 ABS 0 text12 dist/default/production\Lawnmower_control_panel.X.production.o
+__Ltext13 0 0 ABS 0 text13 dist/default/production\Lawnmower_control_panel.X.production.o
+__Ltext14 0 0 ABS 0 text14 dist/default/production\Lawnmower_control_panel.X.production.o
+__Ltext15 0 0 ABS 0 text15 dist/default/production\Lawnmower_control_panel.X.production.o
+__Ltext16 0 0 ABS 0 text16 dist/default/production\Lawnmower_control_panel.X.production.o
+__Ltext17 0 0 ABS 0 text17 dist/default/production\Lawnmower_control_panel.X.production.o
+__Ltext18 0 0 ABS 0 text18 dist/default/production\Lawnmower_control_panel.X.production.o
+__ramtop 800 0 RAM 0 ramtop C:\Users\degee\AppData\Local\Temp\s684.o
 __Lpowerup 0 0 CODE 0 powerup dist/default/production\Lawnmower_control_panel.X.production.o
 __Leeprom_data 0 0 EEDATA 0 eeprom_data dist/default/production\Lawnmower_control_panel.X.production.o
 _BRGCON1bits 3703 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+__psmallconst 800 0 SMALLCONST 0 smallconst dist/default/production\Lawnmower_control_panel.X.production.o
 __Lreset_vec 0 0 CODE 0 reset_vec dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_CLKOUTEN$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 ___param_bank 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _RXB0CONbits 3F80 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Hbigdata 0 0 BIGRAM 1 bigdata dist/default/production\Lawnmower_control_panel.X.production.o
-__end_of__initialization 314 0 CODE 0 cinit dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of__initialization DB6 0 CODE 0 cinit dist/default/production\Lawnmower_control_panel.X.production.o
 _INT0PPS 3AC0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+Lcd_Cmd@a 1E 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_WRTB$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Libigdata 0 0 CODE 0 ibigdata dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_WRTC$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_WRTD$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+_playBuzzer ED6 0 CODE 0 text4 dist/default/production\Lawnmower_control_panel.X.production.o
 _TXB0SIDLbits 37E2 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Lclrtext 0 0 ABS 0 clrtext dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_PWRTS$PWRT_OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_BORV$VBOR_2P45 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _TXB0CONbits 37E0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __pcstackCOMRAM 1 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
-_ADCvalueHigh0 25 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
-_ADCvalueHigh1 21 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+_ADCvalueHigh0 34 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+_ADCvalueHigh1 30 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+_T0CON0bits 3FB8 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+_T0CON1bits 3FB9 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __size_of_Lcd_Init 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __size_of_Lcd_Port 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_BOREN$SBORDIS 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-__end_of_main 214 0 CODE 0 text0 dist/default/production\Lawnmower_control_panel.X.production.o
-sendCANmessage@length 5 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_main 9B2 0 CODE 0 text0 dist/default/production\Lawnmower_control_panel.X.production.o
+sendCANmessage@length 6 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_WRTSAF$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _CANCONbits 3F8F 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+_TMR0H 3FB7 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+_TMR0L 3FB6 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _TRISC 3FC4 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __HRAM 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 __Hbss 0 0 RAM 1 bss dist/default/production\Lawnmower_control_panel.X.production.o
@@ -493,16 +767,23 @@ __LRAM 1 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.
 __Lbss 0 0 RAM 1 bss dist/default/production\Lawnmower_control_panel.X.production.o
 __Lram 0 0 ABS 0 ram dist/default/production\Lawnmower_control_panel.X.production.o
 __Lsfr 0 0 ABS 0 sfr dist/default/production\Lawnmower_control_panel.X.production.o
+_Lcd_Cmd E9A 0 CODE 0 text10 dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_PPS1WAY$ON 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
-__initialization 2FC 0 CODE 0 cinit dist/default/production\Lawnmower_control_panel.X.production.o
+__initialization D7C 0 CODE 0 cinit dist/default/production\Lawnmower_control_panel.X.production.o
+__pdataCOMRAM 36 0 COMRAM 1 dataCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 _RXF0SIDH 37A0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _RXF1SIDH 37A4 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+_max_tick_count 3A 0 COMRAM 1 dataCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __Hfardata 0 0 FARRAM 0 fardata dist/default/production\Lawnmower_control_panel.X.production.o
-__Hsmallconst 0 0 SMALLCONST 0 smallconst dist/default/production\Lawnmower_control_panel.X.production.o
+__Hsmallconst 8A4 0 SMALLCONST 0 smallconst dist/default/production\Lawnmower_control_panel.X.production.o
 __Lifardata 0 0 CODE 0 ifardata dist/default/production\Lawnmower_control_panel.X.production.o
+__size_of_initBuzzer 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _ANSELAbits 3A40 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _ANSELBbits 3A50 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
+Lcd_Write_Char@a 1F 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
+Lcd_Write_Char@y 1E 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_control_panel.X.production.o
 __Hintsave_regs 0 0 BIGRAM 1 intsave_regs dist/default/production\Lawnmower_control_panel.X.production.o
+__end_of_playBuzzer EE0 0 CODE 0 text4 dist/default/production\Lawnmower_control_panel.X.production.o
 __CFG_MCLRE$EXTMCLR 0 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 _RXF1SIDLbits 37A5 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.production.o
 # %SPLITSTAB Section
@@ -529,10 +810,12 @@ _RXF1SIDLbits 37A5 0 ABS 0 - dist/default/production\Lawnmower_control_panel.X.p
 # and size are in units of delta. The file address is in units of bytes.
 # All other numeric quantities are in decimal.
 %SEGMENTS
-ivt0x8 0 8 8 276 1
+ivt0x8 0 8 8 A4 1
 idloc 0 200000 200000 10 1
-text4 0 338 338 E 1
-text6 0 280 280 B6 1
-cstackCOMRAM 1 1 1 27 1
+text0 0 8A4 8A4 422 1
+text15 0 EFC EFC 2 1
+text16 0 CC8 CC8 232 1
+cstackCOMRAM 1 1 1 3B 1
 reset_vec 0 0 0 4 1
+smallconst 0 800 800 A4 1
 config 0 300000 300000 A 1

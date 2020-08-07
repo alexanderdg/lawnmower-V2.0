@@ -36321,6 +36321,145 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 # 32 "D:\\MPLAB\\pic\\include\\xc.h" 2 3
 # 2 "MainCode.c" 2
 
+# 1 "D:\\MPLAB\\pic\\include\\c99\\stdio.h" 1 3
+# 24 "D:\\MPLAB\\pic\\include\\c99\\stdio.h" 3
+# 1 "D:\\MPLAB\\pic\\include\\c99\\bits/alltypes.h" 1 3
+# 10 "D:\\MPLAB\\pic\\include\\c99\\bits/alltypes.h" 3
+typedef void * va_list[1];
+
+
+
+
+typedef void * __isoc_va_list[1];
+# 145 "D:\\MPLAB\\pic\\include\\c99\\bits/alltypes.h" 3
+typedef long ssize_t;
+# 254 "D:\\MPLAB\\pic\\include\\c99\\bits/alltypes.h" 3
+typedef long long off_t;
+# 407 "D:\\MPLAB\\pic\\include\\c99\\bits/alltypes.h" 3
+typedef struct _IO_FILE FILE;
+# 24 "D:\\MPLAB\\pic\\include\\c99\\stdio.h" 2 3
+# 52 "D:\\MPLAB\\pic\\include\\c99\\stdio.h" 3
+typedef union _G_fpos64_t {
+ char __opaque[16];
+ double __align;
+} fpos_t;
+
+extern FILE *const stdin;
+extern FILE *const stdout;
+extern FILE *const stderr;
+
+
+
+
+
+FILE *fopen(const char *restrict, const char *restrict);
+FILE *freopen(const char *restrict, const char *restrict, FILE *restrict);
+int fclose(FILE *);
+
+int remove(const char *);
+int rename(const char *, const char *);
+
+int feof(FILE *);
+int ferror(FILE *);
+int fflush(FILE *);
+void clearerr(FILE *);
+
+int fseek(FILE *, long, int);
+long ftell(FILE *);
+void rewind(FILE *);
+
+int fgetpos(FILE *restrict, fpos_t *restrict);
+int fsetpos(FILE *, const fpos_t *);
+
+size_t fread(void *restrict, size_t, size_t, FILE *restrict);
+size_t fwrite(const void *restrict, size_t, size_t, FILE *restrict);
+
+int fgetc(FILE *);
+int getc(FILE *);
+int getchar(void);
+int ungetc(int, FILE *);
+
+int fputc(int, FILE *);
+int putc(int, FILE *);
+int putchar(int);
+
+char *fgets(char *restrict, int, FILE *restrict);
+
+char *gets(char *);
+
+
+int fputs(const char *restrict, FILE *restrict);
+int puts(const char *);
+
+
+#pragma printf_check(printf) const
+#pragma printf_check(vprintf) const
+#pragma printf_check(sprintf) const
+#pragma printf_check(snprintf) const
+#pragma printf_check(vsprintf) const
+#pragma printf_check(vsnprintf) const
+
+
+int printf(const char *restrict, ...);
+int fprintf(FILE *restrict, const char *restrict, ...);
+int sprintf(char *restrict, const char *restrict, ...);
+int snprintf(char *restrict, size_t, const char *restrict, ...);
+
+int vprintf(const char *restrict, __isoc_va_list);
+int vfprintf(FILE *restrict, const char *restrict, __isoc_va_list);
+int vsprintf(char *restrict, const char *restrict, __isoc_va_list);
+int vsnprintf(char *restrict, size_t, const char *restrict, __isoc_va_list);
+
+int scanf(const char *restrict, ...);
+int fscanf(FILE *restrict, const char *restrict, ...);
+int sscanf(const char *restrict, const char *restrict, ...);
+int vscanf(const char *restrict, __isoc_va_list);
+int vfscanf(FILE *restrict, const char *restrict, __isoc_va_list);
+int vsscanf(const char *restrict, const char *restrict, __isoc_va_list);
+
+void perror(const char *);
+
+int setvbuf(FILE *restrict, char *restrict, int, size_t);
+void setbuf(FILE *restrict, char *restrict);
+
+char *tmpnam(char *);
+FILE *tmpfile(void);
+
+
+
+
+FILE *fmemopen(void *restrict, size_t, const char *restrict);
+FILE *open_memstream(char **, size_t *);
+FILE *fdopen(int, const char *);
+FILE *popen(const char *, const char *);
+int pclose(FILE *);
+int fileno(FILE *);
+int fseeko(FILE *, off_t, int);
+off_t ftello(FILE *);
+int dprintf(int, const char *restrict, ...);
+int vdprintf(int, const char *restrict, __isoc_va_list);
+void flockfile(FILE *);
+int ftrylockfile(FILE *);
+void funlockfile(FILE *);
+int getc_unlocked(FILE *);
+int getchar_unlocked(void);
+int putc_unlocked(int, FILE *);
+int putchar_unlocked(int);
+ssize_t getdelim(char **restrict, size_t *restrict, int, FILE *restrict);
+ssize_t getline(char **restrict, size_t *restrict, FILE *restrict);
+int renameat(int, const char *, int, const char *);
+char *ctermid(char *);
+
+
+
+
+
+
+
+char *tempnam(const char *, const char *);
+# 3 "MainCode.c" 2
+
+
 
 
 
@@ -36379,6 +36518,8 @@ extern __attribute__((nonreentrant)) void _delay3(unsigned char);
 
 
 void initCAN(void);
+void initBuzzer(void);
+void playBuzzer(void);
 void initADC(void);
 
 void sendCANmessage(int id, int message [8], int length);
@@ -36395,25 +36536,35 @@ void Lcd_Write_String(char *a);
 void Lcd_Shift_Right(void);
 void Lcd_Shift_Left(void);
 
+void MenuYesNo(void);
+
+
 int ADCvalueHigh0 = 0;
 int ADCvalueLow0 = 0;
 int ADCvalueHigh1 = 0;
 int ADCvalueLow1 = 0;
-volatile unsigned char status = 0b0;
-volatile int tick_count=0;
+int tick_count=0;
+int max_tick_count = 1;
+int min_tick_count = 0;
+int status = 1;
+int feedback = 1;
 
 void main() {
 
     OSCCON1 = 0b01100000;
     initCAN();
-
+    initBuzzer();
 
     ANSELAbits.ANSELA0 = 0;
-    INT0PPS = 0x00;
+    ANSELAbits.ANSELA1 = 0;
+    ANSELAbits.ANSELA2 = 0;
+    INT0PPS = 0x01;
     TRISAbits.TRISA0 = 1;
+    TRISAbits.TRISA1 = 1;
+    TRISAbits.TRISA2 = 1;
     PIE1bits.INT0IE = 1;
     PIR1bits.INT0IF = 0;
-    INTCON0bits.INT0EDG = 0;
+    INTCON0bits.INT0EDG = 1;
 
     INTCON0bits.GIEL = 1;
     INTCON0bits.GIE = 1;
@@ -36421,32 +36572,76 @@ void main() {
     INTCON0bits.IPEN = 0;
 
     PIE5bits.RXB0IE = 1;
-    PIE5bits.RXB1IE = 1;
-    tick_count = 4;
+    PIE5bits.RXB1IE = 0;
+
+
+
     (INTCON0bits.GIE = 1);
-    tick_count = 5;
+    TRISBbits.TRISB0 = 0;
+    ANSELBbits.ANSELB0 = 0;
+    PORTBbits.RB0 = 1;
+
     Lcd_Init();
-    tick_count = 6;
+start:
 
-    tick_count = 7;
+    Lcd_Clear();
 
-    tick_count = 8;
+    Lcd_Set_Cursor(1,1);
 
-    tick_count = 10;
-# 140 "MainCode.c"
-    while (1) {
+    Lcd_Write_String("Welcome to the robot\0");
 
-        _delay((unsigned long)((1)*(64000000/4000.0)));
-        _delay((unsigned long)((1)*(64000000/4000.0)));
-        _delay((unsigned long)((1)*(64000000/4000.0)));
-        tick_count ++;
-# 161 "MainCode.c"
-    }
+    Lcd_Set_Cursor(2,1);
+    Lcd_Write_String("Execute selftest?");
+    MenuYesNo();
+    if(tick_count == 1) goto mower;
+    Lcd_Clear();
+    Lcd_Set_Cursor(1,1);
+    Lcd_Write_String("Robot will move\0");
+    Lcd_Set_Cursor(2,1);
+    Lcd_Write_String("Are you sure??");
+    MenuYesNo();
+    if(tick_count == 1) goto start;
+selftest:
+    status = 2;
+    Lcd_Clear();
+    Lcd_Set_Cursor(1,1);
+    Lcd_Write_String("Executing selftest\0");
+    Lcd_Set_Cursor(2,1);
+    Lcd_Write_String(".......");
+    while(feedback != 2 & feedback != 3);
+    Lcd_Clear();
+    Lcd_Set_Cursor(1,1);
+    Lcd_Write_String("Selftest was ok!");
+    _delay(5);
+    mower:
+    Lcd_Clear();
+    Lcd_Set_Cursor(1,1);
+    Lcd_Write_String("Starting mower!");
+    while(1);
+}
+
+
+void __attribute__((picinterrupt(("irq(TMR0), low_priority")))) buzzerInt(void) {
+    PORTBbits.RB1 = 0;
+    T0CON0bits.EN = 0;
+    PIR3bits.TMR0IF = 0;
 }
 
 void __attribute__((picinterrupt(("irq(INT0), high_priority")))) encInt(void) {
-    PORTBbits.RB0 = 0;
-    tick_count ++;
+    if(PORTAbits.RA0 == 1)
+    {
+        if(tick_count > min_tick_count) {
+            tick_count --;
+            playBuzzer();
+        }
+    }
+    else
+    {
+        if(tick_count < max_tick_count) {
+            tick_count ++;
+            playBuzzer();
+        }
+    }
     PIR1bits.INT0IF = 0;
 }
 
@@ -36456,11 +36651,7 @@ void __attribute__((picinterrupt(("irq(AD), high_priority")))) adcInt(void) {
 
 }
 
-void __attribute__((picinterrupt(("irq(RXB0IF), high_priority")))) canRecInt(void) {
-
-
-
-    PORTBbits.RB0 = 1;
+void __attribute__((picinterrupt(("irq(RXB0IF), high_priority")))) canRecInt2(void) {
     if (RXB0CONbits.RXFUL == 1) {
 
 
@@ -36472,14 +36663,22 @@ void __attribute__((picinterrupt(("irq(RXB0IF), high_priority")))) canRecInt(voi
                 message[0] = tick_count;
                 sendCANmessage(0, message, 1);
                 break;
+            case 1:
+                message[0] = status;
+                sendCANmessage(0, message, 1);
+                break;
 
 
         }
-# 218 "MainCode.c"
+# 238 "MainCode.c"
         RXB0CONbits.RXFUL = 0;
     }
     PIR5bits.RXB0IF = 0;
-    return;
+}
+
+void __attribute__((picinterrupt(("irq(RXB1IF), high_priority")))) canRecInt(void) {
+    tick_count = 69;
+    PIR5bits.RXB1IF = 0;
 }
 
 
@@ -36565,7 +36764,21 @@ void Lcd_Init(void)
     PORTBbits.RB0 = 1;
     ANSELC = 0x00;
     Lcd_Port(0x00);
-# 322 "MainCode.c"
+
+   _delay((unsigned long)((20)*(64000000/4000.0)));
+  Lcd_Cmd(0x03);
+ _delay((unsigned long)((5)*(64000000/4000.0)));
+  Lcd_Cmd(0x03);
+ _delay((unsigned long)((11)*(64000000/4000.0)));
+  Lcd_Cmd(0x03);
+  Lcd_Cmd(0x02);
+  Lcd_Cmd(0x02);
+  Lcd_Cmd(0x08);
+  Lcd_Cmd(0x00);
+  Lcd_Cmd(0x0C);
+  Lcd_Cmd(0x00);
+  Lcd_Cmd(0x06);
+
 }
 
 void Lcd_Write_Char(char a)
@@ -36602,7 +36815,38 @@ void Lcd_Shift_Left()
  Lcd_Cmd(0x01);
  Lcd_Cmd(0x08);
 }
-# 405 "MainCode.c"
+
+void MenuYesNo(void)
+{
+    while(PORTAbits.RA2)
+    {
+        char str[20];
+        unsigned int value = 105;
+
+        switch(tick_count)
+        {
+            case 0:
+                Lcd_Set_Cursor(3,2);
+                Lcd_Write_String("|Yes|");
+                Lcd_Set_Cursor(4,2);
+                Lcd_Write_String(" No ");
+                break;
+            case 1:
+               Lcd_Set_Cursor(3,2);
+                Lcd_Write_String(" Yes ");
+                Lcd_Set_Cursor(4,2);
+                Lcd_Write_String("|No|");
+                break;
+            default:
+                Lcd_Set_Cursor(3,1);
+                Lcd_Write_String("Error");
+                break;
+        }
+    }
+    while(!PORTAbits.RA2);
+    playBuzzer();
+}
+# 460 "MainCode.c"
 void initCAN(void) {
 
 
@@ -36681,4 +36925,27 @@ int readADC(int ch) {
     ADCON0bits.GO = 1;
     while (ADCON0bits.GO);
     return (ADRESH << 8) +ADRESL;
+}
+
+void initBuzzer(void) {
+
+    ANSELBbits.ANSELB1 = 0;
+    TRISBbits.TRISB1 = 0;
+    PORTBbits.RB1 = 1;
+    T0CON0bits.EN = 1;
+    T0CON0bits.MD16 = 0;
+    T0CON0bits.OUTPS = 0;
+    T0CON1bits.CS = 0b101;
+    T0CON1bits.ASYNC = 1;
+    T0CON1bits.CKPS = 0b1001;
+    TMR0L = 0;
+    TMR0H = 50;
+    PIE3bits.TMR0IE = 1;
+    PIR3bits.TMR0IF = 0;
+}
+
+void playBuzzer(void) {
+   PORTBbits.RB1 = 1;
+   T0CON0bits.EN = 1;
+   TMR0L = 0;
 }

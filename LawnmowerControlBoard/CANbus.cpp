@@ -118,15 +118,30 @@ int CANbus::readDistanceSensor(DistanceSensor sensor) {
 int CANbus::readStatus(void) {
   int data = -1;
   CAN_message_t inMsg;
-  bool temp = readCANReg(2, 0, & inMsg);
+  bool temp = readCANReg(2, 1, & inMsg);
   if (temp) data = inMsg.buf[0];
   return data;
 }
 
-bool CANbus::readCANReg(int device, int reg, CAN_message_t * inMsg) {
+int CANbus::setStatus(void) {
+  int data = -1;
+  CAN_message_t inMsg;
+  bool temp = readCANReg(2, 1, & inMsg);
+  if (temp) data = inMsg.buf[0];
+  return data;
+  /*
+  msg.id = 2;
+  msg.buf[0] = 1;
+  msg.buf[1] = value;
+  msg.len = 2;
+  Can0.write(msg);
+  */
+}
 
+bool CANbus::readCANReg(int device, int reg, CAN_message_t * inMsg) {
   bool ok = false;
   msg.id = device;
+  msg.len = 1;
   msg.buf[0] = reg;
   Can0.write(msg);
   delayMicroseconds(800);
