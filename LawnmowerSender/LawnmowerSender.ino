@@ -5,7 +5,7 @@
 
 // Replace with your network credentials
 const char* ssid = "telenet-2594037";
-const char* password = "j76kdjjpkCdx";
+const char* password = "";
 
 // Set web server port number to 80
 WiFiServer server(80);
