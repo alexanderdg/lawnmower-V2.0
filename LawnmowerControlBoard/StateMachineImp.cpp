@@ -40,6 +40,7 @@ long StateMachineImp::savedTimestamp = 0;
 long StateMachineImp::savedTimestamp2 = 0;
 bool StateMachineImp::collision = false;
 int StateMachineImp::internal_state = 0;
+bool StateMachineImp::result_selftest = false;
 
 StateMachineImp::StateMachineImp(void)
 {
@@ -54,10 +55,14 @@ void StateMachineImp::RunStatemachine(void)
     // Call function for state
     //SM_STATE.func()
     (*StateMachineImp::stateMachine[SM_STATE].func)();
+    canbus -> setMasterState(SM_STATE);
+    int controlPanelStatus  = canbus -> readStatus();
+    if (controlPanelStatus == 0 and SM_STATE != INIT and SM_STATE != CHARGING) changeState(INIT);
+    else if (controlPanelStatus == 7 and (SM_STATE == RUN or SM_STATE == RUN_SLOW)) changeState(FIND_PERIMETER);
   }
   else
   {
-    Serial3.println("Error in the execution of the statemachine");
+    Serial3.println("Error in the execution of the statemachine (unknown state)");
   }
 }
 
@@ -73,6 +78,7 @@ void StateMachineImp::initStatemachine(void)
   perimeterPID -> SetSampleTime(15);
   perimeterPID -> SetMode(AUTOMATIC);
   delay(100);
+  canbus -> setState(0);
 }
 
 void StateMachineImp::SM_INIT(void)
@@ -84,13 +90,19 @@ void StateMachineImp::SM_INIT(void)
     motordriver -> bladeStop();
     motordriver -> disableVBlade();
     enter_state = false;
+    //canbus -> setState(0);
   }
   else
   {
     checkForCharger();
-    if(canbus -> readStatus() == 2)
+    if (canbus -> readStatus() == 2)
     {
       changeState(SELF_TEST);
+    }
+    else if (canbus -> readStatus() == 5)
+    {
+      speaker -> playStartMowing();
+      changeState(RUN);
     }
   }
 }
@@ -104,6 +116,7 @@ void StateMachineImp::SM_SELF_TEST(void)
     motordriver -> bladeStop();
     motordriver -> disableVBlade();
     enter_state = false;
+    result_selftest = false;
   }
   else
   {
@@ -120,6 +133,7 @@ void StateMachineImp::SM_SELF_TEST(void)
         {
           Serial3.println("Selftest of the batterydrive is ok");
           Serial3.println("Selftest of al the components is finished");
+          result_selftest = true;
         }
         else
         {
@@ -135,8 +149,9 @@ void StateMachineImp::SM_SELF_TEST(void)
     {
       Serial3.println("Selftest of the motordriver is failed");
     }
-    delay(1000);
-    changeState(RUN);
+    if (result_selftest) canbus -> setStatus(2);
+    else canbus -> setStatus(1);
+    changeState(INIT);
   }
 }
 
@@ -145,7 +160,6 @@ void StateMachineImp::SM_RUN(void)
   if (enter_state == true)
   {
     Serial3.println("Enter RUN state");
-    speaker -> playStartMowing();
     enter_state = false;
     motordriver -> Forward(0.5);
     //motordriver -> enableVBlade();
@@ -175,10 +189,18 @@ void StateMachineImp::SM_RUN(void)
     {
       changeState(TRY_RIGHT);
     }
-    if (canbus -> readDistanceSensor(LL) < 100 or canbus -> readDistanceSensor(LM) < 100 or canbus -> readDistanceSensor(RM) < 100 or canbus -> readDistanceSensor(RR) < 100 or value > 30)
+    int distanceLL = canbus -> readDistanceSensor(LL);
+    int distanceLM = canbus -> readDistanceSensor(LM);
+    int distanceRM = canbus -> readDistanceSensor(RM);
+    int distanceRR = canbus -> readDistanceSensor(RR);
+    if (distanceLL < 100 or distanceLM < 100 or distanceRM < 100 or distanceRR < 100 or value > 30)
     {
       changeState(RUN_SLOW);
     }
+    Serial3.println(distanceLL);
+    Serial3.println(distanceLM);
+    Serial3.println(distanceRM);
+    Serial3.println(distanceRR);
     checkForCharger();
   }
 }
@@ -199,6 +221,7 @@ void StateMachineImp::SM_RUN_SLOW(void)
     int value, sign;
     canbus -> readPerimeter(&value, &sign);
     long currentTimestamp = millis();
+
     if (motordriver -> getRightCurrent() > 1.6 or canbus -> readPressure2() > 75 or value > 45)
     {
       changeState(TRY_LEFT);
@@ -707,6 +730,8 @@ void StateMachineImp::SM_CHARGING(void)
   {
     Serial3.println("Enter CHARGING state");
     enter_state = false;
+    canbus -> setChargingState(batterydriver -> readChargeState());
+    canbus -> setState(6);
     speaker -> playStartCharging();
     //batterydriver -> disableCharger();
     motordriver -> bladeStop();
@@ -716,6 +741,11 @@ void StateMachineImp::SM_CHARGING(void)
     //ChargeState state = batterydriver -> readChargeState();
     //Serial3.println(batterydriver -> enumToString(state));
     //Serial.println(state);
+    canbus -> setChargingState(batterydriver -> readChargeState());
+    if (!batterydriver -> isChargerPresent())
+    {
+        changeState(INIT);
+    }
   }
 }
 
@@ -730,8 +760,6 @@ void StateMachineImp::changeState(StateType newState)
 
 void StateMachineImp::printDiagnostics(void)
 {
-  int tempery = canbus -> setStatus();
-  Serial3.println(tempery);
   int value, sign, PIDvalue;
   canbus -> readPerimeterPID(&value, &sign, &PIDvalue);
   Serial3.println("---------------------------------------------------------");
@@ -759,7 +787,7 @@ void StateMachineImp::printDiagnostics(void)
   Serial3.println("Right motor current: " + String(motordriver -> getRightCurrent()));
   Serial3.println("Left motor speed: " + String(motordriver -> getLeftSpeed()));
   Serial3.println("Right motor speed: " + String(motordriver -> getRightSpeed()));
-  Serial3.println("Current state: " + StateType(SM_STATE));
+  Serial3.println("Current state: " + SM_STATE);
   Serial3.println("---------------------------------------------------------");
 }
 

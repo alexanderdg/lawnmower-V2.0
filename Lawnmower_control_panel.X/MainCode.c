@@ -1,7 +1,7 @@
 //code for the lawnmower sensor board
 #include <xc.h>
- #include <stdio.h>
- #include <stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 #define _XTAL_FREQ 64000000
 
@@ -59,6 +59,49 @@
 
 // #pragma config statements should precede project file includes.
 // Use project enums instead of #define for ON and OFF
+
+enum SM_State {
+    STARTMENU,
+    CONF_SELFTEST,
+    SELFTEST,
+    SELFTEST_FAIL,
+    CONF_MOWING,
+    MOWING,
+    CHARGING,
+    RETURN_HOME
+};
+
+char master_state_lut[18][20] = {
+                         "INIT               ",
+                         "SELF_TEST          ",
+                         "RUN                ",
+                         "RUN_SLOW           ",
+                         "AVOID_PERI         ",
+                         "TRY_LEFT           ",
+                         "TRY_RIGHT          ",
+                         "TRY_INSTEAD_LEFT   ",
+                         "TRY_INSTEAD_RIGHT  ",
+                         "TRY_LAST_TIME_LEFT ",
+                         "TRY_LAST_TIME_RIGHT",
+                         "TRY_BACKWARD       ",
+                         "STUCK              ",
+                         "FIND_PERIMETER     ",
+                         "RANDOM_TURN        ",
+                         "RETURN_HOME        ",
+                         "CHARGING           ",
+                         "SERROR             "
+                     };
+
+char charging_state_lut[7][20] = {
+                         "NO_CHARGER_PRESENT ",
+                         "FAST_CHARGE        ",
+                         "TOP_OFF_CHARGE     ",
+                         "CHARGE_COMPLETE    ",
+                         "CHARGER_DISABLED   ",
+                         "FAULT              ",
+                         "UNDEFINED          "
+                     };
+
 void initCAN(void);
 void initBuzzer(void);
 void playBuzzer(void);
@@ -85,11 +128,16 @@ int ADCvalueHigh0 = 0;
 int ADCvalueLow0 = 0;
 int ADCvalueHigh1 = 0;
 int ADCvalueLow1 = 0;
-int tick_count=0;
+int tick_count = 0;
 int max_tick_count = 1;
 int min_tick_count = 0;
 int status = 1;
-int feedback = 1;
+int feedback = 0;
+enum SM_State state = STARTMENU;
+int enter_state = 1;
+int master_state = 0;
+int charging_state = 6;
+float charging_voltage = 0;
 
 void main() {
     //set intern oscilator frequency to 64MHz
@@ -115,8 +163,14 @@ void main() {
     //enable CAN interupts
     PIE5bits.RXB0IE = 1;
     PIE5bits.RXB1IE = 0;
-    
-    
+    //setup TIMER1 for escape button
+    T1CONbits.CKPS = 0b11;
+    T1CONbits.NOT_SYNC = 1;
+    T1CONbits.RD16 = 1;
+    T1CLKbits.CS = 0b00110;
+    TMR1H = 0;
+    TMR1L = 0;
+
     //tick_count = 4;
     ei();
     TRISBbits.TRISB0 = 0;
@@ -124,44 +178,258 @@ void main() {
     PORTBbits.RB0 = 1;
     //tick_count = 5;
     Lcd_Init();
-start:
-    //tick_count = 6;
-    Lcd_Clear();
-    //tick_count = 7;
-    Lcd_Set_Cursor(1,1);
-    //tick_count = 8;
-    Lcd_Write_String("Welcome to the robot\0");
-    //tick_count = 10;
-    Lcd_Set_Cursor(2,1);
-    Lcd_Write_String("Execute selftest?");
-    MenuYesNo();
-    if(tick_count == 1) goto mower;
-    Lcd_Clear();
-    Lcd_Set_Cursor(1,1);
-    Lcd_Write_String("Robot will move\0");
-    Lcd_Set_Cursor(2,1);
-    Lcd_Write_String("Are you sure??");
-    MenuYesNo();
-    if(tick_count == 1) goto start;
-selftest:
-    status = 2;
-    Lcd_Clear();
-    Lcd_Set_Cursor(1,1);
-    Lcd_Write_String("Executing selftest\0");
-    Lcd_Set_Cursor(2,1);
-    Lcd_Write_String(".......");
-    while(feedback != 2 & feedback != 3);
-    Lcd_Clear();
-    Lcd_Set_Cursor(1,1);
-    Lcd_Write_String("Selftest was ok!");
-    _delay(5);
-    mower:
-    Lcd_Clear();
-    Lcd_Set_Cursor(1,1);
-    Lcd_Write_String("Starting mower!");
-    while(1);
+    while (1) {
+        switch (state) {
+            case STARTMENU:
+                status = state;
+                if (enter_state == 1) {
+                    tick_count = 0;
+                    enter_state = 0;
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(1, 1);
+                    Lcd_Write_String("Welcome to the robot");
+                    Lcd_Set_Cursor(2, 1);
+                    Lcd_Write_String("Execute selftest?");
+                }
+                else {
+                    MenuYesNo();
+                    if (!PORTAbits.RA2) {
+                        if(tick_count == 0) state = CONF_SELFTEST;
+                        else state = CONF_MOWING;
+                        enter_state = 1;
+                        while (!PORTAbits.RA2);
+                    }
+                }
+                break;
+            case CONF_SELFTEST:
+                status = state;
+                if (enter_state == 1) {
+                    tick_count = 1;
+                    enter_state = 0;
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(1, 1);
+                    Lcd_Write_String("Robot will move");
+                    Lcd_Set_Cursor(2, 1);
+                    Lcd_Write_String("Are you sure??");
+                }
+                else {
+                    MenuYesNo();
+                    if (!PORTAbits.RA2) {
+                        if(tick_count == 0) state = SELFTEST;
+                        else state = STARTMENU;
+                        enter_state = 1;
+                        while (!PORTAbits.RA2);
+                    }
+                }
+                break;
+            case SELFTEST:
+                status = state;
+                if (enter_state == 1) {
+                    enter_state = 0;
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(1, 1);
+                    Lcd_Write_String("Executing selftest");
+                    Lcd_Set_Cursor(2, 1);
+                    Lcd_Write_String(".....");
+                }
+                else {
+                    if(feedback == 1) {
+                        feedback = 0;
+                        enter_state = 1;
+                        state = SELFTEST_FAIL;
+                    }
+                    else if(feedback == 2) {
+                        feedback = 0;
+                        enter_state = 1;
+                        state = CONF_MOWING;
+                        status = state;
+                        Lcd_Clear();
+                        Lcd_Set_Cursor(1, 1);
+                        Lcd_Write_String("Selftest was OK!");
+                        __delay_ms(2000);
+                        
+                    }
+                }
+                break;
+            case SELFTEST_FAIL:
+                status = state;
+                if (enter_state == 1) {
+                    tick_count = 0;
+                    enter_state = 0;
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(1, 1);
+                    Lcd_Write_String("Selftest failed");
+                    Lcd_Set_Cursor(2, 1);
+                    Lcd_Write_String("Try Again?");
+                }
+                else {
+                    MenuYesNo();
+                    if (!PORTAbits.RA2) {
+                        if(tick_count == 0) state = CONF_SELFTEST;
+                        else state = STARTMENU;
+                        enter_state = 1;
+                        while (!PORTAbits.RA2);
+                    }
+                }
+                break;
+            case CONF_MOWING:
+                status = state;
+                if (enter_state == 1) {
+                    tick_count = 1;
+                    enter_state = 0;
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(1, 1);
+                    Lcd_Write_String("Robot will mowing!!");
+                    Lcd_Set_Cursor(2, 1);
+                    Lcd_Write_String("Are you sure??");
+                }
+                else {
+                    MenuYesNo();
+                    if (!PORTAbits.RA2) {
+                        if(tick_count == 0) state = MOWING;
+                        else state = STARTMENU;
+                        enter_state = 1;
+                        while (!PORTAbits.RA2);
+                    }
+                }
+                break;
+            case MOWING:
+                status = state;
+                if (enter_state == 1) {
+                    enter_state = 0;
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(1, 1);
+                    Lcd_Write_String("Mowing lawn");
+                    Lcd_Set_Cursor(2, 1);
+                    Lcd_Write_String(".....");
+                    Lcd_Set_Cursor(3, 1);
+                    Lcd_Write_String("Master STATE:");
+                }
+                else {
+                    char str[20];
+                    sprintf(str, "%3d", TMR1L);
+                    //Lcd_Set_Cursor(3, 1);
+                    //Lcd_Write_String(str);
+                    Lcd_Set_Cursor(4, 1);
+                    Lcd_Write_String(master_state_lut[master_state]);
+                    if(!PORTAbits.RA2)
+                    {
+                        T1CONbits.ON = 1;
+                        if(TMR1H > 50)
+                        {
+                            state = STARTMENU;
+                            enter_state = 1;
+                            Lcd_Clear();
+                            Lcd_Set_Cursor(1, 1);
+                            Lcd_Write_String("Release for restart");
+                            while (!PORTAbits.RA2){
+                                char str[20];
+                                sprintf(str, "%3d", TMR1L);
+                                if(TMR1H > 100) {
+                                    state = RETURN_HOME;
+                                    Lcd_Clear();
+                                    Lcd_Set_Cursor(1, 1);
+                                    Lcd_Write_String("Release for return");
+                                    Lcd_Set_Cursor(2, 1);
+                                    Lcd_Write_String("to charging base");
+                                    while (!PORTAbits.RA2);
+                                }
+                            }
+                            T1CONbits.ON = 0;
+                            TMR1H = 0;
+                            TMR1L = 0;
+                        }
+                    }
+                    else
+                    {
+                        T1CONbits.ON = 0;
+                        TMR1L = 0;
+                        TMR1H = 0;
+                    }
+                }
+                break;
+            case CHARGING:
+                status = state;
+                if (enter_state == 1) {
+                    enter_state = 0;
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(1, 1);
+                    Lcd_Write_String("Charging robot");
+                    Lcd_Set_Cursor(2, 1);
+                    Lcd_Write_String("Voltage: ");
+                }
+                else {
+                    char str[8];
+                    sprintf(str, "%3.2f", charging_voltage);
+                    Lcd_Set_Cursor(2, 10);
+                    Lcd_Write_String(str);
+                    Lcd_Set_Cursor(3, 1);
+                    Lcd_Write_String(charging_state_lut[charging_state]);
+                    //Lcd_Set_Cursor(3, 1);
+                    //Lcd_Write_String(str);
+                    
+                }
+                break;
+            case RETURN_HOME:
+                status = state;
+                if (enter_state == 1) {
+                    enter_state = 0;
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(1, 1);
+                    Lcd_Write_String("Returning home");
+                    Lcd_Set_Cursor(2, 1);
+                    Lcd_Write_String(".....");
+                    Lcd_Set_Cursor(3, 1);
+                    Lcd_Write_String("Master STATE:");
+                }
+                else {
+                    char str[20];
+                    sprintf(str, "%3d", TMR1L);
+                    //Lcd_Set_Cursor(3, 1);
+                    //Lcd_Write_String(str);
+                    Lcd_Set_Cursor(4, 1);
+                    Lcd_Write_String(master_state_lut[master_state]);
+                    if(!PORTAbits.RA2)
+                    {
+                        T1CONbits.ON = 1;
+                        if(TMR1H > 50)
+                        {
+                            state = STARTMENU;
+                            enter_state = 1;
+                            Lcd_Clear();
+                            Lcd_Set_Cursor(1, 1);
+                            Lcd_Write_String("Release for restart");
+                            while (!PORTAbits.RA2){
+                                
+                            }
+                            T1CONbits.ON = 0;
+                            TMR1H = 0;
+                            TMR1L = 0;
+                        }
+                    }
+                    else
+                    {
+                        T1CONbits.ON = 0;
+                        TMR1L = 0;
+                        TMR1H = 0;
+                    }
+                }
+                break;
+            default:
+                status = state;
+                if (enter_state == 1) {
+                    enter_state = 0;
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(1, 1);
+                    Lcd_Write_String("Error statemachine");
+                }
+                else {
+                    
+                }
+                break;
+        }
+    }
 }
-
 
 void __interrupt(irq(TMR0), low_priority) buzzerInt(void) {
     PORTBbits.RB1 = 0;
@@ -170,17 +438,14 @@ void __interrupt(irq(TMR0), low_priority) buzzerInt(void) {
 }
 
 void __interrupt(irq(INT0), high_priority) encInt(void) {
-    if(PORTAbits.RA0 == 1)
-    {
-        if(tick_count > min_tick_count) {
-            tick_count --;
+    if (PORTAbits.RA0 == 1) {
+        if (tick_count > min_tick_count) {
+            tick_count--;
             playBuzzer();
         }
-    }
-    else
-    {
-        if(tick_count < max_tick_count) {
-            tick_count ++;
+    } else {
+        if (tick_count < max_tick_count) {
+            tick_count++;
             playBuzzer();
         }
     }
@@ -195,220 +460,177 @@ void __interrupt(irq(AD), high_priority) adcInt(void) {
 
 void __interrupt(irq(RXB0IF), high_priority) canRecInt2(void) {
     if (RXB0CONbits.RXFUL == 1) {
-        //LATAbits.LA0 = !LATAbits.LA0;
-        //haal de ontvangen data uit de registers
         int message[8];
         switch (RXB0D0) {
-
-
             case 0:
-                message[0] = tick_count;
-                sendCANmessage(0, message, 1);
-                break;
-            case 1:
                 message[0] = status;
                 sendCANmessage(0, message, 1);
                 break;
-                      
-             
+            case 1:
+                feedback = RXB0D1;
+                break;
+            case 2:
+                enter_state = 1;
+                state = RXB0D1;
+                break;
+            case 3:
+                master_state = RXB0D1;
+                break;
+            case 4:
+                charging_state = RXB0D1;
+                break;
         }
-        //message[0] = RXB0D0 + 1;
-        //message[1] = RXB0D1 + 1;
-        //message[0] = distance >> 8 & 0xFF;
-        //message[1] = distance & 0xFF;
-        /*
-        message[0] = ADCvalueHigh0;
-        message[1] = ADCvalueLow0;
-        message[2] = ADCvalueHigh1;
-        message[3] = ADCvalueLow1;
-        message[4] = RXB0D4 + 1;
-        message[5] = RXB0D5 + 1;
-        message[6] = RXB0D6 + 1;
-        message[7] = RXB0D7 + 1;
-        int length = RXB0DLCbits.DLC;
-        int msbadres = RXB0SIDH;
-        int lsbadres = RXB0SIDLbits.SID;
-        int adres = (msbadres << 3) + lsbadres;
-        //wis de RXFULL bit zodat de can module weet dat deze uitgelezen is
- 
-        //asm(BCF RXB0CON, RXFUL);
-         */
-
-
         RXB0CONbits.RXFUL = 0;
     }
     PIR5bits.RXB0IF = 0;
 }
 
 void __interrupt(irq(RXB1IF), high_priority) canRecInt(void) {
-    tick_count = 69;
+    tick_count = 255;
     PIR5bits.RXB1IF = 0;
 }
 
+void Lcd_Port(char a) {
+    if (a & 1)
+        PORTCbits.RC2 = 1;
+    else
+        PORTCbits.RC2 = 0;
 
-void Lcd_Port(char a)
-{
-	if(a & 1)
-		PORTCbits.RC2 = 1;
-	else
-		PORTCbits.RC2 = 0;
+    if (a & 2)
+        PORTCbits.RC5 = 1;
+    else
+        PORTCbits.RC5 = 0;
 
-	if(a & 2)
-		PORTCbits.RC5 = 1;
-	else
-		PORTCbits.RC5 = 0;
+    if (a & 4)
+        PORTCbits.RC6 = 1;
+    else
+        PORTCbits.RC6 = 0;
 
-	if(a & 4)
-		PORTCbits.RC6 = 1;
-	else
-		PORTCbits.RC6 = 0;
-
-	if(a & 8)
-		PORTCbits.RC7 = 1;
-	else
-		PORTCbits.RC7 = 0;
+    if (a & 8)
+        PORTCbits.RC7 = 1;
+    else
+        PORTCbits.RC7 = 0;
 }
-void Lcd_Cmd(char a)
-{
-	PORTCbits.RC0 = 0;             // => RS = 0
-	Lcd_Port(a);
-	PORTCbits.RC1  = 1;             // => E = 1
+
+void Lcd_Cmd(char a) {
+    PORTCbits.RC0 = 0; // => RS = 0
+    Lcd_Port(a);
+    PORTCbits.RC1 = 1; // => E = 1
     __delay_ms(4);
-    PORTCbits.RC1  = 0;             // => E = 0
+    PORTCbits.RC1 = 0; // => E = 0
 }
 
-void Lcd_Clear(void)
-{
-	Lcd_Cmd(0);
-	Lcd_Cmd(1);
+void Lcd_Clear(void) {
+    Lcd_Cmd(0);
+    Lcd_Cmd(1);
 }
 
-void Lcd_Set_Cursor(char a, char b)
-{
-	char temp,z,y;
-	if(a == 1)
-	{
-	  temp = 0x80 + b - 1;
-		z = temp>>4;
-		y = temp & 0x0F;
-		Lcd_Cmd(z);
-		Lcd_Cmd(y);
-	}
-	else if(a == 2)
-	{
-		temp = 0xC0 + b - 1;
-		z = temp>>4;
-		y = temp & 0x0F;
-		Lcd_Cmd(z);
-		Lcd_Cmd(y);
-	}
-    else if(a == 3)
-    {
+void Lcd_Set_Cursor(char a, char b) {
+    char temp, z, y;
+    if (a == 1) {
+        temp = 0x80 + b - 1;
+        z = temp >> 4;
+        y = temp & 0x0F;
+        Lcd_Cmd(z);
+        Lcd_Cmd(y);
+    } else if (a == 2) {
+        temp = 0xC0 + b - 1;
+        z = temp >> 4;
+        y = temp & 0x0F;
+        Lcd_Cmd(z);
+        Lcd_Cmd(y);
+    } else if (a == 3) {
         temp = 0x94 + b - 1;
-		z = temp>>4;
-		y = temp & 0x0F;
-		Lcd_Cmd(z);
-		Lcd_Cmd(y);
-    }
-    else if(a == 4)
-    {
+        z = temp >> 4;
+        y = temp & 0x0F;
+        Lcd_Cmd(z);
+        Lcd_Cmd(y);
+    } else if (a == 4) {
         temp = 0xD4 + b - 1;
-		z = temp>>4;
-		y = temp & 0x0F;
-		Lcd_Cmd(z);
-		Lcd_Cmd(y);
+        z = temp >> 4;
+        y = temp & 0x0F;
+        Lcd_Cmd(z);
+        Lcd_Cmd(y);
     }
 }
 
-void Lcd_Init(void)
-{
+void Lcd_Init(void) {
     TRISC = 0x00;
     TRISBbits.TRISB0 = 0;
     ANSELBbits.ANSELB0 = 0;
     PORTBbits.RB0 = 1;
     ANSELC = 0x00;
     Lcd_Port(0x00);
-   
-   __delay_ms(20);
-  Lcd_Cmd(0x03);
-	__delay_ms(5);
-  Lcd_Cmd(0x03);
-	__delay_ms(11);
-  Lcd_Cmd(0x03);
-  Lcd_Cmd(0x02);
-  Lcd_Cmd(0x02);
-  Lcd_Cmd(0x08);
-  Lcd_Cmd(0x00);
-  Lcd_Cmd(0x0C);
-  Lcd_Cmd(0x00);
-  Lcd_Cmd(0x06);
-  
+
+    __delay_ms(20);
+    Lcd_Cmd(0x03);
+    __delay_ms(5);
+    Lcd_Cmd(0x03);
+    __delay_ms(11);
+    Lcd_Cmd(0x03);
+    Lcd_Cmd(0x02);
+    Lcd_Cmd(0x02);
+    Lcd_Cmd(0x08);
+    Lcd_Cmd(0x00);
+    Lcd_Cmd(0x0C);
+    Lcd_Cmd(0x00);
+    Lcd_Cmd(0x06);
+
 }
 
-void Lcd_Write_Char(char a)
-{
-   char temp,y;
-   temp = a&0x0F;
-   y = a&0xF0;
-   PORTCbits.RC0 = 1;             // => RS = 1
-   Lcd_Port(y>>4);             //Data transfer
-   PORTCbits.RC1 = 1;
-   __delay_us(40);
-   PORTCbits.RC1 = 0;
-   Lcd_Port(temp);
-   PORTCbits.RC1 = 1;
-   __delay_us(40);
-   PORTCbits.RC1 = 0;
+void Lcd_Write_Char(char a) {
+    char temp, y;
+    temp = a & 0x0F;
+    y = a & 0xF0;
+    PORTCbits.RC0 = 1; // => RS = 1
+    Lcd_Port(y >> 4); //Data transfer
+    PORTCbits.RC1 = 1;
+    __delay_us(40);
+    PORTCbits.RC1 = 0;
+    Lcd_Port(temp);
+    PORTCbits.RC1 = 1;
+    __delay_us(40);
+    PORTCbits.RC1 = 0;
 }
 
-void Lcd_Write_String(char *a)
-{
-	int i;
-	for(i=0;a[i]!='\0';i++)
-	   Lcd_Write_Char(a[i]);
+void Lcd_Write_String(char *a) {
+    int i;
+    for (i = 0; a[i] != '\0'; i++)
+        Lcd_Write_Char(a[i]);
 }
 
-void Lcd_Shift_Right()
-{
-	Lcd_Cmd(0x01);
-	Lcd_Cmd(0x0C);
+void Lcd_Shift_Right() {
+    Lcd_Cmd(0x01);
+    Lcd_Cmd(0x0C);
 }
 
-void Lcd_Shift_Left()
-{
-	Lcd_Cmd(0x01);
-	Lcd_Cmd(0x08);
+void Lcd_Shift_Left() {
+    Lcd_Cmd(0x01);
+    Lcd_Cmd(0x08);
 }
 
-void MenuYesNo(void)
-{
-    while(PORTAbits.RA2)
-    {
-        char str[20];
-        unsigned int value = 105;
-        //sprintf(str, "%3d", tick_count);
-        switch(tick_count)
-        {
-            case 0:
-                Lcd_Set_Cursor(3,2);
-                Lcd_Write_String("|Yes|");
-                Lcd_Set_Cursor(4,2);
-                Lcd_Write_String(" No ");
-                break;
-            case 1:
-               Lcd_Set_Cursor(3,2);
-                Lcd_Write_String(" Yes ");
-                Lcd_Set_Cursor(4,2);
-                Lcd_Write_String("|No|");
-                break;
-            default:
-                Lcd_Set_Cursor(3,1);
-                Lcd_Write_String("Error");
-                break;
-        }
+void MenuYesNo(void) {
+    char str[20];
+    unsigned int value = 105;
+    //sprintf(str, "%3d", tick_count);
+    switch (tick_count) {
+        case 0:
+            Lcd_Set_Cursor(3, 2);
+            Lcd_Write_String("|Yes|");
+            Lcd_Set_Cursor(4, 2);
+            Lcd_Write_String(" No ");
+            break;
+        case 1:
+            Lcd_Set_Cursor(3, 2);
+            Lcd_Write_String(" Yes ");
+            Lcd_Set_Cursor(4, 2);
+            Lcd_Write_String("|No|");
+            break;
+        default:
+            Lcd_Set_Cursor(3, 1);
+            Lcd_Write_String("Error");
+            break;
     }
-    while(!PORTAbits.RA2);
-    playBuzzer();
 }
 
 /*
@@ -455,7 +677,7 @@ void initADC(void) {
     //TRISCbits.TRISC1 = 0;
     //ANSELCbits.ANSELC1 = 0;
 }
-*/
+ */
 
 void initCAN(void) {
     //----------------------------------------------------------------------------
@@ -555,7 +777,7 @@ void initBuzzer(void) {
 }
 
 void playBuzzer(void) {
-   PORTBbits.RB1 = 1;
-   T0CON0bits.EN = 1;
-   TMR0L = 0;
+    PORTBbits.RB1 = 1;
+    T0CON0bits.EN = 1;
+    TMR0L = 0;
 }

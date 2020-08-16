@@ -36430,7 +36430,7 @@ int main() {
     INTCON0bits.IPEN = 0;
 
     PIE5bits.RXB0IE = 1;
-    PIE5bits.RXB1IE = 1;
+    PIE5bits.RXB1IE = 0;
     (INTCON0bits.GIE = 1);
 
 

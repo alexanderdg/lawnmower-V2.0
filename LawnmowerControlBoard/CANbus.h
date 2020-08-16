@@ -27,8 +27,11 @@ class CANbus
     int readDistanceSensor(DistanceSensor sensor);
 
     int readStatus(void);
-    int setStatus(void);
-
+    bool setStatus(int value);
+    bool setState(int value);
+    bool setMasterState(int value);
+    bool setChargingVoltage(float value);
+    bool setChargingState(int value);
     bool selfTest(void);
 
   private:
@@ -38,6 +41,7 @@ class CANbus
     int offsetPressure1 = 0;
     int offsetPressure2 = 0;
     bool readCANReg(int device, int reg, CAN_message_t * inMsg);
+    bool writeCANReg(int device, int reg, int value);
 
 };
 

@@ -39,7 +39,7 @@ text21 CODE 0 59E 59E D6 1
 cstackCOMRAM COMRAM 1 23 23 22 1
 cstackBANK0 BANK0 1 60 60 6 1
 bssCOMRAM COMRAM 1 1 1 22 1
-$C:\Users\degee\AppData\Local\Temp\sg0o.o
+$C:\Users\degee\AppData\Local\Temp\sgrc.o
 idloc IDLOC 0 200000 200000 10 1
 init CODE 0 A8 A8 4 1
 reset_vec CODE 0 0 0 4 1
@@ -514,26 +514,26 @@ F8 text0 CODE >135:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.
 288 text0 CODE >209:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_sensor_board.X\MainCode.c
 28E text0 CODE >210:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_sensor_board.X\MainCode.c
 2A8 text0 CODE >211:D:\Drive\Labo\Grasmaaierrobot\Versie 2\Firmware\lawnmower-V2.0\Lawnmower_sensor_board.X\MainCode.c
-C98 cinit CODE >2390:C:\Users\degee\AppData\Local\Temp\sg0o.
-C98 cinit CODE >2392:C:\Users\degee\AppData\Local\Temp\sg0o.
-C98 cinit CODE >2395:C:\Users\degee\AppData\Local\Temp\sg0o.
-C98 cinit CODE >2455:C:\Users\degee\AppData\Local\Temp\sg0o.
-C9C cinit CODE >2456:C:\Users\degee\AppData\Local\Temp\sg0o.
-C9E cinit CODE >2457:C:\Users\degee\AppData\Local\Temp\sg0o.
-C9E cinit CODE >2458:C:\Users\degee\AppData\Local\Temp\sg0o.
-CA0 cinit CODE >2459:C:\Users\degee\AppData\Local\Temp\sg0o.
-CA2 cinit CODE >2460:C:\Users\degee\AppData\Local\Temp\sg0o.
-CA4 cinit CODE >2468:C:\Users\degee\AppData\Local\Temp\sg0o.
-CA6 cinit CODE >2469:C:\Users\degee\AppData\Local\Temp\sg0o.
-CA8 cinit CODE >2470:C:\Users\degee\AppData\Local\Temp\sg0o.
-CAA cinit CODE >2471:C:\Users\degee\AppData\Local\Temp\sg0o.
-CAC cinit CODE >2472:C:\Users\degee\AppData\Local\Temp\sg0o.
-CAE cinit CODE >2473:C:\Users\degee\AppData\Local\Temp\sg0o.
-CB0 cinit CODE >2479:C:\Users\degee\AppData\Local\Temp\sg0o.
-CB0 cinit CODE >2482:C:\Users\degee\AppData\Local\Temp\sg0o.
-CB2 cinit CODE >2483:C:\Users\degee\AppData\Local\Temp\sg0o.
-CB4 cinit CODE >2484:C:\Users\degee\AppData\Local\Temp\sg0o.
-CB6 cinit CODE >2485:C:\Users\degee\AppData\Local\Temp\sg0o.
+C98 cinit CODE >2390:C:\Users\degee\AppData\Local\Temp\sgrc.
+C98 cinit CODE >2392:C:\Users\degee\AppData\Local\Temp\sgrc.
+C98 cinit CODE >2395:C:\Users\degee\AppData\Local\Temp\sgrc.
+C98 cinit CODE >2455:C:\Users\degee\AppData\Local\Temp\sgrc.
+C9C cinit CODE >2456:C:\Users\degee\AppData\Local\Temp\sgrc.
+C9E cinit CODE >2457:C:\Users\degee\AppData\Local\Temp\sgrc.
+C9E cinit CODE >2458:C:\Users\degee\AppData\Local\Temp\sgrc.
+CA0 cinit CODE >2459:C:\Users\degee\AppData\Local\Temp\sgrc.
+CA2 cinit CODE >2460:C:\Users\degee\AppData\Local\Temp\sgrc.
+CA4 cinit CODE >2468:C:\Users\degee\AppData\Local\Temp\sgrc.
+CA6 cinit CODE >2469:C:\Users\degee\AppData\Local\Temp\sgrc.
+CA8 cinit CODE >2470:C:\Users\degee\AppData\Local\Temp\sgrc.
+CAA cinit CODE >2471:C:\Users\degee\AppData\Local\Temp\sgrc.
+CAC cinit CODE >2472:C:\Users\degee\AppData\Local\Temp\sgrc.
+CAE cinit CODE >2473:C:\Users\degee\AppData\Local\Temp\sgrc.
+CB0 cinit CODE >2479:C:\Users\degee\AppData\Local\Temp\sgrc.
+CB0 cinit CODE >2482:C:\Users\degee\AppData\Local\Temp\sgrc.
+CB2 cinit CODE >2483:C:\Users\degee\AppData\Local\Temp\sgrc.
+CB4 cinit CODE >2484:C:\Users\degee\AppData\Local\Temp\sgrc.
+CB6 cinit CODE >2485:C:\Users\degee\AppData\Local\Temp\sgrc.
 # %SYMTAB Section
 # An enumeration of all symbols in the program.
 # The beginning of the section is indicated by %SYMTAB.
@@ -558,7 +558,7 @@ _RXM0SIDH 37B8 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.produc
 _RXM1SIDH 37BC 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
 __Hibigdata 0 0 CODE 0 ibigdata dist/default/production\Lawnmower_sensor_board.X.production.o
 __size_of_wait10US 0 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
-__mediumconst 0 0 MEDIUMCONST 0 mediumconst C:\Users\degee\AppData\Local\Temp\sg0o.o
+__mediumconst 0 0 MEDIUMCONST 0 mediumconst C:\Users\degee\AppData\Local\Temp\sgrc.o
 __Heeprom_data 0 0 EEDATA 0 eeprom_data dist/default/production\Lawnmower_sensor_board.X.production.o
 _T1CONbits 3FB2 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
 _waitForSensor1 8FC 0 CODE 0 text5 dist/default/production\Lawnmower_sensor_board.X.production.o
@@ -569,10 +569,10 @@ _waitForSensor5 764 0 CODE 0 text1 dist/default/production\Lawnmower_sensor_boar
 __CFG_RSTOSC$HFINTOSC_64MHZ 0 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
 __CFG_WDTCCS$SC 0 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
 __Lsmallconst 0 0 SMALLCONST 0 smallconst dist/default/production\Lawnmower_sensor_board.X.production.o
-___sp 0 0 STACK 2 stack C:\Users\degee\AppData\Local\Temp\sg0o.o
+___sp 0 0 STACK 2 stack C:\Users\degee\AppData\Local\Temp\sgrc.o
 _main AC 0 CODE 0 text0 dist/default/production\Lawnmower_sensor_board.X.production.o
 readI2C@counter 43 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_sensor_board.X.production.o
-start A8 0 CODE 0 init C:\Users\degee\AppData\Local\Temp\sg0o.o
+start A8 0 CODE 0 init C:\Users\degee\AppData\Local\Temp\sgrc.o
 __size_of_main 0 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
 __end_of_canRecInt 48E 0 CODE 0 text20 dist/default/production\Lawnmower_sensor_board.X.production.o
 __HbssCOMRAM 0 0 ABS 0 bssCOMRAM dist/default/production\Lawnmower_sensor_board.X.production.o
@@ -581,11 +581,11 @@ __CFG_DEBUG$OFF 0 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.pro
 _RXM1SIDLbits 37BD 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
 __Hpowerup 0 0 CODE 0 powerup dist/default/production\Lawnmower_sensor_board.X.production.o
 _canRecInt 2C4 0 CODE 0 text20 dist/default/production\Lawnmower_sensor_board.X.production.o
-__accesstop 60 0 ABS 0 - C:\Users\degee\AppData\Local\Temp\sg0o.o
-intlevel0 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\sg0o.o
-intlevel1 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\sg0o.o
-intlevel2 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\sg0o.o
-intlevel3 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\sg0o.o
+__accesstop 60 0 ABS 0 - C:\Users\degee\AppData\Local\Temp\sgrc.o
+intlevel0 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\sgrc.o
+intlevel1 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\sgrc.o
+intlevel2 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\sgrc.o
+intlevel3 0 0 CODE 0 text C:\Users\degee\AppData\Local\Temp\sgrc.o
 __LbssCOMRAM 0 0 ABS 0 bssCOMRAM dist/default/production\Lawnmower_sensor_board.X.production.o
 __LnvFARRAM 0 0 FARRAM 0 nvFARRAM dist/default/production\Lawnmower_sensor_board.X.production.o
 __size_of_sendCANmessage 0 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
@@ -610,12 +610,12 @@ ivt0x8_base 8 0 CODE 0 ivt0x8 dist/default/production\Lawnmower_sensor_board.X.p
 _ADRESH 3EF0 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
 _ADRESL 3EEF 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
 _con_perimeter 21 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_sensor_board.X.production.o
-___inthi_sp 0 0 STACK 2 stack C:\Users\degee\AppData\Local\Temp\sg0o.o
+___inthi_sp 0 0 STACK 2 stack C:\Users\degee\AppData\Local\Temp\sgrc.o
 _I2C1ADB1 3D6E 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
 _I2C1CON0 3D73 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
 _I2C1CON1 3D74 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
 _I2C1CON2 3D75 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
-___intlo_sp 0 0 STACK 2 stack C:\Users\degee\AppData\Local\Temp\sg0o.o
+___intlo_sp 0 0 STACK 2 stack C:\Users\degee\AppData\Local\Temp\sgrc.o
 _valid_distance1 D 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_sensor_board.X.production.o
 _valid_distance2 B 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_sensor_board.X.production.o
 _valid_distance3 9 0 COMRAM 1 bssCOMRAM dist/default/production\Lawnmower_sensor_board.X.production.o
@@ -695,7 +695,7 @@ __Htext8 0 0 ABS 0 text8 dist/default/production\Lawnmower_sensor_board.X.produc
 __Htext9 0 0 ABS 0 text9 dist/default/production\Lawnmower_sensor_board.X.production.o
 __Hbigbss 0 0 BIGRAM 1 bigbss dist/default/production\Lawnmower_sensor_board.X.production.o
 __Hbigram 0 0 ABS 0 bigram dist/default/production\Lawnmower_sensor_board.X.production.o
-__smallconst 0 0 SMALLCONST 0 smallconst C:\Users\degee\AppData\Local\Temp\sg0o.o
+__smallconst 0 0 SMALLCONST 0 smallconst C:\Users\degee\AppData\Local\Temp\sgrc.o
 __Hcomram 0 0 ABS 0 comram dist/default/production\Lawnmower_sensor_board.X.production.o
 __Hconfig 30000A 0 CONFIG 0 config dist/default/production\Lawnmower_sensor_board.X.production.o
 __Lbank0 0 0 ABS 0 bank0 dist/default/production\Lawnmower_sensor_board.X.production.o
@@ -848,8 +848,8 @@ main@temp1 64 0 BANK0 1 cstackBANK0 dist/default/production\Lawnmower_sensor_boa
 __Lfardata 0 0 FARRAM 0 fardata dist/default/production\Lawnmower_sensor_board.X.production.o
 initI2C@state 3D 0 COMRAM 1 cstackCOMRAM dist/default/production\Lawnmower_sensor_board.X.production.o
 _I2C1SCLPPSbits 3AE3 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
-stackhi 7FF 0 ABS 0 - C:\Users\degee\AppData\Local\Temp\sg0o.o
-stacklo 66 0 ABS 0 - C:\Users\degee\AppData\Local\Temp\sg0o.o
+stackhi 7FF 0 ABS 0 - C:\Users\degee\AppData\Local\Temp\sgrc.o
+stacklo 66 0 ABS 0 - C:\Users\degee\AppData\Local\Temp\sgrc.o
 _OSCCON1 39D9 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o
 __Lirdata 0 0 CODE 0 irdata dist/default/production\Lawnmower_sensor_board.X.production.o
 __Livt0x8 8 0 CODE 0 ivt0x8 dist/default/production\Lawnmower_sensor_board.X.production.o
@@ -928,7 +928,7 @@ __Ltext18 0 0 ABS 0 text18 dist/default/production\Lawnmower_sensor_board.X.prod
 __Ltext19 0 0 ABS 0 text19 dist/default/production\Lawnmower_sensor_board.X.production.o
 __Ltext20 0 0 ABS 0 text20 dist/default/production\Lawnmower_sensor_board.X.production.o
 __Ltext21 0 0 ABS 0 text21 dist/default/production\Lawnmower_sensor_board.X.production.o
-__ramtop 800 0 RAM 0 ramtop C:\Users\degee\AppData\Local\Temp\sg0o.o
+__ramtop 800 0 RAM 0 ramtop C:\Users\degee\AppData\Local\Temp\sgrc.o
 __Lpowerup 0 0 CODE 0 powerup dist/default/production\Lawnmower_sensor_board.X.production.o
 __Leeprom_data 0 0 EEDATA 0 eeprom_data dist/default/production\Lawnmower_sensor_board.X.production.o
 _BRGCON1bits 3703 0 ABS 0 - dist/default/production\Lawnmower_sensor_board.X.production.o

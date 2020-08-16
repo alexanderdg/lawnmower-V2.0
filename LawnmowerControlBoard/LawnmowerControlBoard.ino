@@ -8,11 +8,12 @@ String receivedText = "";
 
 
 void setup() {
+  Serial3.begin(115200);
   //Serial3.begin(9600);
   //Serial3.print("AT+BAUD8");
   SM.initStatemachine();
   //battery.enableCharger();M
-  Serial3.begin(115200);
+  
   
   //motioncontrol.enableVBlade();
   //motioncontrol.startTurning();

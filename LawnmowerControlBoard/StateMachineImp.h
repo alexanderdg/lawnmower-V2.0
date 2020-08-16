@@ -92,6 +92,7 @@ class StateMachineImp
     static long savedTimestamp2;
     static int internal_state;
     static bool collision;
+    static bool result_selftest;
 
     //PID variables
     static  PID * perimeterPID;

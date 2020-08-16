@@ -5,7 +5,7 @@ Linker command line:
 -W-3 --edf=D:\MPLAB\pic\dat\en_msgs.txt -pivt0x8=08h -cs \
   -h+dist/default/production\Lawnmower_sensor_board.X.production.sym \
   --cmf=dist/default/production\Lawnmower_sensor_board.X.production.cmf -z \
-  -Q18F25K83 -oC:\Users\degee\AppData\Local\Temp\sg0o.2 \
+  -Q18F25K83 -oC:\Users\degee\AppData\Local\Temp\sgrc.2 \
   --defsym=__MPLAB_BUILD=1 \
   -Mdist/default/production/Lawnmower_sensor_board.X.production.map -E1 \
   -ver=XC8 --acfsm=1493 -ASTACK=066h-07FFh -pstack=STACK -ACODE=00h-07FFFh \
@@ -24,7 +24,7 @@ Linker command line:
   -pfarbss=FARRAM,fardata=FARRAM,nvFARRAM=FARRAM \
   -pintsave_regs=BIGRAM,bigbss=BIGRAM,bigdata=BIGRAM -pbss=RAM \
   -pidata=CODE,irdata=CODE,ibigdata=CODE,ifardata=CODE -prparam=COMRAM \
-  C:\Users\degee\AppData\Local\Temp\sg0o.o \
+  C:\Users\degee\AppData\Local\Temp\sgrc.o \
   dist/default/production\Lawnmower_sensor_board.X.production.o 
 
 Object code version is 3.11
@@ -37,7 +37,7 @@ Call graph: (short form)
 
 
                 Name                               Link     Load   Length Selector   Space Scale
-C:\Users\degee\AppData\Local\Temp\sg0o.o
+C:\Users\degee\AppData\Local\Temp\sgrc.o
                 init                                 A8       A8        4        4       0
                 reset_vec                             0        0        4        0       0
                 idloc                            200000   200000       10   200000       0

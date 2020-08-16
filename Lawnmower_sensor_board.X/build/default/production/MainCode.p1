@@ -4,7 +4,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [; ;D:\MPLAB\pic\include\pic18f25k83.h: 27121: extern volatile unsigned char OSCCON1 __attribute__((address(0x39D9)));
 [v _OSCCON1 `Vuc ~T0 @X0 0 e@14809 ]
 "62 MainCode.c
-[; ;MainCode.c: 62:     PIE5bits.RXB1IE = 1;
+[; ;MainCode.c: 62:     PIE5bits.RXB1IE = 0;
 [v _initCAN `(v ~T0 @X0 0 ef ]
 "63
 [; ;MainCode.c: 63:     (INTCON0bits.GIE = 1);
@@ -4097,7 +4097,7 @@ Version 4.0 HI-TECH Software Intermediate Code
 [e = . . _PIE5bits 0 0 -> -> 1 `i `uc ]
 "120
 [; ;MainCode.c: 120:         wait10US();
-[e = . . _PIE5bits 0 1 -> -> 1 `i `uc ]
+[e = . . _PIE5bits 0 1 -> -> 0 `i `uc ]
 "121
 [; ;MainCode.c: 121:         PORTAbits.RA1 = 0;
 [e = . . _INTCON0bits 0 6 -> -> 1 `i `uc ]

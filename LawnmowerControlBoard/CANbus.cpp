@@ -21,10 +21,23 @@ bool CANbus::selfTest(void) {
   bool temp = false;
   int value, sign;
   readPerimeter(&value, &sign);
-  if (readPressure1() > 0 && readPressure2() > 0
-      && readDistanceSensor(1) > 0 && readDistanceSensor(2) > 0
-      && readDistanceSensor(3) > 0 && readDistanceSensor(4) > 0
-      && readDistanceSensor(5) > 0 && value > 0) temp = true;
+  int distanceLL = readDistanceSensor(LL);
+  int distanceLM = readDistanceSensor(LM);
+  int distanceRM = readDistanceSensor(RM);
+  int distanceRR = readDistanceSensor(RR);
+  int pressure1 = readPressure1();
+  int pressure2 = readPressure2();
+  Serial3.println(value);
+  Serial3.println(distanceLL);
+  Serial3.println(distanceLM);
+  Serial3.println(distanceRM);
+  Serial3.println(distanceRR);
+  Serial3.println(pressure1);
+  Serial3.println(pressure2);
+  if (pressure1 != -255 && pressure2 != - 255
+      && distanceLL > 0 && distanceLM > 0
+      && distanceRM > 0
+      && distanceRR > 0 && value != -1) temp = true;
   return temp;
 }
 
@@ -36,7 +49,7 @@ bool CANbus::initCAN(void) {
 }
 
 int CANbus::readPressure1(void) {
-  int data = -1;
+  int data = -255;
   CAN_message_t inMsg;
   bool temp = readCANReg(1, 1, & inMsg);
   if (temp)
@@ -118,24 +131,45 @@ int CANbus::readDistanceSensor(DistanceSensor sensor) {
 int CANbus::readStatus(void) {
   int data = -1;
   CAN_message_t inMsg;
-  bool temp = readCANReg(2, 1, & inMsg);
+  bool temp = readCANReg(2, 0, & inMsg);
   if (temp) data = inMsg.buf[0];
   return data;
 }
 
-int CANbus::setStatus(void) {
-  int data = -1;
-  CAN_message_t inMsg;
-  bool temp = readCANReg(2, 1, & inMsg);
-  if (temp) data = inMsg.buf[0];
-  return data;
-  /*
-  msg.id = 2;
-  msg.buf[0] = 1;
+bool CANbus::setStatus(int value) {
+  bool returnvalue = false;
+  returnvalue = writeCANReg(2, 1, value);
+  return returnvalue;
+}
+
+bool CANbus::setState(int value) {
+  bool returnvalue = false;
+  returnvalue = writeCANReg(2, 2, value);
+  return returnvalue;
+}
+
+bool CANbus::setMasterState(int value) {
+  bool returnvalue = false;
+  returnvalue = writeCANReg(2, 3, value);
+  return returnvalue;
+}
+
+bool CANbus::setChargingState(int value) {
+  bool returnvalue = false;
+  returnvalue = writeCANReg(2, 4, value);
+  return returnvalue;
+}
+
+bool CANbus::writeCANReg(int device, int reg, int value) {
+  bool returnvalue = false;
+  msg.id = device;
+  msg.buf[0] = reg;
   msg.buf[1] = value;
   msg.len = 2;
-  Can0.write(msg);
-  */
+  int temp = Can0.write(msg);
+  delayMicroseconds(800);
+  if(temp == 1) returnvalue = true;
+  return returnvalue;
 }
 
 bool CANbus::readCANReg(int device, int reg, CAN_message_t * inMsg) {
