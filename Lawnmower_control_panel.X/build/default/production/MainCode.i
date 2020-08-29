@@ -36526,7 +36526,8 @@ enum SM_State {
     CONF_MOWING,
     MOWING,
     CHARGING,
-    RETURN_HOME
+    RETURN_HOME,
+    STUCK
 };
 
 char master_state_lut[18][20] = {
@@ -36752,7 +36753,6 @@ void main() {
                 }
                 break;
             case MOWING:
-                status = state;
                 if (enter_state == 1) {
                     enter_state = 0;
                     Lcd_Clear();
@@ -36773,6 +36773,7 @@ void main() {
                     if(!PORTAbits.RA2)
                     {
                         T1CONbits.ON = 1;
+                        status = 0;
                         if(TMR1H > 50)
                         {
                             state = STARTMENU;
@@ -36800,6 +36801,7 @@ void main() {
                     }
                     else
                     {
+                        status = state;
                         T1CONbits.ON = 0;
                         TMR1L = 0;
                         TMR1H = 0;
@@ -36873,6 +36875,25 @@ void main() {
                     }
                 }
                 break;
+            case STUCK:
+                status = state;
+                if (enter_state == 1) {
+                    tick_count = 0;
+                    enter_state = 0;
+                    Lcd_Clear();
+                    Lcd_Set_Cursor(1, 1);
+                    Lcd_Write_String("Robot is stuck");
+                    Lcd_Set_Cursor(2, 1);
+                    Lcd_Write_String("Push to restart");
+                }
+                else {
+                    if (!PORTAbits.RA2) {
+                        state = STARTMENU;
+                        enter_state = 1;
+                        while (!PORTAbits.RA2);
+                    }
+                }
+                break;
             default:
                 status = state;
                 if (enter_state == 1) {
@@ -36930,12 +36951,16 @@ void __attribute__((picinterrupt(("irq(RXB0IF), high_priority")))) canRecInt2(vo
             case 2:
                 enter_state = 1;
                 state = RXB0D1;
+                status= state;
                 break;
             case 3:
                 master_state = RXB0D1;
                 break;
             case 4:
                 charging_state = RXB0D1;
+                break;
+            case 5:
+                charging_voltage = RXB0D1 + (RXB0D2 / 100.0);
                 break;
         }
         RXB0CONbits.RXFUL = 0;
@@ -37090,7 +37115,7 @@ void MenuYesNo(void) {
             break;
     }
 }
-# 682 "MainCode.c"
+# 707 "MainCode.c"
 void initCAN(void) {
 
 

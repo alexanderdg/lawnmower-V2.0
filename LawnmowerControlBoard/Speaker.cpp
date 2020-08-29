@@ -75,3 +75,8 @@ void Speaker::playChargingComplete(void)
 {
   playFile("CHRGC.WAV");
 }
+
+void Speaker::playEmptyBattery(void)
+{
+  playFile("EB.WAV");
+}

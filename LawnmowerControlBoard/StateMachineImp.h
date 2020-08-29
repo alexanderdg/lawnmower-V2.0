@@ -9,6 +9,7 @@
 #include "Settings.h"
 
 #define NUM_STATES 18
+#define LOW_BATTERY 20
 
 enum StateType
 {
@@ -46,7 +47,7 @@ class StateMachineImp
     StateMachineImp();
     static void RunStatemachine(void);
     static void initStatemachine(void);
-    static void changeState(StateType newState);
+    static void updateState(StateType newState);
     static void printDiagnostics(void);
     static void printPIDValues(void);
     static void changePValue(float value);
@@ -74,9 +75,10 @@ class StateMachineImp
     static void SM_RETURN_HOME(void);
     static void SM_CHARGING(void);
     static void SM_SERROR(void);
-    
-    static void checkForCharger(void);
 
+    static void changeState(StateType newState);
+    static void checkForCharger(void);
+    static void checkGlobalParameters(void);
     
 
     static StateMachineType stateMachine[];

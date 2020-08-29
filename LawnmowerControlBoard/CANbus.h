@@ -41,7 +41,7 @@ class CANbus
     int offsetPressure1 = 0;
     int offsetPressure2 = 0;
     bool readCANReg(int device, int reg, CAN_message_t * inMsg);
-    bool writeCANReg(int device, int reg, int value);
+    bool writeCANReg(int device, int reg, char value, char value2 = -1);
 
 };
 

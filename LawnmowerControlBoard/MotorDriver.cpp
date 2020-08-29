@@ -253,6 +253,28 @@ void MotorDriver::setRightSpeed(int speed) {
   analogWrite(R_PWM, speed);
 }
 
+bool MotorDriver::ForwardLeft(float speed) {
+  digitalWrite(RL_EN, LOW);
+  digitalWrite(RL_SLEEP, HIGH);
+  digitalWrite(L_DIR, LOW);
+  SetpointL = MStoCPMSconverter(speed);
+  en_speed_control = true;
+  en_distance_control = false;
+  LPID.SetMode(AUTOMATIC);
+  return true;
+}
+
+bool MotorDriver::ForwardRight(float speed) {
+  digitalWrite(RL_EN, LOW);
+  digitalWrite(RL_SLEEP, HIGH);
+  digitalWrite(R_DIR, HIGH);
+  SetpointR = MStoCPMSconverter(speed);
+  en_speed_control = true;
+  en_distance_control = false;
+  RPID.SetMode(AUTOMATIC);
+  return true;
+}
+
 float MotorDriver::getLeftSpeed(void) {
   return CPMStoMSconverter(counter_l);
 }

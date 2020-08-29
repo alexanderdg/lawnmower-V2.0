@@ -27,12 +27,19 @@ bool CANbus::selfTest(void) {
   int distanceRR = readDistanceSensor(RR);
   int pressure1 = readPressure1();
   int pressure2 = readPressure2();
+  Serial3.print("Perimeter: ");
   Serial3.println(value);
+  Serial3.print("DistanceLL: ");
   Serial3.println(distanceLL);
+  Serial3.print("DistanceLM: ");
   Serial3.println(distanceLM);
+  Serial3.print("DistanceRM: ");
   Serial3.println(distanceRM);
+  Serial3.print("DistanceRR: ");
   Serial3.println(distanceRR);
+  Serial3.print("Pressure1: ");
   Serial3.println(pressure1);
+  Serial3.print("Pressure2: ");
   Serial3.println(pressure2);
   if (pressure1 != -255 && pressure2 != - 255
       && distanceLL > 0 && distanceLM > 0
@@ -160,12 +167,24 @@ bool CANbus::setChargingState(int value) {
   return returnvalue;
 }
 
-bool CANbus::writeCANReg(int device, int reg, int value) {
+bool CANbus::setChargingVoltage(float value) {
+  bool returnvalue = false;
+  char msb  = char(value);
+  char lsb  = char((value-msb) * 100);
+  returnvalue = writeCANReg(2, 5, msb, lsb);
+  return returnvalue;
+}
+
+bool CANbus::writeCANReg(int device, int reg, char value, char value2 = -1) {
   bool returnvalue = false;
   msg.id = device;
   msg.buf[0] = reg;
   msg.buf[1] = value;
   msg.len = 2;
+  if(value2 != -1) {
+    msg.buf[2] = value2;
+    msg.len = 3;
+  }
   int temp = Can0.write(msg);
   delayMicroseconds(800);
   if(temp == 1) returnvalue = true;

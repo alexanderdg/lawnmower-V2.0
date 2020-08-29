@@ -22,6 +22,7 @@ class Speaker
     void playStuck(void);
     void playStartCharging(void);
     void playChargingComplete(void);
+    void playEmptyBattery(void);
 
     bool selfTest(void);
 

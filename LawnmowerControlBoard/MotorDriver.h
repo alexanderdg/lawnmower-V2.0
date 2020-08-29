@@ -25,6 +25,8 @@ class MotorDriver
     bool driveForward(float speed, float distance);
     bool driveBackward(float speed, float distance);
     bool distanceTargetReached(void);
+    bool ForwardLeft(float speed);
+    bool ForwardRight(float speed);    
 
     bool rawRight(bool direction, int pwm);
     bool rawLeft(bool direction, int pwm);
