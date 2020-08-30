@@ -117,6 +117,12 @@ bool MotorDriver::rawRight(bool direction, int pwm) {
   return true;
 }
 
+bool MotorDriver::rawRight(int pwm) {
+  if(pwm >= 0) rawRight(0, pwm);
+  else rawRight(1, pwm);
+  return true;
+}
+
 bool MotorDriver::rawLeft(bool direction, int pwm) {
   digitalWrite(RL_EN, LOW);
   digitalWrite(RL_SLEEP, HIGH);
@@ -130,6 +136,12 @@ bool MotorDriver::rawLeft(bool direction, int pwm) {
   LPID.SetMode(MANUAL);
   RPID.SetMode(MANUAL);
   setLeftSpeed(pwm);
+  return true;
+}
+
+bool MotorDriver::rawLeft(int pwm) {
+  if(pwm >= 0) rawLeft(0, pwm);
+  else rawLeft(1, pwm);
   return true;
 }
 
@@ -319,19 +331,23 @@ bool MotorDriver::bladeStop(void) {
   digitalWrite(B_SLEEP, HIGH);
   digitalWrite(B_EN, HIGH);
   digitalWrite(B_DIR, LOW);
-  digitalWrite(B_PWM, HIGH);
+  digitalWrite(B_PWM, LOW);
   return true;
 }
 
 bool MotorDriver::bladeEmergencyStop(void) {
   digitalWrite(B_SLEEP, HIGH);
-  digitalWrite(B_EN, HIGH);
+  digitalWrite(B_EN, LOW);
   digitalWrite(B_DIR, LOW);
   digitalWrite(B_PWM, LOW);
   return true;
 }
 
 float MotorDriver::getBladeCurrent(void) {
+  //current is the sum of the two HS mosfet so there is a difference between the actual motor current
+  //the actual motor current is lower depeding on the PWM dutycycle and can be calculated
+  //formula is imotor = (i x d) + ((1 - d) x i x 0.5)
+  //because the current is relativly used the motor current isn't calculated
   float temp = (bladeCurrent * 0.000806) * 5;
   return temp;
 }

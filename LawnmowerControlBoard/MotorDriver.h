@@ -29,7 +29,9 @@ class MotorDriver
     bool ForwardRight(float speed);    
 
     bool rawRight(bool direction, int pwm);
+    bool rawRight(int pwm);
     bool rawLeft(bool direction, int pwm);
+    bool rawLeft(int pwm);
 
     bool enableVBlade(void);
     bool disableVBlade(void);
