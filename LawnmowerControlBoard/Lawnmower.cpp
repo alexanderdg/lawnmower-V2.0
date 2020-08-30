@@ -53,6 +53,12 @@ void Lawnmower::checkBluetooth(void) {
       {
         SM.printDiagnostics();
       }
+      else if (commandText == "MOW")
+      {
+        Serial3.print("Change MOW setting to ");
+        Serial3.println(dataText);
+        SM.changeMowEnable(dataText.toInt());
+      }
       else if (commandText == "PID")
       {
         SM.printPIDValues();
@@ -109,6 +115,7 @@ void Lawnmower::printHelpMenu(void)
   Serial3.println("Command 'd' : Ask for diagnostics of the mower");
   Serial3.println("Command 's' : Manual start the mower at own risk!");
   Serial3.println("Command 't' : Find the perimeter at own risk!");
+  Serial3.println("Command 'MOW' : Enable (1)/Disable (0) mowing motor");
   Serial3.println("Command 'PID' : Shows the PID setting of the return to home algoritme");
   Serial3.println("Command 'PID_P' : CHange PID P setting of the return to home algoritme");
   Serial3.println("Command 'PID_I' : CHange PID I setting of the return to home algoritme");

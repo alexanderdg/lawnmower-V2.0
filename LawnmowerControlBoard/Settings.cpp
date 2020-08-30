@@ -29,6 +29,13 @@ bool Settings::writePIDSetpoint(double value)
   if(temp != value) EEPROM.put(12, value);
 }
 
+bool Settings::writeMowEnable(int enable)
+{
+  int temp = 0;
+  EEPROM.get(16, temp);
+  if(temp != enable) EEPROM.put(16, enable);
+}
+
 bool Settings::readPIDValues(float * PValue, float * IValue, float * DValue)
 {
   EEPROM.get(0, * PValue);
@@ -40,5 +47,11 @@ bool Settings::readPIDValues(float * PValue, float * IValue, float * DValue)
 bool Settings::readPIDSetpoint(double * value)
 {
   EEPROM.get(12, * value);
+  return true;
+}
+
+bool Settings::readMowEnable(int * enable)
+{
+  EEPROM.get(16, * enable);
   return true;
 }

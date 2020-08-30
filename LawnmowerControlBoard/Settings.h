@@ -11,8 +11,10 @@ public:
     
     bool writePIDValues(float PValue, float IValue, float DValue);
     bool writePIDSetpoint(double value);
+    bool writeMowEnable(int enable);
     bool readPIDValues(float * PValue, float * IValue, float * DValue);
     bool readPIDSetpoint(double * value);
+    bool readMowEnable(int * enable);
 
 private:
 

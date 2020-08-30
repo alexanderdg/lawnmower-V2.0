@@ -41,6 +41,7 @@ long StateMachineImp::savedTimestamp2 = 0;
 bool StateMachineImp::collision = false;
 int StateMachineImp::internal_state = 0;
 bool StateMachineImp::result_selftest = false;
+int StateMachineImp::mowEnable = 0;
 
 StateMachineImp::StateMachineImp(void)
 {
@@ -70,8 +71,9 @@ void StateMachineImp::initStatemachine(void)
   motordriver -> coastBrake();
   setting -> readPIDValues(&pvalue, &ivalue, &dvalue);
   setting -> readPIDSetpoint(&Setpoint);
+  setting -> readMowEnable(&mowEnable);
   perimeterPID -> SetTunings(pvalue, ivalue, dvalue);
-  perimeterPID -> SetOutputLimits(0, 3000);
+  perimeterPID -> SetOutputLimits(0, 6000);
   perimeterPID -> SetSampleTime(15);
   perimeterPID -> SetMode(AUTOMATIC);
   delay(100);
@@ -85,12 +87,18 @@ void StateMachineImp::SM_INIT(void)
     Serial3.println("Enter INIT state");
     motordriver -> coastBrake();
     motordriver -> bladeStop();
-    motordriver -> disableVBlade();
     enter_state = false;
+    savedTimestamp = millis();
   }
   else
   {
     checkForCharger();
+    long currentTimestamp = millis();
+    if((currentTimestamp - savedTimestamp) > 1000)
+    {
+      motordriver -> disableVBlade();
+    }
+    
     if (canbus -> readStatus() == 2)
     {
       changeState(SELF_TEST);
@@ -158,12 +166,20 @@ void StateMachineImp::SM_RUN(void)
     Serial3.println("Enter RUN state");
     enter_state = false;
     motordriver -> Forward(0.5);
-    //motordriver -> enableVBlade();
-    //motordriver -> startTurning();
+    if(mowEnable > 0)
+    {
+      motordriver -> enableVBlade();
+    }
+    savedTimestamp = millis();
   }
   else
   {
     checkForCharger();
+    long currentTimestamp = millis();
+    if((currentTimestamp - savedTimestamp) > 3000)
+    {
+      motordriver -> startTurning();
+    }
     if(batterydriver -> readBatteryLevel() < LOW_BATTERY) 
     {
       speaker -> playEmptyBattery();
@@ -605,9 +621,15 @@ void StateMachineImp::SM_STUCK(void)
     motordriver -> bladeStop();
     motordriver -> coastBrake();
     speaker -> playStuck();
+    savedTimestamp = millis();
   }
   else
   {
+    long currentTimestamp = millis();
+    if((currentTimestamp - savedTimestamp) > 1000)
+    {
+      motordriver -> disableVBlade();
+    }
     checkForCharger();
   }
 }
@@ -698,11 +720,11 @@ void StateMachineImp::SM_RETURN_HOME(void)
     Serial3.print(PIDvalue);
     Serial3.print(" : ");
     Serial3.print(Output);
-    Serial3.print(" : ");
+    Serial3.print(" : "); 
     Serial3.println(Setpoint);
     Input = PIDvalue;
     perimeterPID -> Compute();
-    motordriver -> rawLeft(0, 3000 - Output);
+    motordriver -> rawLeft(3000 - Output);
     motordriver -> rawRight(1, Output);
     if ((motordriver -> getRightCurrent() > 2.0 or motordriver -> getLeftCurrent() > 2.0 ) and (currentTimestamp - savedTimestamp) > 1000)
     {
@@ -731,10 +753,16 @@ void StateMachineImp::SM_CHARGING(void)
     speaker -> playStartCharging();
     //batterydriver -> disableCharger();
     savedTimestamp = millis();
+    savedTimestamp2 = millis();
   }
   else
   {
     long currentTimestamp = millis();
+    if((currentTimestamp - savedTimestamp2) > 1000)
+    {
+      motordriver -> disableVBlade();
+    }
+    
     if ((currentTimestamp - savedTimestamp) > 500 )
     {
       canbus -> setChargingState(batterydriver -> readChargeState());
@@ -866,4 +894,10 @@ void StateMachineImp::changePIDSetpoint(float value)
 {
   Setpoint = value;
   setting -> writePIDSetpoint(value);
+}
+
+void StateMachineImp::changeMowEnable(int value)
+{
+  mowEnable = value;
+  setting -> writeMowEnable(value);
 }

@@ -32,6 +32,7 @@ unsigned long currentTime = millis();
 unsigned long previousTime = 0;
 // Define timeout time in milliseconds (example: 2000ms = 2s)
 const long timeoutTime = 2000;
+String receivedText = "";
 
 void setup() {
   // initialize the digital pin as an output.
@@ -42,7 +43,7 @@ void setup() {
   pinMode(ps, OUTPUT);
   pinMode(we, OUTPUT);
   pinMode(ce, OUTPUT);
-  digitalWrite(ps, HIGH);
+  digitalWrite(ps, LOW);
   digitalWrite(we, HIGH);
   digitalWrite(ce, LOW);
   Serial.begin(115200);
@@ -61,6 +62,28 @@ void loop() {
   if (Serial2.available() > 0) {
     char temp = Serial2.read();
     Serial.print(temp);
+    if (temp == 13)
+    {
+      Serial.println();
+      char tempchar[30];
+      char * pch;
+      receivedText.toCharArray(tempchar, 30);
+      pch = strchr(tempchar, ' ');
+      String commandText = "";
+      String dataText = "";
+      if (pch != NULL) {
+        Serial.println(pch - tempchar + 1);
+        commandText = receivedText.substring(0, pch - tempchar);
+        if (receivedText.charAt(pch - tempchar + 1) != ' ') dataText = receivedText.substring(pch - tempchar + 1);
+      }
+      else {
+        commandText = receivedText;
+      }
+    }
+    else
+    {
+      receivedText += temp;
+    }
   }
 }
 

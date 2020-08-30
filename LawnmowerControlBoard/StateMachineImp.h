@@ -54,6 +54,7 @@ class StateMachineImp
     static void changeIValue(float value);
     static void changeDValue(float value);
     static void changePIDSetpoint(float value);
+    static void changeMowEnable(int value);
 
   private:
 
@@ -95,6 +96,7 @@ class StateMachineImp
     static int internal_state;
     static bool collision;
     static bool result_selftest;
+    static int mowEnable;
 
     //PID variables
     static  PID * perimeterPID;
