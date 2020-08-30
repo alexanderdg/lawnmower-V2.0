@@ -830,6 +830,7 @@ void StateMachineImp::printDiagnostics(void)
   Serial3.println("Battery level: " + String(batterydriver -> readBatteryLevel()));
   Serial3.println("Left motor current: " + String(motordriver -> getLeftCurrent()));
   Serial3.println("Right motor current: " + String(motordriver -> getRightCurrent()));
+  Serial3.println("Blade motor current: " + String(motordriver -> getBladeCurrent()));
   Serial3.println("Left motor speed: " + String(motordriver -> getLeftSpeed()));
   Serial3.println("Right motor speed: " + String(motordriver -> getRightSpeed()));
   Serial3.println("Current state: " + SM_STATE);
